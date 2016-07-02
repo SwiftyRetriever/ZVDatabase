@@ -10,6 +10,8 @@
 		4D850E4D1D27589300641D34 /* Binding-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D850E4C1D27583000641D34 /* Binding-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D850E531D27598F00641D34 /* sqlite3.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D850E521D27598F00641D34 /* sqlite3.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D850E581D275B6800641D34 /* ZVConmonDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D850E571D275B6800641D34 /* ZVConmonDef.swift */; };
+		4D981DA51D279BC900AA08CB /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */; };
+		4D981DA71D279BC900AA08CB /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
 		4DA079011D26AECC00C30590 /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DA079001D26AECC00C30590 /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DA0792C1D26B29F00C30590 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */; };
 		4DA079341D26B67600C30590 /* ZVDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0792F1D26B67600C30590 /* ZVDatabase.swift */; };
@@ -19,10 +21,23 @@
 		4DA079381D26B67600C30590 /* ZVStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA079331D26B67600C30590 /* ZVStatement.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4D981DA81D279BC900AA08CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DA078F41D26AECC00C30590 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DA078FC1D26AECC00C30590;
+			remoteInfo = ZVDatabase;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4D850E4C1D27583000641D34 /* Binding-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Binding-Header.h"; sourceTree = "<group>"; };
 		4D850E521D27598F00641D34 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = ../../../../../Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include/sqlite3.h; sourceTree = "<group>"; };
 		4D850E571D275B6800641D34 /* ZVConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConmonDef.swift; sourceTree = "<group>"; };
+		4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZVDatabaseTests.swift; sourceTree = "<group>"; };
+		4D981DA61D279BC900AA08CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZVDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA079001D26AECC00C30590 /* ZVDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZVDatabase.h; sourceTree = "<group>"; };
 		4DA079021D26AECC00C30590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -35,6 +50,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D981D9F1D279BC900AA08CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D981DA71D279BC900AA08CB /* ZVDatabase.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DA078F91D26AECC00C30590 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -46,10 +69,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D981DA31D279BC900AA08CB /* ZVDatabaseTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */,
+				4D981DA61D279BC900AA08CB /* Info.plist */,
+			);
+			path = ZVDatabaseTests;
+			sourceTree = "<group>";
+		};
 		4DA078F31D26AECC00C30590 = {
 			isa = PBXGroup;
 			children = (
 				4DA078FF1D26AECC00C30590 /* ZVDatabase */,
+				4D981DA31D279BC900AA08CB /* ZVDatabaseTests */,
 				4DA078FE1D26AECC00C30590 /* Products */,
 				4DA0792A1D26B29E00C30590 /* Frameworks */,
 			);
@@ -59,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */,
+				4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,6 +138,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4D981DA11D279BC900AA08CB /* ZVDatabaseTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D981DAC1D279BC900AA08CB /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */;
+			buildPhases = (
+				4D981D9E1D279BC900AA08CB /* Sources */,
+				4D981D9F1D279BC900AA08CB /* Frameworks */,
+				4D981DA01D279BC900AA08CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D981DA91D279BC900AA08CB /* PBXTargetDependency */,
+			);
+			name = ZVDatabaseTests;
+			productName = ZVDatabaseTests;
+			productReference = 4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4DA078FC1D26AECC00C30590 /* ZVDatabase */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DA079111D26AECC00C30590 /* Build configuration list for PBXNativeTarget "ZVDatabase" */;
@@ -132,6 +184,12 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "小零心语.";
 				TargetAttributes = {
+					4D981DA11D279BC900AA08CB = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = ZJHBGBWAT8;
+						DevelopmentTeamName = "伟 张 (Personal Team)";
+						ProvisioningStyle = Automatic;
+					};
 					4DA078FC1D26AECC00C30590 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = ZJHBGBWAT8;
@@ -154,11 +212,19 @@
 			projectRoot = "";
 			targets = (
 				4DA078FC1D26AECC00C30590 /* ZVDatabase */,
+				4D981DA11D279BC900AA08CB /* ZVDatabaseTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4D981DA01D279BC900AA08CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DA078FB1D26AECC00C30590 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,6 +235,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D981D9E1D279BC900AA08CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D981DA51D279BC900AA08CB /* ZVDatabaseTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4DA078F81D26AECC00C30590 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -184,7 +258,41 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4D981DA91D279BC900AA08CB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DA078FC1D26AECC00C30590 /* ZVDatabase */;
+			targetProxy = 4D981DA81D279BC900AA08CB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4D981DAA1D279BC900AA08CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ZVDatabaseTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		4D981DAB1D279BC900AA08CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = ZVDatabaseTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		4DA0790F1D26AECC00C30590 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -328,6 +436,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D981DAC1D279BC900AA08CB /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D981DAA1D279BC900AA08CB /* Debug */,
+				4D981DAB1D279BC900AA08CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4DA078F71D26AECC00C30590 /* Build configuration list for PBXProject "ZVDatabase" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

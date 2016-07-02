@@ -2,4 +2,70 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZVDatabaseTests/ZVDatabaseTests.swift"
+            timestampString = "489137826.223778"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "testInsertValue()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ZVDatabaseTests/ZVDatabaseTests.swift"
+            timestampString = "489138837.10228"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "testTransaction()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZVDatabaseTests.ZVDatabaseTests.(testTransaction () -&gt; ()).(closure #1)"
+                  moduleName = "ZVDatabaseTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zevwings/Desktop/ZVDatabase/ZVDatabaseTests/ZVDatabaseTests.swift"
+                  timestampString = "489138845.389323"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "907">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ZVDatabaseTests.ZVDatabaseTests.(testTransaction () -&gt; ()).(closure #1).(implicit closure #1)"
+                  moduleName = "ZVDatabaseTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zevwings/Desktop/ZVDatabase/ZVDatabaseTests/ZVDatabaseTests.swift"
+                  timestampString = "489138845.39091"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "172"
+                  endingLineNumber = "172"
+                  offsetFromSymbolStart = "58">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
