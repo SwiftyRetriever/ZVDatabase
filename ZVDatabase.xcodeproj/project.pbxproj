@@ -8,27 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		4DA079011D26AECC00C30590 /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DA079001D26AECC00C30590 /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4DA079081D26AECC00C30590 /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
-		4DA0790D1D26AECC00C30590 /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0790C1D26AECC00C30590 /* ZVDatabaseTests.swift */; };
+		4DA0792C1D26B29F00C30590 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */; };
+		4DA079341D26B67600C30590 /* ZVDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA0792F1D26B67600C30590 /* ZVDatabase.swift */; };
+		4DA079351D26B67600C30590 /* ZVDatabasePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA079301D26B67600C30590 /* ZVDatabasePool.swift */; };
+		4DA079361D26B67600C30590 /* ZVDatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA079311D26B67600C30590 /* ZVDatabaseQueue.swift */; };
+		4DA079371D26B67600C30590 /* ZVElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA079321D26B67600C30590 /* ZVElement.swift */; };
+		4DA079381D26B67600C30590 /* ZVStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA079331D26B67600C30590 /* ZVStatement.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4DA079091D26AECC00C30590 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4DA078F41D26AECC00C30590 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4DA078FC1D26AECC00C30590;
-			remoteInfo = ZVDatabase;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZVDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA079001D26AECC00C30590 /* ZVDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZVDatabase.h; sourceTree = "<group>"; };
 		4DA079021D26AECC00C30590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4DA079071D26AECC00C30590 /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4DA0790C1D26AECC00C30590 /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZVDatabaseTests.swift; sourceTree = "<group>"; };
-		4DA0790E1D26AECC00C30590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4DA0792F1D26B67600C30590 /* ZVDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabase.swift; sourceTree = "<group>"; };
+		4DA079301D26B67600C30590 /* ZVDatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabasePool.swift; sourceTree = "<group>"; };
+		4DA079311D26B67600C30590 /* ZVDatabaseQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabaseQueue.swift; sourceTree = "<group>"; };
+		4DA079321D26B67600C30590 /* ZVElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVElement.swift; sourceTree = "<group>"; };
+		4DA079331D26B67600C30590 /* ZVStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVStatement.swift; sourceTree = "<group>"; };
+		4DA079401D27429500C30590 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,14 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4DA079041D26AECC00C30590 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4DA079081D26AECC00C30590 /* ZVDatabase.framework in Frameworks */,
+				4DA0792C1D26B29F00C30590 /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,8 +45,8 @@
 			isa = PBXGroup;
 			children = (
 				4DA078FF1D26AECC00C30590 /* ZVDatabase */,
-				4DA0790B1D26AECC00C30590 /* ZVDatabaseTests */,
 				4DA078FE1D26AECC00C30590 /* Products */,
+				4DA0792A1D26B29E00C30590 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,7 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */,
-				4DA079071D26AECC00C30590 /* ZVDatabaseTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,18 +62,23 @@
 			isa = PBXGroup;
 			children = (
 				4DA079001D26AECC00C30590 /* ZVDatabase.h */,
+				4DA0792F1D26B67600C30590 /* ZVDatabase.swift */,
+				4DA079301D26B67600C30590 /* ZVDatabasePool.swift */,
+				4DA079311D26B67600C30590 /* ZVDatabaseQueue.swift */,
+				4DA079321D26B67600C30590 /* ZVElement.swift */,
+				4DA079331D26B67600C30590 /* ZVStatement.swift */,
 				4DA079021D26AECC00C30590 /* Info.plist */,
+				4DA079401D27429500C30590 /* module.modulemap */,
 			);
 			path = ZVDatabase;
 			sourceTree = "<group>";
 		};
-		4DA0790B1D26AECC00C30590 /* ZVDatabaseTests */ = {
+		4DA0792A1D26B29E00C30590 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4DA0790C1D26AECC00C30590 /* ZVDatabaseTests.swift */,
-				4DA0790E1D26AECC00C30590 /* Info.plist */,
+				4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */,
 			);
-			path = ZVDatabaseTests;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,24 +113,6 @@
 			productReference = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		4DA079061D26AECC00C30590 /* ZVDatabaseTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4DA079141D26AECC00C30590 /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */;
-			buildPhases = (
-				4DA079031D26AECC00C30590 /* Sources */,
-				4DA079041D26AECC00C30590 /* Frameworks */,
-				4DA079051D26AECC00C30590 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4DA0790A1D26AECC00C30590 /* PBXTargetDependency */,
-			);
-			name = ZVDatabaseTests;
-			productName = ZVDatabaseTests;
-			productReference = 4DA079071D26AECC00C30590 /* ZVDatabaseTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -150,12 +127,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = ZJHBGBWAT8;
 						DevelopmentTeamName = "伟 张 (Personal Team)";
-						ProvisioningStyle = Automatic;
-					};
-					4DA079061D26AECC00C30590 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = ZJHBGBWAT8;
-						DevelopmentTeamName = "伟 张 (Personal Team)";
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -173,20 +145,12 @@
 			projectRoot = "";
 			targets = (
 				4DA078FC1D26AECC00C30590 /* ZVDatabase */,
-				4DA079061D26AECC00C30590 /* ZVDatabaseTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4DA078FB1D26AECC00C30590 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4DA079051D26AECC00C30590 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -200,26 +164,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4DA079031D26AECC00C30590 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4DA0790D1D26AECC00C30590 /* ZVDatabaseTests.swift in Sources */,
+				4DA079371D26B67600C30590 /* ZVElement.swift in Sources */,
+				4DA079351D26B67600C30590 /* ZVDatabasePool.swift in Sources */,
+				4DA079361D26B67600C30590 /* ZVDatabaseQueue.swift in Sources */,
+				4DA079341D26B67600C30590 /* ZVDatabase.swift in Sources */,
+				4DA079381D26B67600C30590 /* ZVStatement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4DA0790A1D26AECC00C30590 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4DA078FC1D26AECC00C30590 /* ZVDatabase */;
-			targetProxy = 4DA079091D26AECC00C30590 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		4DA0790F1D26AECC00C30590 /* Debug */ = {
@@ -261,7 +214,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MODULEMAP_FILE = "$(SRCROOT)/ZVDatabase/module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -306,7 +260,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MODULEMAP_FILE = "$(SRCROOT)/ZVDatabase/module.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -320,16 +275,21 @@
 		4DA079121D26AECC00C30590 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ZVDatabase/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "$(SRCROOT)/ZVDatabase/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -337,38 +297,20 @@
 		4DA079131D26AECC00C30590 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ZVDatabase/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "$(SRCROOT)/ZVDatabase/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		4DA079151D26AECC00C30590 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = ZVDatabaseTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		4DA079161D26AECC00C30590 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = ZVDatabaseTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -392,14 +334,7 @@
 				4DA079131D26AECC00C30590 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		4DA079141D26AECC00C30590 /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4DA079151D26AECC00C30590 /* Debug */,
-				4DA079161D26AECC00C30590 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
