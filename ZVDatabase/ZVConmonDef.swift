@@ -19,5 +19,6 @@ internal func ZVLog(_ items: Swift.Any..., separator: String = "", terminator: S
 public enum ZVDatabaseError : ErrorProtocol {
     
     case error(code: Int32, msg: String)
-    
 }
+
+typealias ZVBusyHandler = ((UnsafeMutablePointer<Void>?, Int32) -> Int32)!

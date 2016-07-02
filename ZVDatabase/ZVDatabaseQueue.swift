@@ -24,7 +24,7 @@ public class ZVDatabaseQueue: NSObject {
         
     }
     
-    public init(path: String, queue: DispatchQueue) {
+    public init(path: String = "", queue: DispatchQueue) {
         
         self.connection = ZVConnection(path: path)
         self.queue = queue

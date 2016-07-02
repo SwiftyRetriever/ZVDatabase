@@ -10,9 +10,10 @@ import UIKit
 
 public class ZVConnection: NSObject {
     
-    internal var connection: OpaquePointer? = nil
+    private var _connection: OpaquePointer? = nil
+    public var connection: OpaquePointer? { get {return _connection } }
     
-    internal var databasePath: String = ""
+    public private(set) var databasePath: String = ""
     
     public private(set) var inTransaction: Bool = false
     
@@ -24,53 +25,39 @@ public class ZVConnection: NSObject {
     }
     
     deinit {
-        sqlite3_close(connection)
-        connection = nil
+        sqlite3_close(_connection)
+        _connection = nil
     }
     
-    public func open() throws {
+    public func open(readonly: Bool = false, vfs vfsName: String? = nil) throws {
     
         if databasePath.isEmpty {
             let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first
             self.databasePath = library! + "/db.sqlite"
         }
         
-        print(databasePath)
+        let flags = readonly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE
         
-        let errCode = sqlite3_open(self.databasePath, &connection)
+        let errCode = sqlite3_open_v2(self.databasePath, &_connection, flags, vfsName)
         guard errCode == SQLITE_OK else {
             let errMsg = "sqlite open error: \(self.lastErrorMsg)"
             throw ZVDatabaseError.error(code: errCode, msg: errMsg);
         }
+        
+        if maxBusyRetryTime > 0.0 {
+            self.setMaxBusyRetry(timeOut: self.maxBusyRetryTime)
+        }
+        
     }
     
     public func close() throws {
         
-        if connection == nil { return }
-        let errCode = sqlite3_close(connection)
+        if _connection == nil { return }
+        let errCode = sqlite3_close(_connection)
         guard errCode == SQLITE_OK else {
             let errMsg = "sqlite close error: \(self.lastErrorMsg)"
             throw ZVDatabaseError.error(code: errCode, msg: errMsg)
         }
-    }
-    
-    public var lastInsertRowid: Int64? {
-        
-        let rowid = sqlite3_last_insert_rowid(connection)
-        return rowid != 0 ? rowid : nil
-    }
-    
-    public var changes: Int {
-        
-        let rows = sqlite3_changes(connection)
-        return Int(rows)
-    }
-    
-    public var lastErrorMsg: String {
-        
-        let errMsg = String(cString: sqlite3_errmsg(connection))
-        return errMsg
-        
     }
     
     public func executeUpdate(_ sql: String,
@@ -96,7 +83,8 @@ public class ZVConnection: NSObject {
         }   
     }
     
-    public func executeQuery(_ sql: String, parameters:[AnyObject?]? = nil) throws -> [ZVSQLRow] {
+    public func executeQuery(_ sql: String,
+                             parameters:[AnyObject?]? = nil) throws -> [ZVSQLRow] {
         
         let statement = ZVStatement(self, sql: sql, parameters: parameters)
         try statement.prepare()
@@ -107,7 +95,7 @@ public class ZVConnection: NSObject {
     public func beginTransaction() -> Bool {
         
         let sql = "begin exclusive transaction"
-        if sqlite3_exec(self.connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
         }
         return self.inTransaction
@@ -116,7 +104,7 @@ public class ZVConnection: NSObject {
     public func beginDeferredTransaction() -> Bool {
         
         let sql = "begin deferred transaction"
-        if sqlite3_exec(self.connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
         }
         return self.inTransaction
@@ -131,8 +119,10 @@ public class ZVConnection: NSObject {
         }
         
         let sql = "rollback transaction"
-        if sqlite3_exec(self.connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
+        } else {
+            
         }
     }
     
@@ -145,8 +135,81 @@ public class ZVConnection: NSObject {
         }
         
         let sql = "commit transaction"
-        if sqlite3_exec(self.connection, sql, nil, nil, nil) == SQLITE_OK{
+        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
         }
+    }
+    
+    // MARK: - BusyHandler
+    private var startBusyRetryTime: TimeInterval = 0.0
+    
+    public var maxBusyRetryTime: TimeInterval = 2.0 {
+        didSet (timeOut) {
+            self.setMaxBusyRetry(timeOut: timeOut)
+        }
+    }
+    
+    private func setMaxBusyRetry(timeOut: TimeInterval) {
+        
+        if _connection == nil {
+            return;
+        }
+        
+        if timeOut > 0 {
+            sqlite3_busy_handler(_connection, nil, nil)
+        } else {
+            sqlite3_busy_handler(_connection, { (dbPointer, retry) -> Int32 in
+                
+                let connection = unsafeBitCast(dbPointer, to: ZVConnection.self)
+                return connection.busyHandler(dbPointer, retry)
+                }, unsafeBitCast(self, to: UnsafeMutablePointer<Void>.self))
+        }
+    }
+    
+    private var busyHandler: ZVBusyHandler = { (dbPointer: UnsafeMutablePointer<Void>?, retry: Int32) -> Int32 in
+        let connection = unsafeBitCast(dbPointer, to: ZVConnection.self)
+        
+        if retry == 0 {
+            connection.startBusyRetryTime = Date.timeIntervalSinceReferenceDate
+            return 1
+        }
+        
+        let delta = Date.timeIntervalSinceReferenceDate - connection.startBusyRetryTime
+        
+        if (delta < connection.maxBusyRetryTime) {
+            
+            let requestedSleep = Int32(arc4random_uniform(50) + 50)
+            let actualSleep = sqlite3_sleep(requestedSleep);
+            if actualSleep != requestedSleep {
+                print("WARNING: Requested sleep of \(requestedSleep) milliseconds, but SQLite returned \(actualSleep). Maybe SQLite wasn't built with HAVE_USLEEP=1?" )
+            }
+            
+            return 1
+        }
+        
+        return 0
+    }
+    
+    // MARK: -
+    public var lastInsertRowid: Int64? {
+        
+        let rowid = sqlite3_last_insert_rowid(_connection)
+        return rowid != 0 ? rowid : nil
+    }
+    
+    public var changes: Int {
+        
+        let rows = sqlite3_changes(_connection)
+        return Int(rows)
+    }
+    
+    public var totalChanges: Int {
+        return Int(sqlite3_total_changes(_connection))
+    }
+    
+    public var lastErrorMsg: String {
+        
+        let errMsg = String(cString: sqlite3_errmsg(_connection))
+        return errMsg
     }
 }
