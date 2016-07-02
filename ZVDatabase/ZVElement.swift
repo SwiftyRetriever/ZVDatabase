@@ -7,19 +7,14 @@
 //
 
 import UIKit
-#if arch(i386) || arch(x86_64)
-    import SQLite3iPhoneSimulator
-#else
-    import SQLite3iPhoneOS
-#endif
 
-public class ZVRow: NSObject {
+public class ZVSQLRow: NSObject {
     
     override init() { }
     
-    private var data = Dictionary<String, ZVColumn>()
+    private var data = Dictionary<String, ZVSQLColumn>()
     
-    public subscript(key: String) -> ZVColumn? {
+    public subscript(key: String) -> ZVSQLColumn? {
         get {
             return data[key]
         }
@@ -39,7 +34,7 @@ public class ZVRow: NSObject {
     }
 }
 
-public class ZVColumn: NSObject {
+public class ZVSQLColumn: NSObject {
     
     private var value: AnyObject? = nil
     private var type: CInt = -1
@@ -54,7 +49,7 @@ public class ZVColumn: NSObject {
     }
 }
 
-public extension ZVColumn {
+public extension ZVSQLColumn {
     
     private var numberValue: NSNumber {
         get {

@@ -8,16 +8,16 @@
 
 import UIKit
 
-class ZVDatabasePool: NSObject {
+public class ZVDatabasePool: NSObject {
     
     private struct Singleton {
         static var pool: ZVDatabasePool?
     }
     
-    static let shared: ZVDatabasePool = ZVDatabasePool()
+    public static let shared: ZVDatabasePool = ZVDatabasePool()
     
-    override class func initialize() {
-        super.initialize()
-    }
+//    override class func initialize() {
+//        super.initialize()
+//    }
     
 }

@@ -7,21 +7,6 @@
 //
 
 import UIKit
-#if arch(i386) || arch(x86_64)
-import SQLite3iPhoneSimulator
-#else
-import SQLite3iPhoneOS
-#endif
-
-internal func ZVLog(_ items: Swift.Any..., separator: String = "", terminator: String = "") {
-    print(items, separator: separator, terminator: terminator)
-}
-
-public enum ZVDatabaseError : ErrorProtocol {
-    
-    case error(code: Int32, msg: String)
-    
-}
 
 public class ZVConnection: NSObject {
     
@@ -111,7 +96,7 @@ public class ZVConnection: NSObject {
         }   
     }
     
-    public func executeQuery(_ sql: String, parameters:[AnyObject?]? = nil) throws -> [ZVRow] {
+    public func executeQuery(_ sql: String, parameters:[AnyObject?]? = nil) throws -> [ZVSQLRow] {
         
         let statement = ZVStatement(self, sql: sql, parameters: parameters)
         try statement.prepare()

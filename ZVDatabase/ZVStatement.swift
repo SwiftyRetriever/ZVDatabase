@@ -7,24 +7,15 @@
 //
 
 import UIKit
-#if arch(i386) || arch(x86_64)
-    import SQLite3iPhoneSimulator
-#else
-    import SQLite3iPhoneOS
-#endif
 
-let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
-
-let SQLITE_BIND_COUNT_ERR: Int32 = 1101
-
-public final class ZVStatement {
+internal final class ZVStatement {
     
     private var statement: OpaquePointer? = nil
     private var sql: UnsafePointer<Int8>? = nil
     private var db: ZVConnection? = nil
     private var parameters: [AnyObject?]?
     
-    public init(_ db: ZVConnection, sql: UnsafePointer<Int8>?, parameters: [AnyObject?]?) {
+    internal init(_ db: ZVConnection, sql: UnsafePointer<Int8>?, parameters: [AnyObject?]?) {
         
         self.sql = sql
         self.db = db
@@ -78,14 +69,14 @@ public final class ZVStatement {
         }
     }
     
-    internal func query() throws -> [ZVRow] {
+    internal func query() throws -> [ZVSQLRow] {
         
         defer {
             sqlite3_finalize(statement)
         }
         
         var result = sqlite3_step(statement)
-        var rows = [ZVRow]()
+        var rows = [ZVSQLRow]()
         while result == SQLITE_ROW {
             let count = sqlite3_column_count(statement)
             rows.append(getRowValue(count: count))
@@ -95,36 +86,36 @@ public final class ZVStatement {
         return rows
     }
     
-    internal func getRowValue(count: Int32) -> ZVRow {
+    internal func getRowValue(count: Int32) -> ZVSQLRow {
         
-        let row = ZVRow()
+        let row = ZVSQLRow()
         
         for idx in 0 ..< count {
             
-            var column: ZVColumn?
+            var column: ZVSQLColumn?
             
             let columnType  = sqlite3_column_type(statement, idx)
             switch columnType {
             case SQLITE_INTEGER:
                 let val = Int(sqlite3_column_int64(statement, idx))
-                column = ZVColumn(value: val, type: columnType)
+                column = ZVSQLColumn(value: val, type: columnType)
                 break
             case SQLITE_FLOAT:
                 let val = Double(sqlite3_column_double(statement, idx))
-                column = ZVColumn(value: val, type: columnType)
+                column = ZVSQLColumn(value: val, type: columnType)
                 break
             case SQLITE_BLOB:
                 let bytes = sqlite3_column_blob(statement, idx)
                 let length = sqlite3_column_bytes(statement, idx)
                 let data = NSData(bytes: bytes, length: Int(length))
-                column = ZVColumn(value: data, type: columnType)
+                column = ZVSQLColumn(value: data, type: columnType)
                 break
             case SQLITE_NULL:
-                column = ZVColumn(value: nil, type: columnType)
+                column = ZVSQLColumn(value: nil, type: columnType)
                 break
             case SQLITE_TEXT, SQLITE3_TEXT:
                 let val = String(cString: UnsafePointer(sqlite3_column_text(statement, idx))) ?? ""
-                column = ZVColumn(value: val, type: columnType)
+                column = ZVSQLColumn(value: val, type: columnType)
                 break
             default:
                 break
