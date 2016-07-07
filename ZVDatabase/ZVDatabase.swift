@@ -63,7 +63,7 @@ public class ZVConnection: NSObject {
     public func executeUpdate(_ sql: String,
                               parameters:[AnyObject?]? = nil) throws {
         
-        let statement = ZVStatement(self, sql: sql, parameters: parameters)
+        let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
         try statement.prepare()
         try statement.execute()
     }
@@ -72,7 +72,7 @@ public class ZVConnection: NSObject {
                               parameters:[AnyObject?]? = nil,
                               lastInsertRowid: Bool = false) throws -> Int64? {
         
-        let statement = ZVStatement(self, sql: sql, parameters: parameters)
+        let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
         try statement.prepare()
         try statement.execute()
         
@@ -86,15 +86,24 @@ public class ZVConnection: NSObject {
     public func executeQuery(_ sql: String,
                              parameters:[AnyObject?]? = nil) throws -> [ZVSQLRow] {
         
-        let statement = ZVStatement(self, sql: sql, parameters: parameters)
+        let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
         try statement.prepare()
         let rows = try statement.query()
         return rows
     }
     
+    public func executeQuery(forDictionary sql: String,
+                             parameters:[AnyObject?]? = nil) throws -> [[String: AnyObject?]] {
+        
+        let statement = ZVStatement(self, sql: sql, parameters: parameters)
+        try statement.prepare()
+        let rows = try statement.query(forDictionary: true)
+        return rows
+    }
+    
     public func beginTransaction() -> Bool {
         
-        let sql = "begin exclusive transaction"
+        let sql = "BEGIN EXCLUSIVE TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
         }
@@ -103,7 +112,7 @@ public class ZVConnection: NSObject {
     
     public func beginDeferredTransaction() -> Bool {
         
-        let sql = "begin deferred transaction"
+        let sql = "BEGIN DEFERRED TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
         }
@@ -118,7 +127,7 @@ public class ZVConnection: NSObject {
             }
         }
         
-        let sql = "rollback transaction"
+        let sql = "ROLLBACK TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
         } else {
@@ -134,7 +143,7 @@ public class ZVConnection: NSObject {
             }
         }
         
-        let sql = "commit transaction"
+        let sql = "COMMIT TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
             self.inTransaction = true
         }
