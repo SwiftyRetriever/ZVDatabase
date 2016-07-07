@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ZVDatabase"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "a simple swift database"
 
   s.description  = <<-DESC
@@ -24,6 +24,6 @@ Pod::Spec.new do |s|
   s.library   = "sqlite3"
   s.requires_arc = true
   # s.module_name = "ZVDatabase",
-  s.module_map = 'ZVDatabase/module.modulemap' 
+  s.module_map = 'ZVDatabase/module.modulemap'
 
 end
