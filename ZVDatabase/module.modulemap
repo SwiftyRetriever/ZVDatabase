@@ -8,7 +8,7 @@ framework module ZVDatabase {
 }
 
 module SQLiteiPhoneOS {
-    header "Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include/sqlite3.h"
+    header "/Applications/Xcode-beta.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include/sqlite3.h"
     export *
 }
 
