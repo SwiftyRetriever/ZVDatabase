@@ -8,6 +8,12 @@
 
 import UIKit
 
+#if (arch(i386) || arch(x86_64))
+    import SQLiteiPhoneSimulator
+#else
+    import SQLiteiPhoneOS
+#endif
+
 public class ZVConnection: NSObject {
     
     private var _connection: OpaquePointer? = nil

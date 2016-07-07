@@ -8,6 +8,12 @@
 
 import UIKit
 
+#if (arch(i386) || arch(x86_64))
+    import SQLiteiPhoneSimulator
+#else
+    import SQLiteiPhoneOS
+#endif
+
 // MARK: - Transform
 public extension ZVSQLColumn {
     

@@ -20,8 +20,10 @@ Pod::Spec.new do |s|
   s.author             = { "zevwings" => "zev.wings@gmail.com" }
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/zevwings/ZVDatabase.git", :tag => "#{s.version}" }
-  s.source_files  = "ZVDatabase/*.h", "ZVDatabase/*.swift"
+  s.source_files  = "ZVDatabase/ZVDatabase.h", "ZVDatabase/*.swift"
   s.library   = "sqlite3"
   s.requires_arc = true
+  # s.module_name = "ZVDatabase",
+  s.module_map = 'ZVDatabase/module.modulemap' 
 
 end
