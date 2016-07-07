@@ -10,5 +10,3 @@
 
 FOUNDATION_EXPORT double ZVDatabaseVersionNumber;
 FOUNDATION_EXPORT const unsigned char ZVDatabaseVersionString[];
-
-#import <ZVDatabase/Binding-Header.h>
