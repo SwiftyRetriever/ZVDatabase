@@ -8,25 +8,25 @@
 
 import UIKit
 
-public class ZVSQLRow: NSObject {
+public final class ZVSQLRow: NSObject {
     
     override init() { }
     
-    private var data = Dictionary<String, ZVSQLColumn>()
+    private var _data = Dictionary<String, ZVSQLColumn>()
     
     public subscript(key: String) -> ZVSQLColumn? {
         get {
-            return data[key]
+            return _data[key]
         }
         
         set(newVal) {
-            data[key] = newVal
+            _data[key] = newVal
         }
     }
     
     public override var description: String {
         var desc: String = "\n[\n"
-        for (k, v) in data {
+        for (k, v) in _data {
             desc.append("key: \(k), value: \(v) \n")
         }
         desc.append("]")
@@ -34,7 +34,7 @@ public class ZVSQLRow: NSObject {
     }
 }
 
-public class ZVSQLColumn: NSObject {
+public final class ZVSQLColumn: NSObject {
     
     internal var value: AnyObject? = nil
     internal var type: CInt = -1

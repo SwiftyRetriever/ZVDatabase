@@ -8,33 +8,31 @@
 
 import UIKit
 
-public class ZVDatabaseQueue: NSObject {
+public final class ZVDatabaseQueue: NSObject {
     
-    private var queue: DispatchQueue?
-    private var connection: ZVConnection?
+    private var _queue: DispatchQueue?
+    private var _connection: ZVConnection?
     
     private override init() {}
     
     public init(path: String) {
         
-        self.connection = ZVConnection(path: path)
-        
-        let queueName = "com.zevwings." + path
-        queue = DispatchQueue(label: queueName)
+        _connection = ZVConnection(path: path)
+        _queue = DispatchQueue(label: "com.zevwings.db.queue")
         
     }
     
     public init(path: String = "", queue: DispatchQueue) {
         
-        self.connection = ZVConnection(path: path)
-        self.queue = queue
+        _connection = ZVConnection(path: path)
+        _queue = queue
     }
     
     public func inBlock(_ block: (db: ZVConnection) -> Void) {
         
-        if let queue = self.queue {
+        if let queue = _queue {
             queue.async(execute: {
-                block(db: self.connection!)
+                block(db: self._connection!)
             })
         }
     }
@@ -42,35 +40,35 @@ public class ZVDatabaseQueue: NSObject {
     public func inTransaction(_ deferred: Bool = false, _ block: (db: ZVConnection) -> Bool) {
         
         do {
-            try self.connection!.open()
+            try _connection!.open()
         } catch {
             print(error)
         }
         
-        queue?.async(execute: {
+        _queue?.async(execute: {
             
             var success = false
             
             if deferred {
-                success = self.connection!.beginDeferredTransaction()
+                success = self._connection!.beginDeferredTransaction()
             } else {
-                success = self.connection!.beginTransaction()
+                success = self._connection!.beginTransaction()
             }
             
             if success {
                 
-                if block(db: self.connection!) {
+                if block(db: self._connection!) {
                     
-                    self.connection!.commit()
-                    do { try self.connection!.close() } catch {}
+                    self._connection!.commit()
+                    do { try self._connection!.close() } catch {}
                 } else {
                     
-                    self.connection!.rollback()
-                    do { try self.connection!.close() } catch {}
+                    self._connection!.rollback()
+                    do { try self._connection!.close() } catch {}
                 }
             } else {
                 
-                do { try self.connection!.close() } catch {}
+                do { try self._connection!.close() } catch {}
             }
         })
     }

@@ -200,7 +200,7 @@
 					};
 					4DA078FC1D26AECC00C30590 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = DDWF823A49;
+						DevelopmentTeam = ZJHBGBWAT8;
 						DevelopmentTeamName = "伟 张 (Personal Team)";
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;

@@ -14,10 +14,10 @@ import UIKit
     import SQLiteiPhoneOS
 #endif
 
-public class ZVConnection: NSObject {
+public final class ZVConnection: NSObject {
     
     private var _connection: OpaquePointer? = nil
-    public var connection: OpaquePointer? { get {return _connection } }
+    public var connection: OpaquePointer? { return _connection }
     
     public private(set) var databasePath: String = ""
     
@@ -51,7 +51,7 @@ public class ZVConnection: NSObject {
         }
         
         if maxBusyRetryTime > 0.0 {
-            self.setMaxBusyRetry(timeOut: self.maxBusyRetryTime)
+            _setMaxBusyRetry(timeOut: self.maxBusyRetryTime)
         }
         
     }
@@ -156,15 +156,15 @@ public class ZVConnection: NSObject {
     }
     
     // MARK: - BusyHandler
-    private var startBusyRetryTime: TimeInterval = 0.0
+    private var _startBusyRetryTime: TimeInterval = 0.0
     
     public var maxBusyRetryTime: TimeInterval = 2.0 {
         didSet (timeOut) {
-            self.setMaxBusyRetry(timeOut: timeOut)
+            _setMaxBusyRetry(timeOut: timeOut)
         }
     }
     
-    private func setMaxBusyRetry(timeOut: TimeInterval) {
+    private func _setMaxBusyRetry(timeOut: TimeInterval) {
         
         if _connection == nil {
             return;
@@ -176,20 +176,20 @@ public class ZVConnection: NSObject {
             sqlite3_busy_handler(_connection, { (dbPointer, retry) -> Int32 in
                 
                 let connection = unsafeBitCast(dbPointer, to: ZVConnection.self)
-                return connection.busyHandler(dbPointer, retry)
+                return connection._busyHandler(dbPointer, retry)
                 }, unsafeBitCast(self, to: UnsafeMutablePointer<Void>.self))
         }
     }
     
-    private var busyHandler: ZVBusyHandler = { (dbPointer: UnsafeMutablePointer<Void>?, retry: Int32) -> Int32 in
+    private var _busyHandler: ZVBusyHandler = { (dbPointer: UnsafeMutablePointer<Void>?, retry: Int32) -> Int32 in
         let connection = unsafeBitCast(dbPointer, to: ZVConnection.self)
         
         if retry == 0 {
-            connection.startBusyRetryTime = Date.timeIntervalSinceReferenceDate
+            connection._startBusyRetryTime = Date.timeIntervalSinceReferenceDate
             return 1
         }
         
-        let delta = Date.timeIntervalSinceReferenceDate - connection.startBusyRetryTime
+        let delta = Date.timeIntervalSinceReferenceDate - connection._startBusyRetryTime
         
         if (delta < connection.maxBusyRetryTime) {
             

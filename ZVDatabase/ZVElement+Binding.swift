@@ -26,47 +26,47 @@ extension ZVSQLColumn {
             
             switch val {
             case is NSNull:
-                try bind(nullValueAt: idx)
+                try _bind(nullValueAt: idx)
                 break
             case is Int8, is UInt8, is Int16, is UInt16, is Int32, is UInt32, is Int64, is UInt64:
-                try bind(intValue: val, at: idx)
+                try _bind(intValue: val, at: idx)
                 break
                 
             case is Float, is Double:
-                try bind(doubleValue: val, at: idx)
+                try _bind(doubleValue: val, at: idx)
                 break
             case is Bool, is Boolean:
-                try bind(booleanValue: val, at: idx)
+                try _bind(booleanValue: val, at: idx)
                 break
             case is Date, is NSDate:
-                try bind(dateValue: val, at: idx)
+                try _bind(dateValue: val, at: idx)
                 break
             case is String:
-                try bind(textValue: val, at: idx)
+                try _bind(textValue: val, at: idx)
                 break
             case is Int, is UInt, is NSNumber:
-                try bind(intValue: val, at: idx)
+                try _bind(intValue: val, at: idx)
                 break
             case is Data:
-                try bind(dataValue: val, at: idx)
+                try _bind(dataValue: val, at: idx)
                 break
             default:
-                try bind(textValue: val, at: idx)
+                try _bind(textValue: val, at: idx)
                 break
             }
         } else {
             
-            try bind(nullValueAt: idx)
+            try _bind(nullValueAt: idx)
         }
     }
     
-    private func bind(nullValueAt index: CInt) throws {
+    private func _bind(nullValueAt index: CInt) throws {
         
         let errCode = sqlite3_bind_null(statement, index)
-        try check(errCode, value: "null", index: index)
+        try _check(errCode, value: "null", index: index)
     }
     
-    private func bind(intValue: AnyObject, at index: CInt) throws {
+    private func _bind(intValue: AnyObject, at index: CInt) throws {
         
         var errCode: CInt = 0
         
@@ -110,29 +110,29 @@ extension ZVSQLColumn {
                 break
             }
         }
-        try check(errCode, value: intValue, index: index)
+        try _check(errCode, value: intValue, index: index)
     }
     
-    private func bind(doubleValue: AnyObject, at index: CInt) throws {
+    private func _bind(doubleValue: AnyObject, at index: CInt) throws {
         var errCode: CInt = 0
         
         if let val = doubleValue as? NSNumber {
             errCode = sqlite3_bind_double(statement, index, val.doubleValue)
         }
-        try check(errCode, value: doubleValue, index: index)
+        try _check(errCode, value: doubleValue, index: index)
     }
     
-    private func bind(booleanValue: AnyObject, at index: CInt) throws {
+    private func _bind(booleanValue: AnyObject, at index: CInt) throws {
         
         var errCode: CInt = 0
         
         if let val = booleanValue as? NSNumber {
             errCode = sqlite3_bind_int(statement, index, val.int32Value)
         }
-        try check(errCode, value: booleanValue, index: index)
+        try _check(errCode, value: booleanValue, index: index)
     }
     
-    private func bind(dateValue: AnyObject, at index: CInt) throws {
+    private func _bind(dateValue: AnyObject, at index: CInt) throws {
         
         var errCode: CInt = 0
         
@@ -143,28 +143,28 @@ extension ZVSQLColumn {
             let timeInterval = val.timeIntervalSince1970
             errCode = sqlite3_bind_double(statement, index, Double(timeInterval))
         }
-        try check(errCode, value: dateValue, index: index)
+        try _check(errCode, value: dateValue, index: index)
     }
     
-    private func bind(dataValue: AnyObject, at index: CInt) throws {
+    private func _bind(dataValue: AnyObject, at index: CInt) throws {
         
         var errCode: CInt = 0
         
         if let val = dataValue as? NSData {
             errCode = sqlite3_bind_blob(statement, index, val.bytes, Int32(val.length), SQLITE_TRANSIENT)
         }
-        try check(errCode, value: dataValue, index: index)
+        try _check(errCode, value: dataValue, index: index)
     }
     
-    private func bind(textValue: AnyObject, at index: CInt) throws {
+    private func _bind(textValue: AnyObject, at index: CInt) throws {
         
         let val = String(textValue)
         
         let errCode = sqlite3_bind_text(statement, index, val, -1 , SQLITE_TRANSIENT)
-        try check(errCode, value: textValue, index: index)
+        try _check(errCode, value: textValue, index: index)
     }
     
-    private func check(_ errorCode: CInt, value: AnyObject, index: CInt) throws {
+    private func _check(_ errorCode: CInt, value: AnyObject, index: CInt) throws {
         
         guard errorCode == SQLITE_OK else {
             let errMsg = "sqlite bind value: \(value) error at \(index) . errorCode : \(errorCode)"
