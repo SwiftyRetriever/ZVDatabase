@@ -1,12 +1,5 @@
 
 
-framework module ZVDatabase {
-    umbrella header "ZVDatabase.h"
-    
-    export *
-    module * { export * }
-}
-
 module SQLiteiPhoneOS {
     header "/Applications/Xcode-beta.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include/sqlite3.h"
     export *

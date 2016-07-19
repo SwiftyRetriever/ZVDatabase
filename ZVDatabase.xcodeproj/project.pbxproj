@@ -32,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D1491A21D3E185900B29C08 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4D782CAF1D2E163B00457F69 /* ZVConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConmonDef.swift; sourceTree = "<group>"; };
 		4D782CB01D2E163B00457F69 /* ZVDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabase.swift; sourceTree = "<group>"; };
 		4D782CB11D2E163B00457F69 /* ZVDatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabasePool.swift; sourceTree = "<group>"; };
@@ -40,7 +41,6 @@
 		4D782CB41D2E163B00457F69 /* ZVElement+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZVElement+Binding.swift"; sourceTree = "<group>"; };
 		4D782CB51D2E163B00457F69 /* ZVElement+Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZVElement+Value.swift"; sourceTree = "<group>"; };
 		4D782CB61D2E163B00457F69 /* ZVStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVStatement.swift; sourceTree = "<group>"; };
-		4D782CE31D2E1B7F00457F69 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZVDatabaseTests.swift; sourceTree = "<group>"; };
 		4D981DA61D279BC900AA08CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,6 +70,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D1491A11D3E185900B29C08 /* Suport */ = {
+			isa = PBXGroup;
+			children = (
+				4D1491A21D3E185900B29C08 /* module.modulemap */,
+			);
+			path = Suport;
+			sourceTree = "<group>";
+		};
 		4D981DA31D279BC900AA08CB /* ZVDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -111,7 +119,7 @@
 				4D782CB61D2E163B00457F69 /* ZVStatement.swift */,
 				4DA079001D26AECC00C30590 /* ZVDatabase.h */,
 				4DA079021D26AECC00C30590 /* Info.plist */,
-				4D782CE31D2E1B7F00457F69 /* module.modulemap */,
+				4D1491A11D3E185900B29C08 /* Suport */,
 			);
 			path = ZVDatabase;
 			sourceTree = "<group>";
@@ -192,7 +200,7 @@
 					};
 					4DA078FC1D26AECC00C30590 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = ZJHBGBWAT8;
+						DevelopmentTeam = DDWF823A49;
 						DevelopmentTeamName = "伟 张 (Personal Team)";
 						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
@@ -278,6 +286,7 @@
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -291,6 +300,7 @@
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -405,10 +415,11 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/ZVDatabase/module.modulemap";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Suport/";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -427,10 +438,11 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "$(SRCROOT)/ZVDatabase/module.modulemap";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Suport/";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
