@@ -108,6 +108,7 @@ public final class ZVDatabasePool {
     }
     
     private func _open() throws -> ZVConnection {
+        
         let database = ZVConnection(path: _databasePath!)
         try database.open()
         try _delegate?.databaseOpened(database)

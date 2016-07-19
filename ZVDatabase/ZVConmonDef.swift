@@ -8,11 +8,16 @@
 
 import Foundation
 
-#if (arch(i386) || arch(x86_64))
-    import SQLiteiPhoneSimulator
-#else
-    import SQLiteiPhoneOS
+#if os(OSX)
+    import SQLiteMacOS
+#elseif os(iOS)
+    #if (arch(i386) || arch(x86_64))
+        import SQLiteiPhoneSimulator
+    #else
+        import SQLiteiPhoneOS
+    #endif
 #endif
+
 
 let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
 
