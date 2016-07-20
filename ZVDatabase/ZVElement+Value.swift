@@ -31,15 +31,15 @@ public extension ZVSQLColumn {
                 
             case SQLITE_TEXT:
                 decimal = NSDecimalNumber(string: self.value as? String)
-                if decimal == NSDecimalNumber.notANumber() {
-                    decimal = NSDecimalNumber.zero()
+                if decimal == NSDecimalNumber.notA {
+                    decimal = NSDecimalNumber.zero
                 }
                 
             case SQLITE_BLOB:
                 if let val = value as? Data {
                     decimal = NSDecimalNumber(string: String(data: val, encoding: .utf8))
-                    if decimal == NSDecimalNumber.notANumber() {
-                        decimal = NSDecimalNumber.zero()
+                    if decimal == NSDecimalNumber.notA {
+                        decimal = NSDecimalNumber.zero
                     }
                 }
                 

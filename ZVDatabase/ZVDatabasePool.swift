@@ -21,33 +21,35 @@ public final class ZVDatabasePool {
     private var _readOnly: Bool = false
     private var _vfsName: String? = nil
     private var _databasePath: String? = nil
-    public weak var _delegate : ZVDatabasePoolDelegate?
     
-//    public static var shared: ZVDatabasePool {
-//        return ZVDatabasePool()
-//    }
-    
+    public weak var delegate : ZVDatabasePoolDelegate?
+
     public init() {
         _lockQueue = DispatchQueue(label: "com.zevwings.db.locked")
     }
     
     public convenience init(path: String, readOnly: Bool = false, vfs vfsName: String? = nil) {
         self.init()
+        _databasePath = path
         _readOnly = readOnly
         _vfsName = vfsName
     }
     
-    public convenience init(path: String, delegate: ZVDatabasePoolDelegate? = nil) {
+    public convenience init(path: String? = nil, delegate: ZVDatabasePoolDelegate? = nil) {
         self.init()
         _databasePath = path
-        _delegate = delegate
+        self.delegate = delegate
     }
     
     
     deinit {
+        
+        _inactiveDatabases.removeAll()
+        _activeDatabases.removeAll()
+        
         _lockQueue = nil
         _vfsName = nil
-        _delegate = nil
+        self.delegate = nil
         _databasePath = nil
     }
     
@@ -109,10 +111,17 @@ public final class ZVDatabasePool {
     
     private func _open() throws -> ZVConnection {
         
-        let database = ZVConnection(path: _databasePath!)
-        try database.open()
-        try _delegate?.databaseOpened(database)
-        return database
+        var database: ZVConnection?
+        if let databasePath = _databasePath {
+            database = ZVConnection(path: databasePath)
+        } else {
+            database = ZVConnection()
+        }
+        if let db = database {
+            try db.open(readonly: _readOnly, vfs: _vfsName)
+            try self.delegate?.databaseOpened(db)
+        }
+        return database!
     }
     
     private func _deactivate(database: ZVConnection) {
@@ -127,7 +136,38 @@ public final class ZVDatabasePool {
                 self._inactiveDatabases.remove(at: index)
             }
             
-            self._delegate?.databaseClosed(database)
+            self.delegate?.databaseClosed(database)
         })
+    }
+    
+    public func inBlock(_ block: (db: ZVConnection) -> Void) throws {
+        
+        let db = try self.dequeueDatabase()
+        block(db: db)
+        self.enqueueDatabase(database: db)
+    }
+    
+    public func inTransaction(useDeferred deferred: Bool = false, _ block: (db: ZVConnection) -> Bool) throws {
+        
+        let db: ZVConnection = try self.dequeueDatabase()
+        
+        var success = false
+        if deferred {
+            success = db.beginDeferredTransaction()
+        } else {
+            success = db.beginTransaction()
+        }
+
+        if success {
+            if block(db: db) {
+                db.commit()
+                self.enqueueDatabase(database: db)
+            } else {
+                db.rollback()
+                self.enqueueDatabase(database: db)
+            }
+        } else {
+            self.enqueueDatabase(database: db)
+        }
     }
 }

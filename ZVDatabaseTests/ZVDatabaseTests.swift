@@ -174,7 +174,56 @@ class ZVDatabaseTests: XCTestCase {
         }
     }
     
+    func testPoolInBlock() {
+        let pool = ZVDatabasePool()
+        do {
+            XCTAssert(pool.activeDatabaseCount == 0)
+            XCTAssert(pool.inactiveDatabaseCount == 0)
+            try pool.inBlock { (db) in
+                
+                XCTAssert(pool.activeDatabaseCount == 1)
+                XCTAssert(pool.inactiveDatabaseCount == 0)
+                do {
+                   try db.executeUpdate("CREATE TABLE Persons(Id_P int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255))");
+                } catch {
+                    
+                }
+            }
+            
+            XCTAssert(pool.activeDatabaseCount == 0)
+            XCTAssert(pool.inactiveDatabaseCount == 1)
+            
+        } catch {
+            print(error)
+        }
+    }
     
+    func testPoolInTransaction() {
+        
+        let pool = ZVDatabasePool()
+        do {
+            
+            try pool.inTransaction({ (db) -> Bool in
+                
+                XCTAssert(pool.activeDatabaseCount == 1)
+                XCTAssert(pool.inactiveDatabaseCount == 0)
+                do {
+                    try db.executeUpdate("CREATE TABLE Persons(Id_P int, LastName varchar(255), FirstName varchar(255), Address varchar(255), City varchar(255))");
+                } catch {
+                    
+                }
+
+                
+                return false
+            })
+            
+            XCTAssert(pool.activeDatabaseCount == 0)
+            XCTAssert(pool.inactiveDatabaseCount == 1)
+            
+        } catch {
+            print(error)
+        }
+    }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
