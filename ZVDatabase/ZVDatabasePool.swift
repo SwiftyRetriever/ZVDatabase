@@ -147,17 +147,24 @@ public final class ZVDatabasePool {
         self.enqueueDatabase(database: db)
     }
     
-    public func inTransaction(useDeferred deferred: Bool = false, _ block: (db: ZVConnection) -> Bool) throws {
+    public func inTransaction(transactionType type: ZVTransactionType = .deferred, _ block: (db: ZVConnection) -> Bool) throws {
         
         let db: ZVConnection = try self.dequeueDatabase()
         
         var success = false
-        if deferred {
+        
+        switch type {
+        case .deferred:
             success = db.beginDeferredTransaction()
-        } else {
-            success = db.beginTransaction()
+            break
+        case .exclusive:
+            success = db.beginExclusiveTransaction()
+            break
+        case .immediate:
+            success = db.beginImmediateTransaction()
+            break
         }
-
+        
         if success {
             if block(db: db) {
                 db.commit()

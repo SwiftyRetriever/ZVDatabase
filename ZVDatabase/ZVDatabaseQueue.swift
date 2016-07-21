@@ -37,7 +37,8 @@ public final class ZVDatabaseQueue: NSObject {
         }
     }
     
-    public func inTransaction(_ deferred: Bool = false, _ block: (db: ZVConnection) -> Bool) {
+    public func inTransaction(transactionType type: ZVTransactionType = .deferred,
+                              _ block: (db: ZVConnection) -> Bool) {
         
         do {
             try _connection!.open()
@@ -49,10 +50,16 @@ public final class ZVDatabaseQueue: NSObject {
             
             var success = false
             
-            if deferred {
+            switch type {
+            case .deferred:
                 success = self._connection!.beginDeferredTransaction()
-            } else {
-                success = self._connection!.beginTransaction()
+                break
+            case .exclusive:
+                success = self._connection!.beginExclusiveTransaction()
+                break
+            case .immediate:
+                success = self._connection!.beginImmediateTransaction()
+                break
             }
             
             if success {

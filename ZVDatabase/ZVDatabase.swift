@@ -25,7 +25,7 @@ public final class ZVConnection: NSObject {
     
     public private(set) var databasePath: String = ""
     
-    public private(set) var inTransaction: Bool = false
+    public private(set) var hasTransaction: Bool = false
     
     public override init() {}
     
@@ -111,35 +111,44 @@ public final class ZVConnection: NSObject {
         return rows
     }
     
-    public func beginTransaction() -> Bool {
+    public func beginExclusiveTransaction() -> Bool {
         
         let sql = "BEGIN EXCLUSIVE TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
-            self.inTransaction = true
+            self.hasTransaction = true
         }
-        return self.inTransaction
+        return self.hasTransaction
     }
     
     public func beginDeferredTransaction() -> Bool {
         
         let sql = "BEGIN DEFERRED TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
-            self.inTransaction = true
+            self.hasTransaction = true
         }
-        return self.inTransaction
+        return self.hasTransaction
+    }
+    
+    public func beginImmediateTransaction() -> Bool {
+        
+        let sql = "BEGIN IMMEDIATE TRANSACTION"
+        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
+            self.hasTransaction = true
+        }
+        return self.hasTransaction
     }
     
     public func rollback() {
         
         defer {
-            if self.inTransaction {
-                self.inTransaction = false
+            if self.hasTransaction {
+                self.hasTransaction = false
             }
         }
         
         let sql = "ROLLBACK TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
-            self.inTransaction = true
+            self.hasTransaction = true
         } else {
             
         }
@@ -148,14 +157,14 @@ public final class ZVConnection: NSObject {
     public func commit() {
         
         defer {
-            if self.inTransaction {
-                self.inTransaction = false
+            if self.hasTransaction {
+                self.hasTransaction = false
             }
         }
         
         let sql = "COMMIT TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
-            self.inTransaction = true
+            self.hasTransaction = true
         }
     }
     

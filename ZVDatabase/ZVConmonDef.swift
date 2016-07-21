@@ -32,4 +32,10 @@ public enum ZVDatabaseError : ErrorProtocol {
     case error(code: Int32, msg: String)
 }
 
+public enum ZVTransactionType {
+    case immediate
+    case exclusive
+    case deferred
+}
+
 typealias ZVBusyHandler = ((UnsafeMutablePointer<Void>?, Int32) -> Int32)!
