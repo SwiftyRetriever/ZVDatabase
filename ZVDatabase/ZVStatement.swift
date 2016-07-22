@@ -24,9 +24,9 @@ internal final class ZVStatement: NSObject {
     private var _statement: OpaquePointer? = nil
     private var _sql: UnsafePointer<Int8>? = nil
     private var _db: ZVConnection? = nil
-    private var _parameters: [AnyObject?]?
+    private var _parameters = [AnyObject]()
     
-    internal init(_ db: ZVConnection, sql: UnsafePointer<Int8>?, parameters: [AnyObject?]?) {
+    internal init(_ db: ZVConnection, sql: UnsafePointer<Int8>?, parameters: [AnyObject]) {
         
         _sql = sql
         _db = db
@@ -37,7 +37,6 @@ internal final class ZVStatement: NSObject {
         
         _sql = nil
         _db = nil
-        _parameters = nil
     }
     
     internal func prepare() throws {
@@ -50,20 +49,17 @@ internal final class ZVStatement: NSObject {
             throw ZVDatabaseError.error(code: errCode, msg: errMsg)
         }
         
-        if let params = _parameters {
+        let count = sqlite3_bind_parameter_count(_statement)
+        
+        guard count == CInt(_parameters.count) else {
+            let errMsg = "failed to bind parameters, counts did not match. SQL: \(_sql), Parameters: \(_parameters)"
+            throw ZVDatabaseError.error(code: SQLITE_BIND_COUNT_ERR, msg: errMsg)
+        }
+        
+        for idx in 1..._parameters.count {
             
-            let count = sqlite3_bind_parameter_count(_statement)
-            
-            guard count == CInt(params.count) else {
-                let errMsg = "failed to bind parameters, counts did not match. SQL: \(_sql), Parameters: \(params)"
-                throw ZVDatabaseError.error(code: SQLITE_BIND_COUNT_ERR, msg: errMsg)
-            }
-            
-            for idx in 1...params.count {
-                
-                let val = params[idx - 1]
-                try ZVSQLColumn(statement: _statement).bind(val, at: idx)
-            }
+            let val = _parameters[idx - 1]
+            try ZVSQLColumn(statement: _statement).bind(val, at: idx)
         }
     }
     

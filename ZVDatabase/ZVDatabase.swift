@@ -71,7 +71,7 @@ public final class ZVConnection: NSObject {
     }
     
     public func executeUpdate(_ sql: String,
-                              parameters:[AnyObject?]? = nil) throws {
+                              parameters:[AnyObject] = []) throws {
         
         let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
         try statement.prepare()
@@ -79,7 +79,7 @@ public final class ZVConnection: NSObject {
     }
     
     public func exceuteUpdate(_ sql: String,
-                              parameters:[AnyObject?]? = nil,
+                              parameters:[AnyObject] = [],
                               lastInsertRowid: Bool = false) throws -> Int64? {
         
         let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
@@ -94,7 +94,7 @@ public final class ZVConnection: NSObject {
     }
     
     public func executeQuery(_ sql: String,
-                             parameters:[AnyObject?]? = nil) throws -> [ZVSQLRow] {
+                             parameters:[AnyObject] = []) throws -> [ZVSQLRow] {
         
         let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
         try statement.prepare()
@@ -103,7 +103,7 @@ public final class ZVConnection: NSObject {
     }
     
     public func executeQuery(forDictionary sql: String,
-                             parameters:[AnyObject?]? = nil) throws -> [[String: AnyObject?]] {
+                             parameters:[AnyObject] = []) throws -> [[String: AnyObject?]] {
         
         let statement = ZVStatement(self, sql: sql, parameters: parameters)
         try statement.prepare()
