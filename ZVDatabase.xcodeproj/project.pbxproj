@@ -32,7 +32,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D1491A21D3E185900B29C08 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4D7BA3E61D45A73F00F7C47F /* ZVConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConmonDef.swift; sourceTree = "<group>"; };
 		4D7BA3E71D45A73F00F7C47F /* ZVConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConnection.swift; sourceTree = "<group>"; };
 		4D7BA3E91D45A73F00F7C47F /* ZVDatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabasePool.swift; sourceTree = "<group>"; };
@@ -71,14 +70,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4D1491A11D3E185900B29C08 /* Suport */ = {
-			isa = PBXGroup;
-			children = (
-				4D1491A21D3E185900B29C08 /* module.modulemap */,
-			);
-			path = Suport;
-			sourceTree = "<group>";
-		};
 		4D7BA3E31D45A73F00F7C47F /* Database */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,7 +137,6 @@
 				4D7BA3E31D45A73F00F7C47F /* Database */,
 				4D7BA3FD1D45A8C400F7C47F /* DataTable */,
 				4DA079021D26AECC00C30590 /* Info.plist */,
-				4D1491A11D3E185900B29C08 /* Suport */,
 			);
 			path = ZVDatabase;
 			sourceTree = "<group>";
