@@ -43,7 +43,8 @@ public final class ZVConnection: NSObject {
     
         if databasePath.isEmpty {
             let library = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first
-            self.databasePath = library! + "/db.sqlite"
+            let identifier = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String ?? "sqlite."
+            self.databasePath = library! + "/" + identifier + ".sqlite"
         }
         
         let flags = readonly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE
