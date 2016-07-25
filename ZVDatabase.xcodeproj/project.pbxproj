@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D782CB71D2E163B00457F69 /* ZVConmonDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CAF1D2E163B00457F69 /* ZVConmonDef.swift */; };
-		4D782CB81D2E163B00457F69 /* ZVConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CB01D2E163B00457F69 /* ZVConnection.swift */; };
-		4D782CB91D2E163B00457F69 /* ZVDatabasePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CB11D2E163B00457F69 /* ZVDatabasePool.swift */; };
-		4D782CBA1D2E163B00457F69 /* ZVDatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CB21D2E163B00457F69 /* ZVDatabaseQueue.swift */; };
-		4D782CBB1D2E163B00457F69 /* ZVElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CB31D2E163B00457F69 /* ZVElement.swift */; };
-		4D782CBC1D2E163B00457F69 /* ZVElement+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CB41D2E163B00457F69 /* ZVElement+Binding.swift */; };
-		4D782CBD1D2E163B00457F69 /* ZVElement+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CB51D2E163B00457F69 /* ZVElement+Value.swift */; };
-		4D782CBE1D2E163B00457F69 /* ZVStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D782CB61D2E163B00457F69 /* ZVStatement.swift */; };
+		4D7BA3F01D45A73F00F7C47F /* ZVConmonDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E61D45A73F00F7C47F /* ZVConmonDef.swift */; };
+		4D7BA3F11D45A73F00F7C47F /* ZVConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E71D45A73F00F7C47F /* ZVConnection.swift */; };
+		4D7BA3F31D45A73F00F7C47F /* ZVDatabasePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E91D45A73F00F7C47F /* ZVDatabasePool.swift */; };
+		4D7BA3F41D45A73F00F7C47F /* ZVDatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EA1D45A73F00F7C47F /* ZVDatabaseQueue.swift */; };
+		4D7BA3F51D45A73F00F7C47F /* ZVElement+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EB1D45A73F00F7C47F /* ZVElement+Binding.swift */; };
+		4D7BA3F61D45A73F00F7C47F /* ZVElement+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EC1D45A73F00F7C47F /* ZVElement+Value.swift */; };
+		4D7BA3F71D45A73F00F7C47F /* ZVElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3ED1D45A73F00F7C47F /* ZVElement.swift */; };
+		4D7BA3F81D45A73F00F7C47F /* ZVStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EE1D45A73F00F7C47F /* ZVStatement.swift */; };
+		4D7BA3FC1D45A89C00F7C47F /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D981DA51D279BC900AA08CB /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */; };
 		4D981DA71D279BC900AA08CB /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
-		4DA079011D26AECC00C30590 /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DA079001D26AECC00C30590 /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DA0792C1D26B29F00C30590 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
@@ -33,19 +33,20 @@
 
 /* Begin PBXFileReference section */
 		4D1491A21D3E185900B29C08 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		4D782CAF1D2E163B00457F69 /* ZVConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConmonDef.swift; sourceTree = "<group>"; };
-		4D782CB01D2E163B00457F69 /* ZVConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConnection.swift; sourceTree = "<group>"; };
-		4D782CB11D2E163B00457F69 /* ZVDatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabasePool.swift; sourceTree = "<group>"; };
-		4D782CB21D2E163B00457F69 /* ZVDatabaseQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabaseQueue.swift; sourceTree = "<group>"; };
-		4D782CB31D2E163B00457F69 /* ZVElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVElement.swift; sourceTree = "<group>"; };
-		4D782CB41D2E163B00457F69 /* ZVElement+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZVElement+Binding.swift"; sourceTree = "<group>"; };
-		4D782CB51D2E163B00457F69 /* ZVElement+Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZVElement+Value.swift"; sourceTree = "<group>"; };
-		4D782CB61D2E163B00457F69 /* ZVStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVStatement.swift; sourceTree = "<group>"; };
+		4D7BA3E61D45A73F00F7C47F /* ZVConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConmonDef.swift; sourceTree = "<group>"; };
+		4D7BA3E71D45A73F00F7C47F /* ZVConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVConnection.swift; sourceTree = "<group>"; };
+		4D7BA3E91D45A73F00F7C47F /* ZVDatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabasePool.swift; sourceTree = "<group>"; };
+		4D7BA3EA1D45A73F00F7C47F /* ZVDatabaseQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVDatabaseQueue.swift; sourceTree = "<group>"; };
+		4D7BA3EB1D45A73F00F7C47F /* ZVElement+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZVElement+Binding.swift"; sourceTree = "<group>"; };
+		4D7BA3EC1D45A73F00F7C47F /* ZVElement+Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZVElement+Value.swift"; sourceTree = "<group>"; };
+		4D7BA3ED1D45A73F00F7C47F /* ZVElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVElement.swift; sourceTree = "<group>"; };
+		4D7BA3EE1D45A73F00F7C47F /* ZVStatement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVStatement.swift; sourceTree = "<group>"; };
+		4D7BA3FA1D45A79C00F7C47F /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZVDatabase.h; sourceTree = "<group>"; };
 		4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZVDatabaseTests.swift; sourceTree = "<group>"; };
 		4D981DA61D279BC900AA08CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZVDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4DA079001D26AECC00C30590 /* ZVDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZVDatabase.h; sourceTree = "<group>"; };
 		4DA079021D26AECC00C30590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -78,6 +79,38 @@
 			path = Suport;
 			sourceTree = "<group>";
 		};
+		4D7BA3E31D45A73F00F7C47F /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				4D7BA3F91D45A79C00F7C47F /* Support */,
+				4D7BA3E61D45A73F00F7C47F /* ZVConmonDef.swift */,
+				4D7BA3E71D45A73F00F7C47F /* ZVConnection.swift */,
+				4D7BA3E91D45A73F00F7C47F /* ZVDatabasePool.swift */,
+				4D7BA3EA1D45A73F00F7C47F /* ZVDatabaseQueue.swift */,
+				4D7BA3EB1D45A73F00F7C47F /* ZVElement+Binding.swift */,
+				4D7BA3EC1D45A73F00F7C47F /* ZVElement+Value.swift */,
+				4D7BA3ED1D45A73F00F7C47F /* ZVElement.swift */,
+				4D7BA3EE1D45A73F00F7C47F /* ZVStatement.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		4D7BA3F91D45A79C00F7C47F /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				4D7BA3FA1D45A79C00F7C47F /* module.modulemap */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		4D7BA3FD1D45A8C400F7C47F /* DataTable */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DataTable;
+			path = ZVDatabase/DataTable;
+			sourceTree = SOURCE_ROOT;
+		};
 		4D981DA31D279BC900AA08CB /* ZVDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,15 +142,9 @@
 		4DA078FF1D26AECC00C30590 /* ZVDatabase */ = {
 			isa = PBXGroup;
 			children = (
-				4D782CAF1D2E163B00457F69 /* ZVConmonDef.swift */,
-				4D782CB01D2E163B00457F69 /* ZVConnection.swift */,
-				4D782CB11D2E163B00457F69 /* ZVDatabasePool.swift */,
-				4D782CB21D2E163B00457F69 /* ZVDatabaseQueue.swift */,
-				4D782CB31D2E163B00457F69 /* ZVElement.swift */,
-				4D782CB41D2E163B00457F69 /* ZVElement+Binding.swift */,
-				4D782CB51D2E163B00457F69 /* ZVElement+Value.swift */,
-				4D782CB61D2E163B00457F69 /* ZVStatement.swift */,
-				4DA079001D26AECC00C30590 /* ZVDatabase.h */,
+				4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */,
+				4D7BA3E31D45A73F00F7C47F /* Database */,
+				4D7BA3FD1D45A8C400F7C47F /* DataTable */,
 				4DA079021D26AECC00C30590 /* Info.plist */,
 				4D1491A11D3E185900B29C08 /* Suport */,
 			);
@@ -139,7 +166,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DA079011D26AECC00C30590 /* ZVDatabase.h in Headers */,
+				4D7BA3FC1D45A89C00F7C47F /* ZVDatabase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,14 +282,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D782CB81D2E163B00457F69 /* ZVConnection.swift in Sources */,
-				4D782CBE1D2E163B00457F69 /* ZVStatement.swift in Sources */,
-				4D782CB91D2E163B00457F69 /* ZVDatabasePool.swift in Sources */,
-				4D782CBC1D2E163B00457F69 /* ZVElement+Binding.swift in Sources */,
-				4D782CBA1D2E163B00457F69 /* ZVDatabaseQueue.swift in Sources */,
-				4D782CBD1D2E163B00457F69 /* ZVElement+Value.swift in Sources */,
-				4D782CBB1D2E163B00457F69 /* ZVElement.swift in Sources */,
-				4D782CB71D2E163B00457F69 /* ZVConmonDef.swift in Sources */,
+				4D7BA3F61D45A73F00F7C47F /* ZVElement+Value.swift in Sources */,
+				4D7BA3F81D45A73F00F7C47F /* ZVStatement.swift in Sources */,
+				4D7BA3F01D45A73F00F7C47F /* ZVConmonDef.swift in Sources */,
+				4D7BA3F31D45A73F00F7C47F /* ZVDatabasePool.swift in Sources */,
+				4D7BA3F51D45A73F00F7C47F /* ZVElement+Binding.swift in Sources */,
+				4D7BA3F41D45A73F00F7C47F /* ZVDatabaseQueue.swift in Sources */,
+				4D7BA3F11D45A73F00F7C47F /* ZVConnection.swift in Sources */,
+				4D7BA3F71D45A73F00F7C47F /* ZVElement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +446,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Suport/";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Database/Support/";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -442,7 +469,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Suport/";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Database/Support/";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
