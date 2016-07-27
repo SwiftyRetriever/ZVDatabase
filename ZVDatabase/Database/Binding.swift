@@ -13,19 +13,19 @@ import Foundation
 #elseif os(iOS)
     #if (arch(i386) || arch(x86_64))
         import SQLiteiPhoneSimulator
-        #else
+    #else
         import SQLiteiPhoneOS
     #endif
 #endif
 
 
-public protocol Binding {
+public protocol Bindable {
     
     func bind(to statement: Statement, at index: Int) throws
     
 }
 
-protocol Number: Binding {}
+protocol Number: Bindable {}
 
 // MARK: - Number
 extension Int8: Number {
@@ -126,7 +126,7 @@ extension NSNumber: Number {
 }
 
 //MARK: - Null
-extension NSNull: Binding {
+extension NSNull: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(nullValueAt: index)
@@ -134,14 +134,14 @@ extension NSNull: Binding {
 }
 
 //MARK: - String
-extension String: Binding {
+extension String: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(textValue: self, at: index)
     }
 }
 
-extension NSString: Binding {
+extension NSString: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(textValue: self as String, at: index)
@@ -149,14 +149,14 @@ extension NSString: Binding {
 }
 
 //MARK: - NSDate
-extension NSDate: Binding {
+extension NSDate: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(doubleValue: self.timeIntervalSince1970, at: index)
     }
 }
 
-extension Date: Binding {
+extension Date: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(doubleValue: self.timeIntervalSince1970, at: index)
@@ -164,14 +164,14 @@ extension Date: Binding {
 }
 
 //MARK: - NSData
-extension NSData: Binding {
+extension NSData: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(dataValue: self, at: index)
     }
 }
 
-extension Data: Binding {
+extension Data: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(dataValue: self, at: index)

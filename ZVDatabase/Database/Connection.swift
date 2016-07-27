@@ -74,7 +74,7 @@ public final class Connection: NSObject {
     }
     
     public func executeUpdate(_ sql: String,
-                              parameters:[Binding] = []) throws {
+                              parameters:[Bindable] = []) throws {
         
         let _sql = (sql as NSString).utf8String
         let statement = try Statement(self, sql: _sql, parameters: parameters)
@@ -82,7 +82,7 @@ public final class Connection: NSObject {
     }
     
     public func exceuteUpdate(_ sql: String,
-                              parameters:[Binding] = [],
+                              parameters:[Bindable] = [],
                               lastInsertRowid: Bool = false) throws -> Int64? {
         
         let _sql = (sql as NSString).utf8String
@@ -97,7 +97,7 @@ public final class Connection: NSObject {
     }
     
     public func executeQuery(_ sql: String,
-                             parameters:[Binding] = []) throws -> [[String: AnyObject]] {
+                             parameters:[Bindable] = []) throws -> [[String: AnyObject]] {
         
         let statement = try Statement(self, sql: sql, parameters: parameters)
         let rows = try statement.query()

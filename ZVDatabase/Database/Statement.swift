@@ -51,13 +51,13 @@ public final class Statement: NSObject {
     private var _statement: SQLiteParameter? = nil
     private var _sql: UnsafePointer<Int8>? = nil
     private var _db: Connection? = nil
-    private var _parameters = [Binding]()
+    private var _parameters = [Bindable]()
     
     override init() {
         super.init()
     }
     
-    internal convenience init(_ db: Connection, sql: UnsafePointer<Int8>?, parameters: [Binding]) throws {
+    internal convenience init(_ db: Connection, sql: UnsafePointer<Int8>?, parameters: [Bindable]) throws {
         self.init()
         
         _sql = sql
@@ -127,7 +127,7 @@ public final class Statement: NSObject {
     }
 }
 
-//MARK: - Binding
+//MARK: - Bindable
 internal extension Statement {
     
     internal func bind(nullValueAt index: Int) throws {
