@@ -38,14 +38,14 @@ public final class ZVSQLColumn: NSObject {
     
     internal var value: AnyObject? = nil
     internal var type: CInt = -1
-    internal var statement: OpaquePointer? = nil
+    internal var statement: SQLiteParameter? = nil
     
     internal init(value: AnyObject?, type: CInt) {
         self.value = value
         self.type = type
     }
     
-    internal init(statement: OpaquePointer?) {
+    internal init(statement: SQLiteParameter?) {
         self.statement = statement
     }
     

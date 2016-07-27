@@ -8,21 +8,21 @@
 
 import UIKit
 
-public protocol ZVDatabasePoolDelegate : class {
+public protocol DatabasePoolDelegate : class {
     
-    func databaseOpened(_ database: ZVConnection) throws
-    func databaseClosed(_ database: ZVConnection)
+    func databaseOpened(_ database: Connection) throws
+    func databaseClosed(_ database: Connection)
     
 }
 
-public final class ZVDatabasePool {
+public final class DatabasePool {
 
     private var _lockQueue: DispatchQueue?
     private var _readOnly: Bool = false
     private var _vfsName: String? = nil
     private var _databasePath: String? = nil
     
-    public weak var delegate : ZVDatabasePoolDelegate?
+    public weak var delegate : DatabasePoolDelegate?
 
     public init() {
         _lockQueue = DispatchQueue(label: "com.zevwings.db.locked")
@@ -35,7 +35,7 @@ public final class ZVDatabasePool {
         _vfsName = vfsName
     }
     
-    public convenience init(path: String? = nil, delegate: ZVDatabasePoolDelegate? = nil) {
+    public convenience init(path: String? = nil, delegate: DatabasePoolDelegate? = nil) {
         self.init()
         _databasePath = path
         self.delegate = delegate
@@ -53,9 +53,9 @@ public final class ZVDatabasePool {
         _databasePath = nil
     }
     
-    private var _array = Array<ZVConnection>()
-    private var _inactiveDatabases   = [ZVConnection]()
-    private var _activeDatabases     = [ZVConnection]()
+    private var _array = Array<Connection>()
+    private var _inactiveDatabases   = [Connection]()
+    private var _activeDatabases     = [Connection]()
     
     public var inactiveDatabaseCount : Int {
         return _inactiveDatabases.count
@@ -65,8 +65,8 @@ public final class ZVDatabasePool {
         return _activeDatabases.count
     }
 
-    public func dequeueDatabase() throws -> ZVConnection {
-        var database: ZVConnection?
+    public func dequeueDatabase() throws -> Connection {
+        var database: Connection?
         var error: NSError?
         _lockQueue?.sync {
             if _inactiveDatabases.isEmpty {
@@ -92,14 +92,14 @@ public final class ZVDatabasePool {
         return dequeuedDatabase
     }
     
-    public func enqueueDatabase(database: ZVConnection) {
+    public func enqueueDatabase(database: Connection) {
         _deactivate(database: database)
         _lockQueue?.sync(execute: {
             _inactiveDatabases.append(database)
         })
     }
     
-    public func removeDatabase(database: ZVConnection) {
+    public func removeDatabase(database: Connection) {
         _deactivate(database: database)
     }
     
@@ -109,13 +109,13 @@ public final class ZVDatabasePool {
         })
     }
     
-    private func _open() throws -> ZVConnection {
+    private func _open() throws -> Connection {
         
-        var database: ZVConnection?
+        var database: Connection?
         if let databasePath = _databasePath {
-            database = ZVConnection(path: databasePath)
+            database = Connection(path: databasePath)
         } else {
-            database = ZVConnection()
+            database = Connection()
         }
         if let db = database {
             try db.open(readonly: _readOnly, vfs: _vfsName)
@@ -124,7 +124,7 @@ public final class ZVDatabasePool {
         return database!
     }
     
-    private func _deactivate(database: ZVConnection) {
+    private func _deactivate(database: Connection) {
         
         _lockQueue?.sync(execute: { 
             
@@ -140,16 +140,16 @@ public final class ZVDatabasePool {
         })
     }
     
-    public func inBlock(_ block: (db: ZVConnection) -> Void) throws {
+    public func inBlock(_ block: (db: Connection) -> Void) throws {
         
         let db = try self.dequeueDatabase()
         block(db: db)
         self.enqueueDatabase(database: db)
     }
     
-    public func inTransaction(transactionType type: ZVTransactionType = .deferred, _ block: (db: ZVConnection) -> Bool) throws {
+    public func inTransaction(transactionType type: TransactionType = .deferred, _ block: (db: Connection) -> Bool) throws {
         
-        let db: ZVConnection = try self.dequeueDatabase()
+        let db: Connection = try self.dequeueDatabase()
         
         var success = false
         

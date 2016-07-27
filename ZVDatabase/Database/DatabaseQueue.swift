@@ -8,27 +8,27 @@
 
 import UIKit
 
-public final class ZVDatabaseQueue: NSObject {
+public final class DatabaseQueue: NSObject {
     
     private var _queue: DispatchQueue?
-    private var _connection: ZVConnection?
+    private var _connection: Connection?
     
     private override init() {}
     
     public init(path: String) {
         
-        _connection = ZVConnection(path: path)
+        _connection = Connection(path: path)
         _queue = DispatchQueue(label: "com.zevwings.db.queue")
         
     }
     
     public init(path: String = "", queue: DispatchQueue) {
         
-        _connection = ZVConnection(path: path)
+        _connection = Connection(path: path)
         _queue = queue
     }
     
-    public func inBlock(_ block: (db: ZVConnection) -> Void) {
+    public func inBlock(_ block: (db: Connection) -> Void) {
         
         if let queue = _queue {
             queue.async(execute: {
@@ -37,8 +37,8 @@ public final class ZVDatabaseQueue: NSObject {
         }
     }
     
-    public func inTransaction(transactionType type: ZVTransactionType = .deferred,
-                              _ block: (db: ZVConnection) -> Bool) {
+    public func inTransaction(transactionType type: TransactionType = .deferred,
+                              _ block: (db: Connection) -> Bool) {
         
         do {
             try _connection!.open()

@@ -18,10 +18,10 @@ import UIKit
     #endif
 #endif
 
-public final class ZVConnection: NSObject {
+public final class Connection: NSObject {
     
-    private var _connection: OpaquePointer? = nil
-    public var connection: OpaquePointer? { return _connection }
+    private var _connection: SQLite3? = nil
+    public var connection: SQLite3? { return _connection }
     
     public private(set) var databasePath: String = ""
     
@@ -52,7 +52,7 @@ public final class ZVConnection: NSObject {
         let errCode = sqlite3_open_v2(self.databasePath, &_connection, flags, vfsName)
         guard errCode == SQLITE_OK else {
             let errMsg = "sqlite open error: \(self.lastErrorMsg)"
-            throw ZVDatabaseError.error(code: errCode, msg: errMsg);
+            throw DatabaseError.error(code: errCode, msg: errMsg);
         }
         
         if maxBusyRetryTime > 0.0 {
@@ -65,25 +65,28 @@ public final class ZVConnection: NSObject {
         
         if _connection == nil { return }
         let errCode = sqlite3_close(_connection)
+        
         guard errCode == SQLITE_OK else {
             let errMsg = "sqlite close error: \(self.lastErrorMsg)"
-            throw ZVDatabaseError.error(code: errCode, msg: errMsg)
+            throw DatabaseError.error(code: errCode, msg: errMsg)
         }
     }
     
     public func executeUpdate(_ sql: String,
-                              parameters:[AnyObject] = []) throws {
+                              parameters:[Binding] = []) throws {
         
-        let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
+        let _sql = (sql as NSString).utf8String
+        let statement = Statement(self, sql: _sql, parameters: parameters)
         try statement.prepare()
         try statement.execute()
     }
     
     public func exceuteUpdate(_ sql: String,
-                              parameters:[AnyObject] = [],
+                              parameters:[Binding] = [],
                               lastInsertRowid: Bool = false) throws -> Int64? {
         
-        let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
+        let _sql = (sql as NSString).utf8String
+        let statement = Statement(self, sql: _sql, parameters: parameters)
         try statement.prepare()
         try statement.execute()
         
@@ -95,23 +98,25 @@ public final class ZVConnection: NSObject {
     }
     
     public func executeQuery(_ sql: String,
-                             parameters:[AnyObject] = []) throws -> [ZVSQLRow] {
+                             parameters:[Binding] = []) throws -> [ZVSQLRow] {
         
-        let statement = ZVStatement(self, sql: (sql as NSString).utf8String, parameters: parameters)
+        let statement = Statement(self, sql: (sql as NSString).utf8String, parameters: parameters)
         try statement.prepare()
         let rows = try statement.query()
         return rows
     }
     
     public func executeQuery(forDictionary sql: String,
-                             parameters:[AnyObject] = []) throws -> [[String: AnyObject?]] {
+                             parameters:[Binding] = []) throws -> [[String: AnyObject?]] {
         
-        let statement = ZVStatement(self, sql: sql, parameters: parameters)
+        let statement = Statement(self, sql: sql, parameters: parameters)
         try statement.prepare()
         let rows = try statement.query(forDictionary: true)
         return rows
     }
     
+    
+    // MARK: - Transaction
     public func beginExclusiveTransaction() -> Bool {
         
         let sql = "BEGIN EXCLUSIVE TRANSACTION"
@@ -189,14 +194,14 @@ public final class ZVConnection: NSObject {
         } else {
             sqlite3_busy_handler(_connection, { (dbPointer, retry) -> Int32 in
                 
-                let connection = unsafeBitCast(dbPointer, to: ZVConnection.self)
+                let connection = unsafeBitCast(dbPointer, to: Connection.self)
                 return connection._busyHandler(dbPointer, retry)
                 }, unsafeBitCast(self, to: UnsafeMutablePointer<Void>.self))
         }
     }
     
-    private var _busyHandler: ZVBusyHandler = { (dbPointer: UnsafeMutablePointer<Void>?, retry: Int32) -> Int32 in
-        let connection = unsafeBitCast(dbPointer, to: ZVConnection.self)
+    private var _busyHandler: BusyHandler = { (dbPointer: UnsafeMutablePointer<Void>?, retry: Int32) -> Int32 in
+        let connection = unsafeBitCast(dbPointer, to: Connection.self)
         
         if retry == 0 {
             connection._startBusyRetryTime = Date.timeIntervalSinceReferenceDate

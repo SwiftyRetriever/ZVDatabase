@@ -19,14 +19,14 @@ import UIKit
 #endif
 
 
-internal final class ZVStatement: NSObject {
+public final class Statement: NSObject {
     
-    private var _statement: OpaquePointer? = nil
+    private var _statement: SQLiteParameter? = nil
     private var _sql: UnsafePointer<Int8>? = nil
-    private var _db: ZVConnection? = nil
-    private var _parameters = [AnyObject]()
+    private var _db: Connection? = nil
+    private var _parameters = [Binding]()
     
-    internal init(_ db: ZVConnection, sql: UnsafePointer<Int8>?, parameters: [AnyObject]) {
+    internal init(_ db: Connection, sql: UnsafePointer<Int8>?, parameters: [Binding]) {
         
         _sql = sql
         _db = db
@@ -34,9 +34,7 @@ internal final class ZVStatement: NSObject {
     }
     
     deinit {
-        
-        _sql = nil
-        _db = nil
+
     }
     
     internal func prepare() throws {
@@ -46,20 +44,22 @@ internal final class ZVStatement: NSObject {
         guard errCode == SQLITE_OK else {
             sqlite3_finalize(_statement)
             let errMsg = "sqlite3_prepare error :\(_db?.lastErrorMsg)"
-            throw ZVDatabaseError.error(code: errCode, msg: errMsg)
+            throw DatabaseError.error(code: errCode, msg: errMsg)
         }
         
         let count = sqlite3_bind_parameter_count(_statement)
         
         guard count == CInt(_parameters.count) else {
             let errMsg = "failed to bind parameters, counts did not match. SQL: \(_sql), Parameters: \(_parameters)"
-            throw ZVDatabaseError.error(code: SQLITE_BIND_COUNT_ERR, msg: errMsg)
+            throw DatabaseError.error(code: SQLITE_BIND_COUNT_ERR, msg: errMsg)
         }
         
-        for idx in 1..._parameters.count {
+        if _parameters.count < 1 { return }
+        
+        for idx in 1 ... _parameters.count {
             
-            let val = _parameters[idx - 1]
-            try ZVSQLColumn(statement: _statement).bind(val, at: idx)
+            let value = _parameters[idx - 1]
+            try value.bind(to: self, at: idx)
         }
     }
     
@@ -73,7 +73,7 @@ internal final class ZVStatement: NSObject {
         
         guard errCode == SQLITE_OK || errCode == SQLITE_DONE else {
             let errMsg = "excute sql \(String(cString: _sql!)), \(_db?.lastErrorMsg)"
-            throw ZVDatabaseError.error(code: errCode, msg: errMsg)
+            throw DatabaseError.error(code: errCode, msg: errMsg)
         }
     }
     
@@ -185,5 +185,56 @@ internal final class ZVStatement: NSObject {
             row.updateValue(column, forKey: key)
         }
         return row
+    }
+}
+
+internal extension Statement {
+    
+    internal func bind(nullValueAt index: Int) throws {
+        
+        let errCode = sqlite3_bind_null(_statement, CInt(index))
+        try _check(errCode, value: "null", index: index)
+    }
+    
+    internal func bind(intValue value: Int, at index: Int) throws {
+        
+        let errCode = sqlite3_bind_int(_statement, CInt(index), Int32(value))
+        try _check(errCode, value: value, index: index)
+    }
+    
+    internal func bind(int64Value value: Int64, at index: Int) throws {
+        
+        let errCode = sqlite3_bind_int64(_statement, CInt(index), value)
+        try _check(errCode, value: Int(value), index: index)
+    }
+    
+    internal func bind(doubleValue value: Double, at index: Int) throws {
+        
+        let errCode = sqlite3_bind_double(_statement, CInt(index), value)
+        try _check(errCode, value: value, index: index)
+    }
+    
+    internal func bind(dataValue value: NSData, at index: Int) throws {
+        var errCode: CInt = 0
+        if value.length == 0 {
+            errCode = sqlite3_bind_zeroblob(_statement, Int32(index), 0);
+        } else {
+            errCode = sqlite3_bind_blob(_statement, CInt(index), value.bytes, Int32(value.length), SQLITE_TRANSIENT)
+        }
+        try _check(errCode, value: value, index: index)
+    }
+    
+    internal func bind(textValue value: String, at index: Int) throws {
+    
+        let errCode = sqlite3_bind_text(_statement, CInt(index), value, -1, SQLITE_TRANSIENT)
+        try _check(errCode, value: value, index: index)
+    }
+    
+    private func _check(_ errorCode: CInt, value: AnyObject, index: Int) throws {
+        
+        guard errorCode == SQLITE_OK else {
+            let errMsg = "sqlite bind value: \(value) error at \(index) . errorCode : \(errorCode)"
+            throw DatabaseError.error(code: errorCode, msg: errMsg)
+        }
     }
 }

@@ -11,7 +11,7 @@ import XCTest
 
 class ZVDatabaseTests: XCTestCase {
     
-    var connection: ZVConnection?
+    var connection: Connection?
     
     override func setUp() {
         super.setUp()
@@ -25,7 +25,7 @@ class ZVDatabaseTests: XCTestCase {
     
     func testCreateTable() {
         
-        let connection = ZVConnection()
+        let connection = Connection()
         var result:Bool = false
         do {
             try connection.open()
@@ -44,7 +44,7 @@ class ZVDatabaseTests: XCTestCase {
     
     func testInsertValue() {
         
-        let connection = ZVConnection()
+        let connection = Connection()
         var rowId: Int64? = 0
         do {
             try connection.open()
@@ -65,7 +65,7 @@ class ZVDatabaseTests: XCTestCase {
     
     func testUpdateValue() {
         
-        let connection = ZVConnection()
+        let connection = Connection()
         var changes: Int64? = 0
         do {
             try connection.open()
@@ -85,7 +85,7 @@ class ZVDatabaseTests: XCTestCase {
     
     func testDeleteValue() {
         
-        let connection = ZVConnection()
+        let connection = Connection()
         var changes: Int64? = 0
         do {
             try connection.open()
@@ -105,7 +105,7 @@ class ZVDatabaseTests: XCTestCase {
     
     func testQuery() {
         
-        let connection = ZVConnection()
+        let connection = Connection()
         var rows: [ZVSQLRow]?
         do {
             try connection.open()
@@ -126,7 +126,7 @@ class ZVDatabaseTests: XCTestCase {
     func testQueue() {
         let path = NSHomeDirectory() + "/db.sqlite"
         let queue = DispatchQueue(label: "com.zevwinsg.dbqueue")
-        let dbQueue = ZVDatabaseQueue(path: path, queue: queue)
+        let dbQueue = DatabaseQueue(path: path, queue: queue)
         
         var changes: Int64? = 0
         dbQueue.inBlock { (db) in
@@ -152,7 +152,7 @@ class ZVDatabaseTests: XCTestCase {
     func testTransaction() {
         
         let queue = DispatchQueue(label: "com.zevwinsg.dbqueue")
-        let dbQueue = ZVDatabaseQueue(queue: queue)
+        let dbQueue = DatabaseQueue(queue: queue)
         
         dbQueue.inTransaction { (db) -> Bool in
             var changes: Int64? = 0
@@ -175,7 +175,7 @@ class ZVDatabaseTests: XCTestCase {
     }
     
     func testPoolInBlock() {
-        let pool = ZVDatabasePool()
+        let pool = DatabasePool()
         do {
             XCTAssert(pool.activeDatabaseCount == 0)
             XCTAssert(pool.inactiveDatabaseCount == 0)
@@ -200,7 +200,7 @@ class ZVDatabaseTests: XCTestCase {
     
     func testPoolInTransaction() {
         
-        let pool = ZVDatabasePool()
+        let pool = DatabasePool()
         do {
             
             try pool.inTransaction({ (db) -> Bool in

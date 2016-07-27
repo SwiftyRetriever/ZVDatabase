@@ -24,7 +24,7 @@ import Foundation
 extension ZVSQLColumn {
     
     internal func bind(_ value: AnyObject?, at index: Int) throws {
-
+        /*
         let idx = CInt(index)
         
         if let val = value {
@@ -62,63 +62,28 @@ extension ZVSQLColumn {
         } else {
             
             try _bind(nullValueAt: idx)
-        }
+        }*/
     }
     
-    private func _bind(nullValueAt index: CInt) throws {
+    internal func bind(nullValueAt index: CInt) throws {
         
         let errCode = sqlite3_bind_null(statement, index)
         try _check(errCode, value: "null", index: index)
     }
     
-    private func _bind(intValue: AnyObject, at index: CInt) throws {
+    internal func bind(intValue: Int, at index: CInt) throws {
         
-        var errCode: CInt = 0
-        
-        if let val = intValue as? NSNumber {
-            
-            // get the objc type from value and bind to stmt
-            let typeEncoding = String(cString: val.objCType)
-            
-            switch typeEncoding {
-            case "c":
-                errCode = sqlite3_bind_int(statement, index, Int32(val.int8Value))
-                break
-            case "s":
-                errCode = sqlite3_bind_int(statement, index, Int32(val.int16Value))
-                break
-            case "i":
-                errCode = sqlite3_bind_int(statement, index, val.int32Value)
-                break
-            case "l":
-                errCode = sqlite3_bind_int(statement, index, val.int32Value)
-                break
-            case "q":
-                errCode = sqlite3_bind_int64(statement, index, val.int64Value)
-                break
-            case "C":
-                errCode = sqlite3_bind_int(statement, index, Int32(val.uint8Value))
-                break
-            case "S":
-                errCode = sqlite3_bind_int(statement, index, Int32(val.uint16Value))
-                break
-            case "I":
-                errCode = sqlite3_bind_int64(statement, index, sqlite3_int64(val.uintValue))
-                break
-            case "L":
-                errCode = sqlite3_bind_int64(statement, index, val.int64Value)
-                break
-            case "Q":
-                errCode = sqlite3_bind_int64(statement, index, sqlite3_int64(val.uint64Value))
-                break
-            default:
-                break
-            }
-        }
+        let errCode = sqlite3_bind_int(statement, index, Int32(intValue))
         try _check(errCode, value: intValue, index: index)
     }
     
-    private func _bind(doubleValue: AnyObject, at index: CInt) throws {
+    internal func bind(int64Value: Int, at index: CInt) throws {
+        
+        let errCode = sqlite3_bind_int64(statement, index, sqlite3_int64(intValue))
+        try _check(errCode, value: intValue, index: index)
+    }
+    
+    internal func bind(doubleValue: AnyObject, at index: CInt) throws {
         var errCode: CInt = 0
         
         if let val = doubleValue as? NSNumber {
@@ -127,7 +92,7 @@ extension ZVSQLColumn {
         try _check(errCode, value: doubleValue, index: index)
     }
     
-    private func _bind(booleanValue: AnyObject, at index: CInt) throws {
+    internal func bind(booleanValue: AnyObject, at index: CInt) throws {
         
         var errCode: CInt = 0
         
@@ -137,7 +102,7 @@ extension ZVSQLColumn {
         try _check(errCode, value: booleanValue, index: index)
     }
     
-    private func _bind(dateValue: AnyObject, at index: CInt) throws {
+    internal func bind(dateValue: AnyObject, at index: CInt) throws {
         
         var errCode: CInt = 0
         
@@ -151,7 +116,7 @@ extension ZVSQLColumn {
         try _check(errCode, value: dateValue, index: index)
     }
     
-    private func _bind(dataValue: AnyObject, at index: CInt) throws {
+    internal func bind(dataValue: AnyObject, at index: CInt) throws {
         
         var errCode: CInt = 0
         
@@ -161,7 +126,7 @@ extension ZVSQLColumn {
         try _check(errCode, value: dataValue, index: index)
     }
     
-    private func _bind(textValue: AnyObject, at index: CInt) throws {
+    internal func bind(textValue: AnyObject, at index: CInt) throws {
         
         let val = String(textValue)
         
@@ -173,7 +138,7 @@ extension ZVSQLColumn {
         
         guard errorCode == SQLITE_OK else {
             let errMsg = "sqlite bind value: \(value) error at \(index) . errorCode : \(errorCode)"
-            throw ZVDatabaseError.error(code: errorCode, msg: errMsg)
+            throw DatabaseError.error(code: errorCode, msg: errMsg)
         }
     }
 }
