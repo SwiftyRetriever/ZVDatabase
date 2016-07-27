@@ -88,14 +88,6 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		4D7BA3FD1D45A8C400F7C47F /* DataTable */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = DataTable;
-			path = ZVDatabase/DataTable;
-			sourceTree = SOURCE_ROOT;
-		};
 		4D981DA31D279BC900AA08CB /* ZVDatabaseTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,7 +121,6 @@
 			children = (
 				4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */,
 				4D7BA3E31D45A73F00F7C47F /* Database */,
-				4D7BA3FD1D45A8C400F7C47F /* DataTable */,
 				4DA079021D26AECC00C30590 /* Info.plist */,
 			);
 			path = ZVDatabase;
