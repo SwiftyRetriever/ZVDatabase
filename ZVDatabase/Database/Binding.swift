@@ -20,9 +20,11 @@ import Foundation
 
 
 public protocol Binding {
+    
     func bind(to statement: Statement, at index: Int) throws
-//    func get()
+    
 }
+
 protocol Number: Binding {}
 
 // MARK: - Number

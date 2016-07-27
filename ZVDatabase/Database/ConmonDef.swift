@@ -40,3 +40,25 @@ internal enum DatabaseError : ErrorProtocol {
 }
 
 internal typealias BusyHandler = ((UnsafeMutablePointer<Void>?, Int32) -> Int32)!
+
+internal extension Int32 {
+    
+    var isSuccess: Bool {
+        
+        switch self {
+        case SQLITE_OK: return true
+        case SQLITE_DONE: return true
+        case SQLITE_ROW: return true
+        default: return false
+        }
+    }
+    
+    var next: Bool {
+        
+        switch self {
+        case SQLITE_DONE: return false
+        case SQLITE_ROW: return true
+        default: return false
+        }
+    }
+}

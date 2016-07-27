@@ -19,6 +19,33 @@ import UIKit
 #endif
 
 
+internal enum ColumnType: Int {
+    
+    case Integer
+    case Float
+    case Text
+    case Blob
+    case Null
+    
+    static func fromSQLiteColumnType(columnType: Int32) -> ColumnType {
+        switch columnType {
+        case SQLITE_INTEGER:
+            return .Integer
+        case SQLITE_TEXT, SQLITE3_TEXT:
+            return .Text
+        case SQLITE_NULL:
+            return .Null
+        case SQLITE_FLOAT:
+            return .Float
+        case SQLITE_BLOB:
+            return .Blob
+        default:
+            return .Text
+        }
+    }
+
+}
+
 public final class Statement: NSObject {
     
     private var _statement: SQLiteParameter? = nil
@@ -26,22 +53,29 @@ public final class Statement: NSObject {
     private var _db: Connection? = nil
     private var _parameters = [Binding]()
     
-    internal init(_ db: Connection, sql: UnsafePointer<Int8>?, parameters: [Binding]) {
+    override init() {
+        super.init()
+    }
+    
+    internal convenience init(_ db: Connection, sql: UnsafePointer<Int8>?, parameters: [Binding]) throws {
+        self.init()
         
         _sql = sql
         _db = db
         _parameters = parameters
+        
+        try self.prepare()
     }
     
     deinit {
 
     }
     
-    internal func prepare() throws {
+    private func prepare() throws {
         
         let errCode = sqlite3_prepare(_db!.connection, _sql, -1, &_statement, nil)
         
-        guard errCode == SQLITE_OK else {
+        guard errCode.isSuccess else {
             sqlite3_finalize(_statement)
             let errMsg = "sqlite3_prepare error :\(_db?.lastErrorMsg)"
             throw DatabaseError.error(code: errCode, msg: errMsg)
@@ -71,123 +105,29 @@ public final class Statement: NSObject {
         
         let errCode = sqlite3_step(_statement)
         
-        guard errCode == SQLITE_OK || errCode == SQLITE_DONE else {
+        guard errCode.isSuccess else {
             let errMsg = "excute sql \(String(cString: _sql!)), \(_db?.lastErrorMsg)"
             throw DatabaseError.error(code: errCode, msg: errMsg)
         }
     }
     
-    internal func query() throws -> [ZVSQLRow] {
+    internal func query() throws -> [[String: AnyObject]] {
         
         defer {
             sqlite3_finalize(_statement)
         }
         
         var result = sqlite3_step(_statement)
-        var rows = [ZVSQLRow]()
-        while result == SQLITE_ROW {
-            let count = sqlite3_column_count(_statement)
-            rows.append(getRowValue(count: count))
+        var rows = [[String: AnyObject]]()
+        while result.next {
+            rows.append(self.rowValue)
             result = sqlite3_step(_statement)
         }
-        
         return rows
-    }
-    
-    internal func getRowValue(count: Int32) -> ZVSQLRow {
-        
-        let row = ZVSQLRow()
-        
-        for idx in 0 ..< count {
-            
-            var column: ZVSQLColumn?
-            
-            let columnType  = sqlite3_column_type(_statement, idx)
-            switch columnType {
-            case SQLITE_INTEGER:
-                let val = Int(sqlite3_column_int64(_statement, idx))
-                column = ZVSQLColumn(value: val, type: columnType)
-                break
-            case SQLITE_FLOAT:
-                let val = Double(sqlite3_column_double(_statement, idx))
-                column = ZVSQLColumn(value: val, type: columnType)
-                break
-            case SQLITE_BLOB:
-                let bytes = sqlite3_column_blob(_statement, idx)
-                let length = sqlite3_column_bytes(_statement, idx)
-                let data = NSData(bytes: bytes, length: Int(length))
-                column = ZVSQLColumn(value: data, type: columnType)
-                break
-            case SQLITE_NULL:
-                column = ZVSQLColumn(value: nil, type: columnType)
-                break
-            case SQLITE_TEXT, SQLITE3_TEXT:
-                let val = String(cString: UnsafePointer(sqlite3_column_text(_statement, idx))) ?? ""
-                column = ZVSQLColumn(value: val, type: columnType)
-                break
-            default:
-                break
-            }
-            let key = String(cString: sqlite3_column_name(_statement, idx))
-            row[key] = column
-        }
-        return row
-    }
-    
-    internal func query(forDictionary: Bool) throws -> [[String: AnyObject?]] {
-        
-        defer {
-            sqlite3_finalize(_statement)
-        }
-        
-        var result = sqlite3_step(_statement)
-        var rows = [[String: AnyObject?]]()
-        while result == SQLITE_ROW {
-            let count = sqlite3_column_count(_statement)
-            rows.append(getRowValue(forDictionary: count))
-            result = sqlite3_step(_statement)
-        }
-        
-        return rows
-    }
-    
-    internal func getRowValue(forDictionary count: Int32) -> [String: AnyObject?] {
-        
-        var row = [String: AnyObject?]()
-        
-        for idx in 0 ..< count {
-            
-            var column: AnyObject?
-            
-            let columnType  = sqlite3_column_type(_statement, idx)
-            switch columnType {
-            case SQLITE_INTEGER:
-                column = Int(sqlite3_column_int64(_statement, idx))
-                break
-            case SQLITE_FLOAT:
-                column = Double(sqlite3_column_double(_statement, idx))
-                break
-            case SQLITE_BLOB:
-                let bytes = sqlite3_column_blob(_statement, idx)
-                let length = sqlite3_column_bytes(_statement, idx)
-                column = NSData(bytes: bytes, length: Int(length))
-                break
-            case SQLITE_NULL:
-                column = nil
-                break
-            case SQLITE_TEXT, SQLITE3_TEXT:
-                column = String(cString: UnsafePointer(sqlite3_column_text(_statement, idx))) ?? ""
-                break
-            default:
-                break
-            }
-            let key = String(cString: sqlite3_column_name(_statement, idx))
-            row.updateValue(column, forKey: key)
-        }
-        return row
     }
 }
 
+//MARK: - Binding
 internal extension Statement {
     
     internal func bind(nullValueAt index: Int) throws {
@@ -230,11 +170,73 @@ internal extension Statement {
         try _check(errCode, value: value, index: index)
     }
     
-    private func _check(_ errorCode: CInt, value: AnyObject, index: Int) throws {
+    private func _check(_ errCode: CInt, value: AnyObject, index: Int) throws {
         
-        guard errorCode == SQLITE_OK else {
-            let errMsg = "sqlite bind value: \(value) error at \(index) . errorCode : \(errorCode)"
-            throw DatabaseError.error(code: errorCode, msg: errMsg)
+        guard errCode.isSuccess else {
+            let errMsg = "sqlite bind value: \(value) error at \(index) . error code : \(errCode)"
+            throw DatabaseError.error(code: errCode, msg: errMsg)
+        }
+    }
+}
+
+//MARL: - RowValue
+internal extension Statement {
+    
+    internal var rowValue: [String: AnyObject] {
+        var row = [String: AnyObject]()
+        for index in 0 ..< self.columnCount() {
+            let columnName = self.columnName(at: index)
+            row[columnName] = value(at: index)
+        }
+        return row
+    }
+    
+    internal func columnCount() -> CInt {
+        return sqlite3_column_count(_statement)
+    }
+    
+    internal func columntType(at index: CInt) -> ColumnType {
+
+        let columnType = sqlite3_column_type(_statement, index)
+        return ColumnType.fromSQLiteColumnType(columnType: columnType)
+    }
+    
+    internal func columnName(at index: CInt) -> String {
+        return String(cString: sqlite3_column_name(_statement, index))
+    }
+
+    internal func intValue(at index: CInt) -> Int {
+        return Int(sqlite3_column_int64(_statement, index))
+    }
+    
+    internal func doubleValue(at index: CInt) -> Double {
+        return sqlite3_column_double(_statement, index)
+    }
+    
+    internal func stringValue(at index: CInt) -> String? {
+        return String(cString: UnsafePointer(sqlite3_column_text(_statement, index)))
+    }
+    
+    internal func dataValue(at index: CInt) -> NSData {
+        
+        let bytes = sqlite3_column_blob(_statement, index)
+        let length = sqlite3_column_bytes(_statement, index)
+        return NSData(bytes: bytes, length: Int(length))
+    }
+    
+    internal func value(at index: CInt) -> AnyObject? {
+        
+        switch columntType(at: index) {
+        case .Integer:
+            return intValue(at: index)
+        case .Text:
+            return stringValue(at: index)
+        case .Float:
+            return doubleValue(at: index)
+        case .Blob:
+            return dataValue(at: index)
+        case .Null:
+            return nil
         }
     }
 }

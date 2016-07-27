@@ -79,4 +79,30 @@ public final class DatabaseQueue: NSObject {
             }
         })
     }
+    
+    public func inSavePoint(with name: String,
+                            _ block: (db: Connection) -> Bool) {
+        
+        do {
+            try _connection!.open()
+        } catch {
+            print(error)
+        }
+        
+        _queue?.async(execute: {
+            
+            let success = self._connection!.beginSavepoint(with: name)
+            
+            if success {
+
+                if block(db: self._connection!) {
+                    
+                } else {
+                    self._connection!.rollbackSavepoint(with: name)
+                }
+                
+                self._connection!.releaseSavepoint(with: name)
+            }
+        })
+    }
 }

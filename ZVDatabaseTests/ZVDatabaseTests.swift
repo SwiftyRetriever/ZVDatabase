@@ -89,10 +89,8 @@ class ZVDatabaseTests: XCTestCase {
         var changes: Int64? = 0
         do {
             try connection.open()
-            let sql = "DELETE FROM Persons WHERE Id_P = ?"
-            changes = try connection.exceuteUpdate(sql,
-                                                 parameters: [9527],
-                                                 lastInsertRowid: false)
+            let sql = "DELETE FROM Persons"
+            changes = try connection.exceuteUpdate(sql)
             
             try connection.close()
             
@@ -106,27 +104,43 @@ class ZVDatabaseTests: XCTestCase {
     func testQuery() {
         
         let connection = Connection()
-        var rows: [ZVSQLRow]?
+//        var rows: [[String: Binding]]
         do {
             try connection.open()
+//            let i: Binding = 0
             let sql = "SELECT Id_P, LastName, FirstName, Address, City FROM Persons WHERE Id_P = ?"
-            rows = try connection.executeQuery(sql, parameters: [9527])
-            
+            let rows = try connection.executeQuery(sql, parameters: [10])
+            let row  = rows[0]
+            let col = row["Id_P"]
+
+            XCTAssertTrue(c == "10")
+//            numberValue
+//            if col == nil {
+//                
+//            } else if col?.stringValue == "Wings" {
+//                
+//            }
+//            let row = rows?[0]
+//            let col = row?["LastName"]
+//            let i: Int = col
+//            print(i)
             try connection.close()
             
         } catch {
             
         }
         
-        let lastName = rows?[0]["LastName"]?.stringValue
-        XCTAssertTrue(lastName == "Zhang")
+//        let lastName = rows?[0]["LastName"]
+        
+//            ?.stringValue
+//        XCTAssertTrue(lastName == "Wings")
     }
     
     // if this test failed, the queue is start.
     func testQueue() {
-        let path = NSHomeDirectory() + "/db.sqlite"
+//        let path = NSHomeDirectory() + "/db.sqlite"
         let queue = DispatchQueue(label: "com.zevwinsg.dbqueue")
-        let dbQueue = DatabaseQueue(path: path, queue: queue)
+        let dbQueue = DatabaseQueue(path: "", queue: queue)
         
         var changes: Int64? = 0
         dbQueue.inBlock { (db) in
@@ -141,7 +155,8 @@ class ZVDatabaseTests: XCTestCase {
                 }
                 try db.close()
             } catch {
-                
+                let e = error
+                print(e)
             }
         }
         

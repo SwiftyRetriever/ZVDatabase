@@ -26,6 +26,7 @@ public final class Connection: NSObject {
     public private(set) var databasePath: String = ""
     
     public private(set) var hasTransaction: Bool = false
+    public private(set) var hasSavePoint: Bool = false
     
     public override init() {}
     
@@ -50,7 +51,7 @@ public final class Connection: NSObject {
         let flags = readonly ? SQLITE_OPEN_READONLY : SQLITE_OPEN_CREATE | SQLITE_OPEN_READWRITE
         
         let errCode = sqlite3_open_v2(self.databasePath, &_connection, flags, vfsName)
-        guard errCode == SQLITE_OK else {
+        guard errCode.isSuccess else {
             let errMsg = "sqlite open error: \(self.lastErrorMsg)"
             throw DatabaseError.error(code: errCode, msg: errMsg);
         }
@@ -66,7 +67,7 @@ public final class Connection: NSObject {
         if _connection == nil { return }
         let errCode = sqlite3_close(_connection)
         
-        guard errCode == SQLITE_OK else {
+        guard errCode.isSuccess else {
             let errMsg = "sqlite close error: \(self.lastErrorMsg)"
             throw DatabaseError.error(code: errCode, msg: errMsg)
         }
@@ -76,8 +77,7 @@ public final class Connection: NSObject {
                               parameters:[Binding] = []) throws {
         
         let _sql = (sql as NSString).utf8String
-        let statement = Statement(self, sql: _sql, parameters: parameters)
-        try statement.prepare()
+        let statement = try Statement(self, sql: _sql, parameters: parameters)
         try statement.execute()
     }
     
@@ -86,8 +86,7 @@ public final class Connection: NSObject {
                               lastInsertRowid: Bool = false) throws -> Int64? {
         
         let _sql = (sql as NSString).utf8String
-        let statement = Statement(self, sql: _sql, parameters: parameters)
-        try statement.prepare()
+        let statement = try Statement(self, sql: _sql, parameters: parameters)
         try statement.execute()
         
         if lastInsertRowid {
@@ -98,20 +97,10 @@ public final class Connection: NSObject {
     }
     
     public func executeQuery(_ sql: String,
-                             parameters:[Binding] = []) throws -> [ZVSQLRow] {
+                             parameters:[Binding] = []) throws -> [[String: AnyObject]] {
         
-        let statement = Statement(self, sql: (sql as NSString).utf8String, parameters: parameters)
-        try statement.prepare()
+        let statement = try Statement(self, sql: sql, parameters: parameters)
         let rows = try statement.query()
-        return rows
-    }
-    
-    public func executeQuery(forDictionary sql: String,
-                             parameters:[Binding] = []) throws -> [[String: AnyObject?]] {
-        
-        let statement = Statement(self, sql: sql, parameters: parameters)
-        try statement.prepare()
-        let rows = try statement.query(forDictionary: true)
         return rows
     }
     
@@ -120,7 +109,7 @@ public final class Connection: NSObject {
     public func beginExclusiveTransaction() -> Bool {
         
         let sql = "BEGIN EXCLUSIVE TRANSACTION"
-        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
             self.hasTransaction = true
         }
         return self.hasTransaction
@@ -129,7 +118,7 @@ public final class Connection: NSObject {
     public func beginDeferredTransaction() -> Bool {
         
         let sql = "BEGIN DEFERRED TRANSACTION"
-        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
             self.hasTransaction = true
         }
         return self.hasTransaction
@@ -138,7 +127,7 @@ public final class Connection: NSObject {
     public func beginImmediateTransaction() -> Bool {
         
         let sql = "BEGIN IMMEDIATE TRANSACTION"
-        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
             self.hasTransaction = true
         }
         return self.hasTransaction
@@ -153,7 +142,7 @@ public final class Connection: NSObject {
         }
         
         let sql = "ROLLBACK TRANSACTION"
-        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
             self.hasTransaction = true
         } else {
             
@@ -169,8 +158,38 @@ public final class Connection: NSObject {
         }
         
         let sql = "COMMIT TRANSACTION"
-        if sqlite3_exec(_connection, sql, nil, nil, nil) == SQLITE_OK {
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
             self.hasTransaction = true
+        }
+    }
+    
+    
+    public func beginSavepoint(with name: String) -> Bool {
+        
+        let sql = "SAVEPOINT " + name
+        
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
+            self.hasSavePoint = true
+        }
+        
+        return self.hasSavePoint
+    }
+    
+    public func rollbackSavepoint(with name: String) {
+        
+        let sql = "ROLLBACK TO SAVEPOINT " + name
+        
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
+            self.hasSavePoint = false
+        }
+    }
+    
+    public func releaseSavepoint(with name:String) {
+        
+        let sql = "RELEASE " + name
+        
+        if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
+            self.hasSavePoint = true
         }
     }
     
