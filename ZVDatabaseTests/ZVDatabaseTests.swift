@@ -108,12 +108,12 @@ class ZVDatabaseTests: XCTestCase {
         do {
             try connection.open()
 //            let i: Binding = 0
-            let sql = "SELECT Id_P, LastName, FirstName, Address, City FROM Persons WHERE Id_P = ?"
-            let rows = try connection.executeQuery(sql, parameters: [10])
-            let row  = rows[0]
-            let col = row["Id_P"]
+//            let sql = "SELECT Id_P, LastName, FirstName, Address, City FROM Persons WHERE Id_P = ?"
+//            let rows = try connection.executeQuery(sql, parameters: [10])
+//            let row  = rows[0]
+//            let col = row["Id_P"]
 
-            XCTAssertTrue(c == "10")
+//            XCTAssertTrue(c == "10")
 //            numberValue
 //            if col == nil {
 //                
