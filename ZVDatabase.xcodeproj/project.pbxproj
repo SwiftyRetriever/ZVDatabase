@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A6E98D11D48BCB600F7A090 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E98D01D48BCB600F7A090 /* Statement.swift */; };
 		4A8878501D48618E00FEEF6D /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88784F1D48618E00FEEF6D /* Binding.swift */; };
 		4D7BA3F01D45A73F00F7C47F /* ConmonDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */; };
 		4D7BA3F11D45A73F00F7C47F /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E71D45A73F00F7C47F /* Connection.swift */; };
 		4D7BA3F31D45A73F00F7C47F /* DatabasePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */; };
 		4D7BA3F41D45A73F00F7C47F /* DatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EA1D45A73F00F7C47F /* DatabaseQueue.swift */; };
-		4D7BA3F61D45A73F00F7C47F /* ZVElement+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EC1D45A73F00F7C47F /* ZVElement+Value.swift */; };
-		4D7BA3F71D45A73F00F7C47F /* ZVElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3ED1D45A73F00F7C47F /* ZVElement.swift */; };
-		4D7BA3F81D45A73F00F7C47F /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EE1D45A73F00F7C47F /* Statement.swift */; };
 		4D7BA3FC1D45A89C00F7C47F /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D981DA51D279BC900AA08CB /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */; };
 		4D981DA71D279BC900AA08CB /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
@@ -32,14 +30,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A6E98D01D48BCB600F7A090 /* Statement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		4A88784F1D48618E00FEEF6D /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConmonDef.swift; sourceTree = "<group>"; };
 		4D7BA3E71D45A73F00F7C47F /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabasePool.swift; sourceTree = "<group>"; };
 		4D7BA3EA1D45A73F00F7C47F /* DatabaseQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseQueue.swift; sourceTree = "<group>"; };
-		4D7BA3EC1D45A73F00F7C47F /* ZVElement+Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZVElement+Value.swift"; sourceTree = "<group>"; };
-		4D7BA3ED1D45A73F00F7C47F /* ZVElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVElement.swift; sourceTree = "<group>"; };
-		4D7BA3EE1D45A73F00F7C47F /* Statement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		4D7BA3FA1D45A79C00F7C47F /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZVDatabase.h; sourceTree = "<group>"; };
 		4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,15 +69,13 @@
 		4D7BA3E31D45A73F00F7C47F /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				4D7BA3F91D45A79C00F7C47F /* Support */,
+				4A88784F1D48618E00FEEF6D /* Binding.swift */,
 				4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */,
 				4D7BA3E71D45A73F00F7C47F /* Connection.swift */,
 				4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */,
 				4D7BA3EA1D45A73F00F7C47F /* DatabaseQueue.swift */,
-				4D7BA3EC1D45A73F00F7C47F /* ZVElement+Value.swift */,
-				4D7BA3ED1D45A73F00F7C47F /* ZVElement.swift */,
-				4D7BA3EE1D45A73F00F7C47F /* Statement.swift */,
-				4A88784F1D48618E00FEEF6D /* Binding.swift */,
+				4A6E98D01D48BCB600F7A090 /* Statement.swift */,
+				4D7BA3F91D45A79C00F7C47F /* Support */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -272,14 +266,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D7BA3F61D45A73F00F7C47F /* ZVElement+Value.swift in Sources */,
-				4D7BA3F81D45A73F00F7C47F /* Statement.swift in Sources */,
+				4A6E98D11D48BCB600F7A090 /* Statement.swift in Sources */,
 				4D7BA3F01D45A73F00F7C47F /* ConmonDef.swift in Sources */,
 				4D7BA3F31D45A73F00F7C47F /* DatabasePool.swift in Sources */,
 				4D7BA3F41D45A73F00F7C47F /* DatabaseQueue.swift in Sources */,
 				4D7BA3F11D45A73F00F7C47F /* Connection.swift in Sources */,
 				4A8878501D48618E00FEEF6D /* Binding.swift in Sources */,
-				4D7BA3F71D45A73F00F7C47F /* ZVElement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
