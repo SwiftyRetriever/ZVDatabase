@@ -177,3 +177,46 @@ extension Data: Bindable {
         try statement.bind(dataValue: self, at: index)
     }
 }
+
+//MARK: - Collection
+extension NSArray: Bindable {
+   
+    public func bind(to statement: Statement, at index: Int) throws {
+        let data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+        try statement.bind(dataValue: data, at: index)
+    }
+}
+
+extension NSDictionary: Bindable {
+ 
+    public func bind(to statement: Statement, at index: Int) throws {
+        let data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+        try statement.bind(dataValue: data, at: index)
+    }
+}
+
+extension Dictionary: Bindable  {
+    
+    public func bind(to statement: Statement, at index: Int) throws {
+        
+        if let dictionary = self as? AnyObject {
+            let data = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted)
+            try statement.bind(dataValue: data, at: index)
+        } else {
+            try statement.bind(nullValueAt: index)
+        }
+    }
+}
+
+extension Array : Bindable {
+    
+    public func bind(to statement: Statement, at index: Int) throws {
+        
+        if let array = self as? AnyObject {
+            let data = try JSONSerialization.data(withJSONObject: array, options: .prettyPrinted)
+            try statement.bind(dataValue: data, at: index)
+        } else {
+            try statement.bind(nullValueAt: index)
+        }
+    }
+}

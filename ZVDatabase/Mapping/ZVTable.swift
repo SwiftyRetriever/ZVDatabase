@@ -41,4 +41,10 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
     public var fields: [String: String] {
         return [:]
     }
+    
+    public func save(object: ZVObject, db: Connection) throws {
+        let cmd = Command().insert(object.dictionaryValue(), into: self.tableName)
+        try cmd.execute(with: db)
+    }
+    
 }

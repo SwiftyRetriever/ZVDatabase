@@ -17,10 +17,10 @@ public class ZVObject: NSObject, ZVObjectProtocol {
 
     public required override init() {}
     
-    public func dictionaryValue() -> [String: AnyObject] {
+    public func dictionaryValue() -> [String: Bindable] {
         
         let mirror = Mirror(reflecting: self)
-        var dictionary = [String: AnyObject]()
+        var dictionary = [String: Bindable]()
         
         for child in mirror.children {
             if let label = child.label {
@@ -56,7 +56,7 @@ public class ZVObject: NSObject, ZVObjectProtocol {
 //        return value(forDetail: anyValue)
 //    }
     
-    func value(for anyValue: Any) -> AnyObject {
+    func value(for anyValue: Any) -> Bindable {
         
         switch anyValue {
         case is Int64:
@@ -83,13 +83,11 @@ public class ZVObject: NSObject, ZVObjectProtocol {
             return anyValue as! NSNumber
         case is String, is NSString:
             return anyValue as! String
-        case is UUID:
-            return anyValue as! UUID
         case is NSArray:
             let mirror = Mirror(reflecting: anyValue)
             if mirror.subjectType is ZVObject.Type {
                 let value = anyValue as! [ZVObject]
-                var array = [[String: AnyObject]]()
+                var array = [[String: Bindable]]()
                 for item in value {
                     array.append(item.dictionaryValue())
                 }
@@ -101,7 +99,7 @@ public class ZVObject: NSObject, ZVObjectProtocol {
             let mirror = Mirror(reflecting: anyValue)
             if mirror.subjectType is Dictionary<String, ZVObject>.Type {
                 let value = anyValue as! [String: ZVObject]
-                var dictioanry = [String: [String: AnyObject]]()
+                var dictioanry = [String: [String: Bindable]]()
                 for (key, val) in value {
                     dictioanry[key] = val.dictionaryValue()
                 }
