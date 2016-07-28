@@ -9,19 +9,21 @@
 /* Begin PBXBuildFile section */
 		4A6E98D11D48BCB600F7A090 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6E98D01D48BCB600F7A090 /* Statement.swift */; };
 		4A8878501D48618E00FEEF6D /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88784F1D48618E00FEEF6D /* Binding.swift */; };
+		4A9D21571D49ADED008F00E4 /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D21561D49ADED008F00E4 /* ZVDatabaseTests.swift */; };
+		4A9D21591D49ADED008F00E4 /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
+		4A9D21601D49AF57008F00E4 /* ZVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D215F1D49AF57008F00E4 /* ZVObject.swift */; };
+		4A9D21621D49AF7A008F00E4 /* ZVTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D21611D49AF7A008F00E4 /* ZVTable.swift */; };
 		4D7BA3F01D45A73F00F7C47F /* ConmonDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */; };
 		4D7BA3F11D45A73F00F7C47F /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E71D45A73F00F7C47F /* Connection.swift */; };
 		4D7BA3F31D45A73F00F7C47F /* DatabasePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */; };
 		4D7BA3F41D45A73F00F7C47F /* DatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EA1D45A73F00F7C47F /* DatabaseQueue.swift */; };
 		4D7BA3FC1D45A89C00F7C47F /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D97C7741D48FD5B000ABB04 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D97C7731D48FD5B000ABB04 /* Command.swift */; };
-		4D981DA51D279BC900AA08CB /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */; };
-		4D981DA71D279BC900AA08CB /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
 		4DA0792C1D26B29F00C30590 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4D981DA81D279BC900AA08CB /* PBXContainerItemProxy */ = {
+		4A9D215A1D49ADED008F00E4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4DA078F41D26AECC00C30590 /* Project object */;
 			proxyType = 1;
@@ -33,6 +35,11 @@
 /* Begin PBXFileReference section */
 		4A6E98D01D48BCB600F7A090 /* Statement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Statement.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4A88784F1D48618E00FEEF6D /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Binding.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		4A9D21541D49ADED008F00E4 /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A9D21561D49ADED008F00E4 /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZVDatabaseTests.swift; sourceTree = "<group>"; };
+		4A9D21581D49ADED008F00E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A9D215F1D49AF57008F00E4 /* ZVObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVObject.swift; sourceTree = "<group>"; };
+		4A9D21611D49AF7A008F00E4 /* ZVTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVTable.swift; sourceTree = "<group>"; };
 		4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConmonDef.swift; sourceTree = "<group>"; };
 		4D7BA3E71D45A73F00F7C47F /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Connection.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabasePool.swift; sourceTree = "<group>"; };
@@ -40,20 +47,17 @@
 		4D7BA3FA1D45A79C00F7C47F /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZVDatabase.h; sourceTree = "<group>"; };
 		4D97C7731D48FD5B000ABB04 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
-		4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ZVDatabaseTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		4D981DA61D279BC900AA08CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZVDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA079021D26AECC00C30590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4D981D9F1D279BC900AA08CB /* Frameworks */ = {
+		4A9D21511D49ADED008F00E4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D981DA71D279BC900AA08CB /* ZVDatabase.framework in Frameworks */,
+				4A9D21591D49ADED008F00E4 /* ZVDatabase.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,10 +72,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A9D21551D49ADED008F00E4 /* ZVDatabaseTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A9D21561D49ADED008F00E4 /* ZVDatabaseTests.swift */,
+				4A9D21581D49ADED008F00E4 /* Info.plist */,
+			);
+			path = ZVDatabaseTests;
+			sourceTree = "<group>";
+		};
 		4D7910BA1D48E2FF00A21B32 /* Mapping */ = {
 			isa = PBXGroup;
 			children = (
 				4D97C7731D48FD5B000ABB04 /* Command.swift */,
+				4A9D215F1D49AF57008F00E4 /* ZVObject.swift */,
+				4A9D21611D49AF7A008F00E4 /* ZVTable.swift */,
 			);
 			path = Mapping;
 			sourceTree = "<group>";
@@ -98,20 +113,11 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		4D981DA31D279BC900AA08CB /* ZVDatabaseTests */ = {
-			isa = PBXGroup;
-			children = (
-				4D981DA41D279BC900AA08CB /* ZVDatabaseTests.swift */,
-				4D981DA61D279BC900AA08CB /* Info.plist */,
-			);
-			path = ZVDatabaseTests;
-			sourceTree = "<group>";
-		};
 		4DA078F31D26AECC00C30590 = {
 			isa = PBXGroup;
 			children = (
 				4DA078FF1D26AECC00C30590 /* ZVDatabase */,
-				4D981DA31D279BC900AA08CB /* ZVDatabaseTests */,
+				4A9D21551D49ADED008F00E4 /* ZVDatabaseTests */,
 				4DA078FE1D26AECC00C30590 /* Products */,
 				4DA0792A1D26B29E00C30590 /* Frameworks */,
 			);
@@ -121,7 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */,
-				4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */,
+				4A9D21541D49ADED008F00E4 /* ZVDatabaseTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,22 +165,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4D981DA11D279BC900AA08CB /* ZVDatabaseTests */ = {
+		4A9D21531D49ADED008F00E4 /* ZVDatabaseTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D981DAC1D279BC900AA08CB /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */;
+			buildConfigurationList = 4A9D215C1D49ADED008F00E4 /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */;
 			buildPhases = (
-				4D981D9E1D279BC900AA08CB /* Sources */,
-				4D981D9F1D279BC900AA08CB /* Frameworks */,
-				4D981DA01D279BC900AA08CB /* Resources */,
+				4A9D21501D49ADED008F00E4 /* Sources */,
+				4A9D21511D49ADED008F00E4 /* Frameworks */,
+				4A9D21521D49ADED008F00E4 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				4D981DA91D279BC900AA08CB /* PBXTargetDependency */,
+				4A9D215B1D49ADED008F00E4 /* PBXTargetDependency */,
 			);
 			name = ZVDatabaseTests;
 			productName = ZVDatabaseTests;
-			productReference = 4D981DA21D279BC900AA08CB /* ZVDatabaseTests.xctest */;
+			productReference = 4A9D21541D49ADED008F00E4 /* ZVDatabaseTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		4DA078FC1D26AECC00C30590 /* ZVDatabase */ = {
@@ -205,10 +211,8 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "小零心语.";
 				TargetAttributes = {
-					4D981DA11D279BC900AA08CB = {
+					4A9D21531D49ADED008F00E4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = ZJHBGBWAT8;
-						DevelopmentTeamName = "伟 张 (Personal Team)";
 						ProvisioningStyle = Automatic;
 					};
 					4DA078FC1D26AECC00C30590 = {
@@ -233,13 +237,13 @@
 			projectRoot = "";
 			targets = (
 				4DA078FC1D26AECC00C30590 /* ZVDatabase */,
-				4D981DA11D279BC900AA08CB /* ZVDatabaseTests */,
+				4A9D21531D49ADED008F00E4 /* ZVDatabaseTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		4D981DA01D279BC900AA08CB /* Resources */ = {
+		4A9D21521D49ADED008F00E4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,11 +260,11 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		4D981D9E1D279BC900AA08CB /* Sources */ = {
+		4A9D21501D49ADED008F00E4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D981DA51D279BC900AA08CB /* ZVDatabaseTests.swift in Sources */,
+				4A9D21571D49ADED008F00E4 /* ZVDatabaseTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A9D21601D49AF57008F00E4 /* ZVObject.swift in Sources */,
 				4A6E98D11D48BCB600F7A090 /* Statement.swift in Sources */,
 				4D7BA3F01D45A73F00F7C47F /* ConmonDef.swift in Sources */,
 				4D7BA3F31D45A73F00F7C47F /* DatabasePool.swift in Sources */,
@@ -275,44 +280,41 @@
 				4D97C7741D48FD5B000ABB04 /* Command.swift in Sources */,
 				4D7BA3F11D45A73F00F7C47F /* Connection.swift in Sources */,
 				4A8878501D48618E00FEEF6D /* Binding.swift in Sources */,
+				4A9D21621D49AF7A008F00E4 /* ZVTable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4D981DA91D279BC900AA08CB /* PBXTargetDependency */ = {
+		4A9D215B1D49ADED008F00E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4DA078FC1D26AECC00C30590 /* ZVDatabase */;
-			targetProxy = 4D981DA81D279BC900AA08CB /* PBXContainerItemProxy */;
+			targetProxy = 4A9D215A1D49ADED008F00E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		4D981DAA1D279BC900AA08CB /* Debug */ = {
+		4A9D215D1D49ADED008F00E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = ZVDatabaseTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		4D981DAB1D279BC900AA08CB /* Release */ = {
+		4A9D215E1D49ADED008F00E4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = ZVDatabaseTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabaseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -462,14 +464,13 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4D981DAC1D279BC900AA08CB /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */ = {
+		4A9D215C1D49ADED008F00E4 /* Build configuration list for PBXNativeTarget "ZVDatabaseTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4D981DAA1D279BC900AA08CB /* Debug */,
-				4D981DAB1D279BC900AA08CB /* Release */,
+				4A9D215D1D49ADED008F00E4 /* Debug */,
+				4A9D215E1D49ADED008F00E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 		4DA078F71D26AECC00C30590 /* Build configuration list for PBXProject "ZVDatabase" */ = {
 			isa = XCConfigurationList;
