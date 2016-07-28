@@ -208,7 +208,7 @@ extension Dictionary: Bindable  {
     }
 }
 
-extension Array : Bindable {
+extension Array: Bindable {
     
     public func bind(to statement: Statement, at index: Int) throws {
         

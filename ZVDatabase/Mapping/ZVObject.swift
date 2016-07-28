@@ -32,31 +32,60 @@ public class ZVObject: NSObject, ZVObjectProtocol {
         return dictionary
     }
     
-//    public func value(for anyValue: Any) -> AnyObject {
-//        
-//        let mirror = Mirror(reflecting: anyValue)
-//        if mirror.displayStyle == .optional {
-//            print(mirror)
-//        } else if mirror.displayStyle == .struct {
-//            
-//        } else if mirror.displayStyle == .class {
-//            print("else if mirror.displayStyle == .class \(mirror)")
-//        } else if mirror.displayStyle == .enum {
-//            
-//        } else if mirror.displayStyle == .tuple {
-//            
-//        } else if mirror.displayStyle == .collection {
-//            
-//        } else if mirror.displayStyle == .dictionary {
-//            
-//        } else if mirror.displayStyle == .set {
-//            
-//        }
-//        
-//        return value(forDetail: anyValue)
-//    }
+    public func value(for anyValue: Any) -> Bindable {
+        
+        let mirror = Mirror(reflecting: anyValue)
+        if mirror.displayStyle == .optional {
+            if mirror.children.count == 0 {
+                return NSNull()
+            } else {
+                
+            }
+            
+        } else if mirror.displayStyle == .class {
+            
+            if let value = anyValue as? ZVObject {
+                return value.dictionaryValue()
+            }
+            return NSNull()
+        } else if mirror.displayStyle == .enum {
+            
+        } else if mirror.displayStyle == .tuple {
+            
+        } else if mirror.displayStyle == .collection {
+            
+            if mirror.subjectType is ZVObject.Type {
+                let value = anyValue as! [ZVObject]
+                var array = [[String: Bindable]]()
+                for item in value {
+                    array.append(item.dictionaryValue())
+                }
+                return array
+            } else {
+                return anyValue as! NSArray
+            }
+            
+        } else if mirror.displayStyle == .dictionary {
+            
+            if mirror.subjectType is Dictionary<String, ZVObject>.Type {
+                
+                let value = anyValue as? [String: ZVObject]
+                if value == nil { return NSNull() }
+                
+                var dictioanry = [String: [String: Bindable]]()
+                for (key, val) in value! {
+                    dictioanry[key] = val.dictionaryValue()
+                }
+                return dictioanry
+            } else {
+                return anyValue as? NSDictionary ?? NSNull()
+            }
+        }
+        
+        return value(forDetail: anyValue)
+    }
     
-    func value(for anyValue: Any) -> Bindable {
+    func value(forDetail anyValue: Any) -> Bindable {
         
         switch anyValue {
         case is Int64:
