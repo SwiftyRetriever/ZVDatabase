@@ -471,6 +471,7 @@
 				4A9D215E1D49ADED008F00E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4DA078F71D26AECC00C30590 /* Build configuration list for PBXProject "ZVDatabase" */ = {
 			isa = XCConfigurationList;

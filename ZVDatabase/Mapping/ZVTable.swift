@@ -8,6 +8,37 @@
 
 import UIKit
 
-class ZVTable: NSObject {
+public protocol ZVTableProtocol {
+    
+    init()
+    
+    var databasePath: String? { get }
+    var tableName: String { get }
+    var primaryKey: String? { get }
+    var fields: [String: String] { get }
+}
 
+public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
+
+    internal var dataArray: [Command] = []
+    
+    public required override init () {}
+    
+    deinit {}
+    
+    public var databasePath: String? {
+        return nil
+    }
+    
+    public var tableName: String {
+        return String(self.classForCoder)
+    }
+    
+    public var primaryKey: String? {
+        return nil
+    }
+    
+    public var fields: [String: String] {
+        return [:]
+    }
 }
