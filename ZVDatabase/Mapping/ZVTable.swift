@@ -47,4 +47,30 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
         try cmd.execute(with: db)
     }
     
+    
+    public func update(object: ZVObject, db: Connection) throws {
+        
+        var values = object.dictionaryValue()
+        var primaryKey: Bindable = ""
+
+        if let pk = self.primaryKey {
+            
+            primaryKey = values[pk]!
+            values.removeValue(forKey: pk)
+            
+            let cmd = Command().update(values, table: self.tableName)
+                .where(self.primaryKey!, equalTo: primaryKey)
+            try cmd.execute(with: db)
+        } else {
+            print("the primary key is not figure out.")
+        }
+    }
+    
+    public func delete(by primaryKey: Bindable, db: Connection) throws {
+        
+        if let pk = self.primaryKey {
+            let cmd = Command().delete(from: self.tableName).where(pk, equalTo: primaryKey)
+            try cmd.execute(with: db)
+        }
+    }
 }
