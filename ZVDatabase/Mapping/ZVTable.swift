@@ -20,7 +20,7 @@ public protocol ZVTableProtocol {
 
 public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
 
-    internal var dataArray: [Command] = []
+    internal var dataArray: [SQL] = []
     
     public required override init () {}
     
@@ -42,12 +42,14 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
         return [:]
     }
     
-    public func save(object: ZVObject) {
-        let cmd = Command().insert(object.dictionaryValue(), into: self.tableName)
-        self.dataArray.append(cmd)
-//        try cmd.execute(with: db)
+    public func create() {
+        
     }
     
+    public func save(object: ZVObject) {
+        let cmd = SQL().insert(object.dictionaryValue(), into: self.tableName)
+        self.dataArray.append(cmd)
+    }
     
     public func update(object: ZVObject) {
         
@@ -59,22 +61,21 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
             primaryKey = values[pk]!
             values.removeValue(forKey: pk)
             
-            let cmd = Command().update(values, table: self.tableName)
+            let cmd = SQL().update(values, table: self.tableName)
                 .where(self.primaryKey!, equalTo: primaryKey)
             self.dataArray.append(cmd)
-//            try cmd.execute(with: db)
         } else {
             print("the primary key is not figure out.")
         }
     }
     
-    public func delete(by command: Command) {
+    public func delete(by command: SQL) {
         
-        let cmd = Command().delete(from: self.tableName).append(command: command)
+        let cmd = SQL().delete(from: self.tableName).append(command: command)
         self.dataArray.append(cmd)
     }
     
-    public func select(by command: Command) {
+    public func select(by command: SQL) {
 //        let cmd = Command().select(<#T##column: [String]##[String]#>, from: <#T##String#>)
     }
 }

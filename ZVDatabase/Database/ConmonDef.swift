@@ -34,7 +34,7 @@ internal let SQLITE_STATIC    = unsafeBitCast( 0, to: sqlite3_destructor_type.se
 
 internal let SQLITE_BIND_COUNT_ERR: Int32 = 1101
 
-internal enum DatabaseError : ErrorProtocol {
+internal enum DatabaseError : Error {
     
     case error(code: Int32, msg: String)
 }

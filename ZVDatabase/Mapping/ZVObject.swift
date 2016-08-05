@@ -8,16 +8,13 @@
 
 import UIKit
 
-public protocol ZVObjectProtocol: NSObjectProtocol {
-    
+public protocol ZVObjectProtocol/*: NSObjectProtocol*/ {
     init()
 }
 
-public class ZVObject: NSObject, ZVObjectProtocol {
-
-    public required override init() {}
+internal extension ZVObjectProtocol {
     
-    public func dictionaryValue(skip:[String] = []) -> [String: Bindable] {
+    internal func dictionaryValue(skip:[String] = []) -> [String: Bindable] {
         
         let mirror = Mirror(reflecting: self)
         var dictionary = [String: Bindable]()
@@ -61,28 +58,26 @@ public class ZVObject: NSObject, ZVObjectProtocol {
         case is String, is NSString:
             return anyValue as! String
         case is NSArray:
-            let mirror = Mirror(reflecting: anyValue)
-            if mirror.subjectType is ZVObject.Type {
-                let value = anyValue as! [ZVObject]
+            let value = anyValue as! NSArray
+            if let val = value as? Array<ZVObject> {
                 var array = [[String: Bindable]]()
-                for item in value {
+                for item in val {
                     array.append(item.dictionaryValue())
                 }
                 return array
             } else {
-                return anyValue as! NSArray
+                return value
             }
         case is NSDictionary:
-            let mirror = Mirror(reflecting: anyValue)
-            if mirror.subjectType is Dictionary<String, ZVObject>.Type {
-                let value = anyValue as! [String: ZVObject]
+            let value = anyValue as! NSDictionary
+            if let val = value as? Dictionary<String, ZVObject> {
                 var dictioanry = [String: [String: Bindable]]()
-                for (key, val) in value {
-                    dictioanry[key] = val.dictionaryValue()
+                for (k, v) in val {
+                    dictioanry[k] = v.dictionaryValue()
                 }
                 return dictioanry
             } else {
-                return anyValue as! NSDictionary
+                return value
             }
         case is Date:
             return anyValue as! Date
@@ -93,6 +88,13 @@ public class ZVObject: NSObject, ZVObjectProtocol {
             return NSNull()
         }
     }
+}
+
+
+public class ZVObject: NSObject, ZVObjectProtocol {
+
+    public required override init() {}
+
 }
 
 //MARK: - Collection Bindale

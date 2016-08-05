@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class Command: NSObject {
+public class SQL: NSObject {
     
     private var _sql: String = ""
     private var _parameters = [Bindable]()
@@ -17,7 +17,7 @@ public class Command: NSObject {
     deinit {}
 
     //MARK: - CRUD
-    public func insert(_ column: [String], into table: String, parameters: [Bindable] = []) -> Command {
+    public func insert(_ column: [String], into table: String, parameters: [Bindable] = []) -> SQL {
         
         let prefix = column.map { _ in return "?" }
         let sql = "INSERT INTO \(table) (\(column.joined(separator: ", "))) VALUES (\(prefix.joined(separator: ", ")))"
@@ -28,7 +28,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func insert(_ values: [String: Bindable], into table: String) -> Command {
+    public func insert(_ values: [String: Bindable], into table: String) -> SQL {
         
         var columnArray = [String]()
         var prefixArray = [String]()
@@ -46,7 +46,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func update(_ column: [String], table: String, parameters: [Bindable] = []) -> Command {
+    public func update(_ column: [String], table: String, parameters: [Bindable] = []) -> SQL {
         
         let col = column.map { (col) in return "\(col) = ?" }.joined(separator: ", ")
         _sql.append("UPDATE \(table) SET \(col)")
@@ -55,7 +55,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func update(_ values: [String: Bindable], table: String) -> Command {
+    public func update(_ values: [String: Bindable], table: String) -> SQL {
         
         var columnArray = [String]()
         var valueArray  = [Bindable]()
@@ -71,7 +71,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func delete(from table: String) -> Command {
+    public func delete(from table: String) -> SQL {
         
         let sql = "DELETE FROM \(table)"
         _sql.append(sql)
@@ -79,7 +79,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func select(_ column: [String], from table: String, parameters: [Bindable] = []) -> Command {
+    public func select(_ column: [String], from table: String, parameters: [Bindable] = []) -> SQL {
         
         let sql = "SELECT \(column.joined(separator: ", ")) FROM \(table)"
         _sql.append(sql)
@@ -89,7 +89,7 @@ public class Command: NSObject {
     }
     
     //MARK: - WHERE Statement
-    public func `where`(_ expression: String, parameters: [Bindable] = []) -> Command {
+    public func `where`(_ expression: String, parameters: [Bindable] = []) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append(expression)
@@ -98,7 +98,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, equalTo value: Bindable) -> Command {
+    public func `where`(_ column: String, equalTo value: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) = \(value)")
@@ -106,7 +106,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, unequalTo value: Bindable) -> Command {
+    public func `where`(_ column: String, unequalTo value: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) <> \(value)")
@@ -114,7 +114,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, lessThan value: Bindable) -> Command {
+    public func `where`(_ column: String, lessThan value: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) < \(value)")
@@ -122,7 +122,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, gatherThan value: Bindable) -> Command {
+    public func `where`(_ column: String, gatherThan value: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) > \(value)")
@@ -130,7 +130,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, lessThanOrEqualTo value: Bindable) -> Command {
+    public func `where`(_ column: String, lessThanOrEqualTo value: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) <= \(value)")
@@ -138,7 +138,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, gatherThanOrEqualTo value: Bindable) -> Command {
+    public func `where`(_ column: String, gatherThanOrEqualTo value: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) >= \(value)")
@@ -146,7 +146,7 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, between value1: Bindable, and value2: Bindable) -> Command {
+    public func `where`(_ column: String, between value1: Bindable, and value2: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) BETWEENT \(value1) AND \(value2)" )
@@ -154,14 +154,14 @@ public class Command: NSObject {
         return self
     }
     
-    public func `where`(_ column: String, like value: Bindable) -> Command {
+    public func `where`(_ column: String, like value: Bindable) -> SQL {
         
         _add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) LIKE \(value)" )
         return self
     }
     
-    public func `where`(_ column: String, in values: [Bindable]) -> Command {
+    public func `where`(_ column: String, in values: [Bindable]) -> SQL {
         
         let prefix = values.map { _  in return "?" }.joined(separator: ",")
         
@@ -172,28 +172,28 @@ public class Command: NSObject {
     }
     
     //MARK: - ORDER Statement
-    public func order(by condition: [String]) -> Command {
+    public func order(by condition: [String]) -> SQL {
         
         _add(keyword: "ORDER BY")
         _sql.append(condition.joined(separator: ","))
         return self
     }
     
-    public func order(by column: String, asc: Bool = true) -> Command {
+    public func order(by column: String, asc: Bool = true) -> SQL {
         
         _add(keyword: "ORDER BY")
         _sql.append("\(column) \(asc ? "ASC" : "DESC")")
         return self
     }
     
-    public func append(command: Command) -> Command {
+    public func append(command: SQL) -> SQL {
         self._sql.append(command._sql)
         self._parameters.append(contentsOf: command._parameters)
         return self
     }
     
     // Add End Prefix
-    public func end() -> Command{
+    public func end() -> SQL{
         
         _sql.append(";")
         return self
