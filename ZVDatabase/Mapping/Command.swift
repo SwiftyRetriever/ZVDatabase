@@ -186,6 +186,12 @@ public class Command: NSObject {
         return self
     }
     
+    public func append(command: Command) -> Command {
+        self._sql.append(command._sql)
+        self._parameters.append(contentsOf: command._parameters)
+        return self
+    }
+    
     // Add End Prefix
     public func end() -> Command{
         

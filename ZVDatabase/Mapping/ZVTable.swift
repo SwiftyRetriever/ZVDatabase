@@ -42,13 +42,14 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
         return [:]
     }
     
-    public func save(object: ZVObject, db: Connection) throws {
+    public func save(object: ZVObject) {
         let cmd = Command().insert(object.dictionaryValue(), into: self.tableName)
-        try cmd.execute(with: db)
+        self.dataArray.append(cmd)
+//        try cmd.execute(with: db)
     }
     
     
-    public func update(object: ZVObject, db: Connection) throws {
+    public func update(object: ZVObject) {
         
         var values = object.dictionaryValue()
         var primaryKey: Bindable = ""
@@ -60,17 +61,20 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
             
             let cmd = Command().update(values, table: self.tableName)
                 .where(self.primaryKey!, equalTo: primaryKey)
-            try cmd.execute(with: db)
+            self.dataArray.append(cmd)
+//            try cmd.execute(with: db)
         } else {
             print("the primary key is not figure out.")
         }
     }
     
-    public func delete(by primaryKey: Bindable, db: Connection) throws {
+    public func delete(by command: Command) {
         
-        if let pk = self.primaryKey {
-            let cmd = Command().delete(from: self.tableName).where(pk, equalTo: primaryKey)
-            try cmd.execute(with: db)
-        }
+        let cmd = Command().delete(from: self.tableName).append(command: command)
+        self.dataArray.append(cmd)
+    }
+    
+    public func select(by command: Command) {
+//        let cmd = Command().select(<#T##column: [String]##[String]#>, from: <#T##String#>)
     }
 }
