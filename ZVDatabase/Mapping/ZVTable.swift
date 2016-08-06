@@ -8,16 +8,6 @@
 
 import UIKit
 
-public protocol ZVTableProtocol {
-    
-    init()
-    
-    func databasePath() -> String?
-    func tableName() -> String
-    func primaryKey() -> String?
-    func fields() -> [String: String]
-}
-
 public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
 
     internal var dataArray: [SQL] = []
