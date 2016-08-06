@@ -15,7 +15,52 @@ public class SQL: NSObject {
     
     public override init() {}
     deinit {}
+    
+    //MARK: - Schema
+    public func create(table name: String, fields: [String: String]) -> SQL {
+        
+        var columns: [String] = []
+        for (name, info) in fields {
+            columns.append("\(name) \(info)")
+        }
+        let sql = "CREATE TABLE IF NOT EXISTS \(name) (\(columns.joined(separator: ", ")));"
+        _sql.append(sql)
+        
+        return self
+    }
 
+    public func drop(table name: String) -> SQL {
+        
+        let sql = "DROP TABLE IF NOT EXISTS \(name));"
+        _sql.append(sql)
+        
+        return self
+    }
+
+    public func add(column: String, info: String, for table: String) -> SQL {
+        
+        let sql = "ALTER TABLE \(table) ADD \(column) \(info);"
+        _sql.append(sql)
+        
+        return self
+    }
+
+    public func delete(colmun column: String, from table: String) -> SQL {
+        
+        let sql = "ALTER TABLE \(table) DROP COLUMN \(column);"
+        _sql.append(sql)
+        
+        return self
+    }
+    
+    public func alert(column: String, info: String, for table: String) -> SQL {
+        
+        let sql = "ALTER TABLE \(table) ALTER COLUMN \(column) \(info);"
+        _sql.append(sql)
+        
+        return self
+    }
+    
     //MARK: - CRUD
     public func insert(_ column: [String], into table: String, parameters: [Bindable] = []) -> SQL {
         

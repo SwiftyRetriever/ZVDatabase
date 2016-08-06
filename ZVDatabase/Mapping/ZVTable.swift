@@ -12,10 +12,10 @@ public protocol ZVTableProtocol {
     
     init()
     
-    var databasePath: String? { get }
-    var tableName: String { get }
-    var primaryKey: String? { get }
-    var fields: [String: String] { get }
+    func databasePath() -> String?
+    func tableName() -> String
+    func primaryKey() -> String?
+    func fields() -> [String: String]
 }
 
 public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
@@ -26,28 +26,31 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
     
     deinit {}
     
-    public var databasePath: String? {
+    public func databasePath() -> String? {
         return nil
     }
     
-    public var tableName: String {
+    public func tableName() -> String {
         return String(self.classForCoder)
     }
     
-    public var primaryKey: String? {
+    public func primaryKey() -> String? {
         return nil
     }
     
-    public var fields: [String: String] {
+    public func fields() -> [String: String] {
         return [:]
     }
     
     public func create() {
         
+        let cmd = SQL().create(table: self.tableName(), fields: self.fields())
+        self.dataArray.append(cmd)
     }
     
     public func save(object: ZVObject) {
-        let cmd = SQL().insert(object.dictionaryValue(), into: self.tableName)
+        
+        let cmd = SQL().insert(object.dictionaryValue(), into: self.tableName())
         self.dataArray.append(cmd)
     }
     
@@ -56,13 +59,13 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
         var values = object.dictionaryValue()
         var primaryKey: Bindable = ""
 
-        if let pk = self.primaryKey {
+        if let pk = self.primaryKey() {
             
             primaryKey = values[pk]!
             values.removeValue(forKey: pk)
             
-            let cmd = SQL().update(values, table: self.tableName)
-                .where(self.primaryKey!, equalTo: primaryKey)
+            let cmd = SQL().update(values, table: self.tableName())
+                .where(self.primaryKey()!, equalTo: primaryKey)
             self.dataArray.append(cmd)
         } else {
             print("the primary key is not figure out.")
@@ -71,11 +74,11 @@ public class ZVTable<V: ZVObjectProtocol>: NSObject, ZVTableProtocol {
     
     public func delete(by command: SQL) {
         
-        let cmd = SQL().delete(from: self.tableName).append(command: command)
+        let cmd = SQL().delete(from: self.tableName()).append(command: command)
         self.dataArray.append(cmd)
     }
     
-    public func select(by command: SQL) {
+//    public func select(by command: SQL) {
 //        let cmd = Command().select(<#T##column: [String]##[String]#>, from: <#T##String#>)
-    }
+//    }
 }
