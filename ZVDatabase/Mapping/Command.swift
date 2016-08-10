@@ -14,13 +14,11 @@ public class Command: NSObject {
     internal var _parameters = [Bindable]()
     
     public override init() {}
-    deinit {
-        print("deinit...")
-    }
+    deinit {}
 }
 
 //MARK: - Schema
-extension Command {
+public extension Command {
     
     public func create(table name: String, fields: [String: String]) -> Command {
         
@@ -68,7 +66,7 @@ extension Command {
 }
 
 //MARK: - CRUD
-extension Command {
+public extension Command {
     
     public func insert(_ column: [String], parameters: [Bindable] = [], into table: String) -> Command {
         
@@ -143,7 +141,7 @@ extension Command {
 }
 
 //MARK: - WHERE Statement
-extension Command {
+public extension Command {
     
     public func `where`(_ expression: String, parameters: [Bindable] = []) -> Command {
         
@@ -229,7 +227,7 @@ extension Command {
 }
 
 //MARK: - Order Statement
-extension Command {
+public extension Command {
     
     public func order(by condition: [String]) -> Command {
         
@@ -253,7 +251,7 @@ extension Command {
 }
 
 //MARK: - End Prefix
-extension Command {
+public extension Command {
     
     public func end() -> Command{
         
@@ -263,9 +261,9 @@ extension Command {
 }
 
 // MARK: - private methods
-extension Command {
+internal extension Command {
     
-    private func _add(keyword: String, prefix: String = ", ") {
+    internal func _add(keyword: String, prefix: String = ", ") {
         
         if _sql.contains(keyword) {
             _sql.append(" \(prefix) ")
@@ -276,7 +274,7 @@ extension Command {
 }
 
 //MARK: - Execute
-extension Command {
+public extension Command {
     
     public func execute(with db: Connection) throws {
         

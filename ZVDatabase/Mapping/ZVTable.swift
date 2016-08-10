@@ -112,27 +112,74 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
         }
     }
     
-    public func update(_ values: [String: Bindable], where command: Command) {
-        
-        let cmd = Command().update(values, table: self.tableName()).append(command: command)
-        self.commands.append(cmd)
-    }
-    
-    public func delete(by command: Command) {
-        
-        let cmd = Command().delete(from: self.tableName()).append(command: command)
-        self.commands.append(cmd)
-    }
-    
-    public func select(_ rows: [String] = [], by command: Command) {
+    public func update(_ values: [String: Bindable], where command: Where? = nil) {
         
         var cmd: Command!
-        if rows.isEmpty {
-            let fields = self.shared.fields().map({ (key, _) in return key })
-            cmd = Command().select(fields, from: self.tableName()).append(command: command)
+        if command == nil {
+            cmd = Command().update(values, table: self.tableName())
         } else {
-            cmd = Command().select(rows, from: self.tableName()).append(command: command)
+            cmd = Command().update(values, table: self.tableName()).append(command: command!)
         }
         self.commands.append(cmd)
+    }
+    
+    public func delete(where command: Where? = nil) {
+        
+        var cmd: Command!
+        if command == nil {
+            cmd = Command().delete(from: self.tableName())
+        } else {
+            cmd = Command().delete(from: self.tableName()).append(command: command!)
+        }
+        self.commands.append(cmd)
+    }
+    
+    public func select(_ rows: [String] = [], where command: Where? = nil) {
+        
+        let fields = rows.isEmpty ? self.shared.fields().map({ (key, _) in return key }) : rows
+        var cmd: Command!
+        
+        if command == nil {
+            cmd = Command().select(fields, from: self.tableName())
+        } else {
+            cmd = Command().select(fields, from: self.tableName()).append(command: command!)
+        }
+        
+        self.commands.append(cmd)
+    }
+    
+    public func excute(inBackground: Bool = false) {
+        
+        if inBackground {
+            
+            let queue = DatabaseQueue(path: self.databasePath() ?? "")
+            queue.inTransaction({ (db) -> Bool in
+
+                var success: Bool = true
+                do {
+                    for cmd in self.commands {
+                        try cmd.execute(with: db)
+                    }
+                } catch {
+                    print(error)
+                    success = false
+                }
+                return success
+            })
+            
+        } else {
+            
+            let db = Connection(path: self.databasePath() ?? "")
+            do {
+                try db.open()
+                print(db.databasePath)
+                for cmd in self.commands {
+                    try cmd.execute(with: db)
+                }
+                try db.close()
+            } catch {
+                print(error)
+            }
+        }
     }
 }

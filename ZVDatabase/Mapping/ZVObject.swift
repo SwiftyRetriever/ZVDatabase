@@ -194,7 +194,7 @@ internal extension ZVObject {
                 
                 if self.primaryKey()?.key == label {
                     var type = val.type() + " " + "PRMARY KEY"
-                    let autoincrement = (self.primaryKey()?.autoincrement ?? false) ? " AUTOINCREMENT" : ""
+                    let autoincrement = (self.primaryKey()?.autoincrement ?? false) ? " AUTO_INCREMENT " : ""
                     type += autoincrement
                     
                     dictionary[label] = type
