@@ -10,18 +10,18 @@ import UIKit
 
 private var gSingleton: [String: Any] = [:]
 
-public protocol ZVTableProtocol {
+public protocol TableProtocol {
     
     init()
     func databasePath() -> String?
     func tableName() -> String
 }
 
-public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
+public class Table<V: ZVObject>: TableProtocol {
 
     internal var commands: [Command] = []
     
-    public required override init () {}
+    public required init () {}
     
     deinit {}
     
@@ -31,10 +31,6 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
     
     public func tableName() -> String {
         return String(V.self)
-    }
-    
-    public func primaryKey() -> String? {
-        return nil
     }
     
     private var shared: V {
@@ -50,47 +46,54 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
         return shared!
     }
     
-    // MARK: - Schema
+}
+
+//MARK: - Schema
+extension Table {
+    
     public func create() {
         
-        let cmd = Command().create(table: self.tableName(), fields: self.shared.fields())
+        let cmd = Schema(create: self.tableName(), fields: self.shared.fields())
         self.commands.append(cmd)
     }
     
     public func drop() {
         
-        let cmd = Command().drop(table: self.tableName())
+        let cmd = Schema(drop: self.tableName())
         self.commands.append(cmd)
     }
     
     public func add(column: String, info: String) {
         
-        let cmd = Command().add(column: column, info: info, for: self.tableName())
+        let cmd = Schema(add: column, info: info, for: self.tableName())
         self.commands.append(cmd)
     }
     
     public func delete(colmun column: String) {
         
-        let cmd = Command().delete(colmun: column, from: self.tableName())
+        let cmd = Schema(delete: column, from: self.tableName())
         self.commands.append(cmd)
     }
     
     public func alert(column: String, info: String) {
         
-        let cmd = Command().alert(column: column, info: info, for: self.tableName())
+        let cmd = Schema(alert: column, info: info, for: self.tableName())
         self.commands.append(cmd)
     }
+}
 
-    // MARK: - CRUD
+//MARK: - CRUD
+extension Table {
+    
     public func insert(_ object: ZVObject) {
         
-        let cmd = Command().insert(object.dictionaryValue(), into: self.tableName())
+        let cmd = Insert(object.dictionaryValue(), into: self.tableName())
         self.commands.append(cmd)
     }
     
     public func insert(_ column: [String], parameters: [Bindable] = []) {
         
-        let cmd = Command().insert(column, parameters: parameters, into: self.tableName())
+        let cmd = Insert(column, parameters: parameters, into: self.tableName())
         self.commands.append(cmd)
     }
     
@@ -98,14 +101,14 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
         
         var values = object.dictionaryValue()
         var primaryKey: Bindable = ""
-
-        if let pk = self.primaryKey() {
+        
+        if let pk = object.primaryKey()?.key {
             
             primaryKey = values[pk]!
             values.removeValue(forKey: pk)
             
-            let cmd = Command().update(values, table: self.tableName())
-                .where(self.primaryKey()!, equalTo: primaryKey)
+            let cmd = Update(values, table: self.tableName())
+                .where(pk, equalTo: primaryKey)
             self.commands.append(cmd)
         } else {
             print("the primary key is not figure out.")
@@ -116,9 +119,9 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
         
         var cmd: Command!
         if command == nil {
-            cmd = Command().update(values, table: self.tableName())
+            cmd = Update(values, table: self.tableName())
         } else {
-            cmd = Command().update(values, table: self.tableName()).append(command: command!)
+            cmd = Update(values, table: self.tableName()).appending(command!)
         }
         self.commands.append(cmd)
     }
@@ -127,9 +130,9 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
         
         var cmd: Command!
         if command == nil {
-            cmd = Command().delete(from: self.tableName())
+            cmd = Delete(from: self.tableName())
         } else {
-            cmd = Command().delete(from: self.tableName()).append(command: command!)
+            cmd = Delete(from: self.tableName()).appending(command!)
         }
         self.commands.append(cmd)
     }
@@ -140,13 +143,17 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
         var cmd: Command!
         
         if command == nil {
-            cmd = Command().select(fields, from: self.tableName())
+            cmd = Select(fields, from: self.tableName())
         } else {
-            cmd = Command().select(fields, from: self.tableName()).append(command: command!)
+            cmd = Select(fields, from: self.tableName()).appending(command!)
         }
         
         self.commands.append(cmd)
     }
+}
+
+//MARK: - Execute
+extension Table {
     
     public func excute(inBackground: Bool = false) {
         

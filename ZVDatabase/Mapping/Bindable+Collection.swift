@@ -15,36 +15,36 @@ internal extension Collection {
     internal func value(for anyValue: Any) -> AnyObject {
         
         switch anyValue {
-        case is Int64:
-            return NSDecimalNumber(value: anyValue as! Int64)
-        case is Int32:
-            return NSDecimalNumber(value: anyValue as! Int32)
-        case is Int16:
-            return NSDecimalNumber(value: anyValue as! Int16)
-        case is Int8:
-            return NSDecimalNumber(value: anyValue as! Int8)
-        case is UInt64:
-            return NSDecimalNumber(value: anyValue as! UInt64)
-        case is UInt32:
-            return NSDecimalNumber(value: anyValue as! UInt32)
-        case is UInt16:
-            return NSDecimalNumber(value: anyValue as! UInt16)
-        case is UInt8:
-            return NSDecimalNumber(value: anyValue as! UInt8)
-        case is Double:
-            return NSDecimalNumber(value: anyValue as! Double)
-        case is Float:
-            return NSDecimalNumber(value: anyValue as! Float)
-        case is NSNumber, is Int, is UInt:
-            return anyValue as! NSNumber
-        case is String, is NSString:
-            return anyValue as! String
-        case is NSArray:
-            return anyValue as! NSArray
-        case is NSDictionary:
-            return anyValue as! NSDictionary
-        case is Date:
-            return anyValue as! Date
+        case let value as Int64:
+            return NSDecimalNumber(value: value)
+        case let value as Int32:
+            return NSDecimalNumber(value: value)
+        case let value as Int16:
+            return NSDecimalNumber(value: value)
+        case let value as Int8:
+            return NSDecimalNumber(value: value)
+        case let value as UInt64:
+            return NSDecimalNumber(value: value)
+        case let value as UInt32:
+            return NSDecimalNumber(value: value)
+        case let value as UInt16:
+            return NSDecimalNumber(value: value)
+        case let value as UInt8:
+            return NSDecimalNumber(value: value)
+        case let value as Double:
+            return NSDecimalNumber(value: value)
+        case let value as Float:
+            return NSDecimalNumber(value: value)
+        case let value as NSNumber:
+            return value
+        case let value as String:
+            return value
+        case let value as NSArray:
+            return value
+        case let value as NSDictionary:
+            return value
+        case let value as Date:
+            return value
         default:
             return NSNull()
         }
