@@ -10,14 +10,14 @@ import UIKit
 
 private var gSingleton: [String: Any] = [:]
 
-public protocol TableProtocol {
+public protocol ZVTableProtocol {
     
     init()
     func databasePath() -> String?
     func tableName() -> String
 }
 
-public class Table<V: ZVObject>: TableProtocol {
+public class ZVTable<V: ZVObject>: ZVTableProtocol {
 
     internal var commands: [Command] = []
     
@@ -45,11 +45,10 @@ public class Table<V: ZVObject>: TableProtocol {
         }
         return shared!
     }
-    
 }
 
 //MARK: - Schema
-extension Table {
+public extension ZVTable {
     
     public func create() {
         
@@ -83,7 +82,7 @@ extension Table {
 }
 
 //MARK: - CRUD
-extension Table {
+public extension ZVTable {
     
     public func insert(_ object: ZVObject) {
         
@@ -91,7 +90,8 @@ extension Table {
         self.commands.append(cmd)
     }
     
-    public func insert(_ column: [String], parameters: [Bindable] = []) {
+    public func insert(_ column: [String],
+                       parameters: [Bindable] = []) {
         
         let cmd = Insert(column, parameters: parameters, into: self.tableName())
         self.commands.append(cmd)
@@ -104,7 +104,7 @@ extension Table {
         
         if let pk = object.primaryKey()?.key {
             
-            primaryKey = values[pk]!
+            primaryKey = values[pk] ?? ""
             values.removeValue(forKey: pk)
             
             let cmd = Update(values, table: self.tableName())
@@ -115,45 +115,34 @@ extension Table {
         }
     }
     
-    public func update(_ values: [String: Bindable], where command: Where? = nil) {
+    public func update(_ values: [String: Bindable],
+                       where command: Where? = nil) {
         
-        var cmd: Command!
-        if command == nil {
-            cmd = Update(values, table: self.tableName())
-        } else {
-            cmd = Update(values, table: self.tableName()).appending(command!)
-        }
+        let cmd = Update(values, table: self.tableName()).appending(command!)
         self.commands.append(cmd)
     }
     
     public func delete(where command: Where? = nil) {
         
-        var cmd: Command!
-        if command == nil {
-            cmd = Delete(from: self.tableName())
-        } else {
-            cmd = Delete(from: self.tableName()).appending(command!)
-        }
+        let cmd = Delete(from: self.tableName()).appending(command)
         self.commands.append(cmd)
     }
     
-    public func select(_ rows: [String] = [], where command: Where? = nil) {
+    public func select(_ rows: [String] = [],
+                       where command: Where? = nil,
+                       inBackground: Bool = false,
+                       rs result: (result: [[String: AnyObject]]) -> Void) {
         
         let fields = rows.isEmpty ? self.shared.fields().map({ (key, _) in return key }) : rows
-        var cmd: Command!
-        
-        if command == nil {
-            cmd = Select(fields, from: self.tableName())
-        } else {
-            cmd = Select(fields, from: self.tableName()).appending(command!)
-        }
-        
+        let cmd = Select(fields, from: self.tableName()).appending(command)
+//        print(cmd._sql)
         self.commands.append(cmd)
+        self.query(result)
     }
 }
 
 //MARK: - Execute
-extension Table {
+public extension ZVTable {
     
     public func excute(inBackground: Bool = false) {
         
@@ -195,5 +184,49 @@ extension Table {
             }
             return success
         })
+    }
+}
+
+public extension ZVTable {
+    
+    public func query(inBackground: Bool = false, _ result: (result: [[String: AnyObject]]) -> Void) {
+        
+        if inBackground {
+            _queryInBackground(result: result)
+        } else {
+            _query(result: result)
+        }
+    }
+
+    private func _query(result: (results: [[String: AnyObject]]) -> Void) {
+        
+        let db = Connection(path: self.databasePath() ?? "")
+        do {
+            try db.open()
+            print(db.databasePath)
+            for cmd in self.commands {
+                let rs = try cmd.query(with: db)
+                result(results: rs)
+            }
+            try db.close()
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func _queryInBackground(result: (results: [[String: AnyObject]]) -> Void) {
+        
+        let queue = DatabaseQueue(path: self.databasePath() ?? "")
+        queue.inBlock { (db) in
+            
+            do {
+                for cmd in self.commands {
+                    let rs = try cmd.query(with: db)
+                    result(results: rs)
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
 }

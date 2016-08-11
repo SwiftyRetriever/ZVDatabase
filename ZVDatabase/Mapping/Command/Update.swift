@@ -8,9 +8,9 @@
 
 import UIKit
 
-class Update: Command {
+public class Update: Command {
 
-    convenience init(_ column: [String], table: String, parameters: [Bindable] = []) {
+    public convenience init(_ column: [String], table: String, parameters: [Bindable] = []) {
         
         self.init()
         let col = column.map { (col) in return "\(col) = ?" }.joined(separator: ", ")
@@ -18,7 +18,7 @@ class Update: Command {
         _parameters.append(contentsOf: parameters)
     }
     
-    convenience init(_ values: [String: Bindable], table: String) {
+    public convenience init(_ values: [String: Bindable], table: String) {
     
         self.init()
         var columnArray = [String]()

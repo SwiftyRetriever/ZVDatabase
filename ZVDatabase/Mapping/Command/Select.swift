@@ -8,9 +8,9 @@
 
 import UIKit
 
-class Select: Command {
+public class Select: Command {
 
-    convenience init(_ column: [String], from table: String, parameters: [Bindable] = []) {
+    public convenience init(_ column: [String], from table: String, parameters: [Bindable] = []) {
         
         self.init()
         let sql = "SELECT \(column.joined(separator: ", ")) FROM \(table)"

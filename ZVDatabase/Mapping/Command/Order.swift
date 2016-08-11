@@ -8,16 +8,16 @@
 
 import UIKit
 
-class Order: Command {
+public class Order: Command {
 
-    convenience init(condition: [String]) {
+    public convenience init(condition: [String]) {
         
         self.init()
         _add(keyword: "ORDER BY")
         _sql.append(condition.joined(separator: ","))
     }
     
-    convenience init(column: String, asc: Bool = true) {
+    public convenience init(column: String, asc: Bool = true) {
         
         self.init()
         _add(keyword: "ORDER BY")

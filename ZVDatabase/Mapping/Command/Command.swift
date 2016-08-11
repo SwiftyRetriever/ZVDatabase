@@ -20,6 +20,15 @@ public class Command: NSObject {
 //MARK: - WHERE Statement
 public extension Command {
     
+    public var isEmpty: Bool {
+        
+        var isEmpty: Bool = true
+        if _sql.isEmpty || _parameters.isEmpty {
+            isEmpty = true
+        }
+        return isEmpty
+    }
+    
     public func `where`(_ expression: String, parameters: [Bindable] = []) -> Command {
         
         _add(keyword: "WHERE", prefix: "AND")
@@ -124,9 +133,14 @@ public extension Command {
 //MARK: - Appding
 public extension Command {
     
-    public func appending(_ command: Command) -> Command {
-        self._sql.append(command._sql)
-        self._parameters.append(contentsOf: command._parameters)
+    public func appending(_ command: Command?) -> Command {
+        
+        if command == nil && command!.isEmpty {
+            return self
+        }
+        
+        self._sql.append(command!._sql)
+        self._parameters.append(contentsOf: command!._parameters)
         return self
     }
 }

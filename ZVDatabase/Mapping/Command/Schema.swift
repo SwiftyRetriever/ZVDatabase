@@ -8,9 +8,9 @@
 
 import UIKit
 
-class Schema: Command {
+public class Schema: Command {
 
-    convenience init(create table: String, fields: [String: String]) {
+    public convenience init(create table: String, fields: [String: String]) {
         
         self.init()
         var columns: [String] = []
@@ -21,28 +21,28 @@ class Schema: Command {
         _sql.append(sql)
     }
     
-    convenience init(drop table: String) {
+    public convenience init(drop table: String) {
         
         self.init()
         let sql = "DROP TABLE IF NOT EXISTS \(table));"
         _sql.append(sql)
     }
     
-    convenience init(add column: String, info: String, for table: String) {
+    public convenience init(add column: String, info: String, for table: String) {
         
         self.init()
         let sql = "ALTER TABLE \(table) ADD \(column) \(info);"
         _sql.append(sql)
     }
     
-    convenience init(delete column: String, from table: String) {
+    public convenience init(delete column: String, from table: String) {
         
         self.init()
         let sql = "ALTER TABLE \(table) DROP COLUMN \(column);"
         _sql.append(sql)
     }
     
-    convenience init(alert column: String, info: String, for table: String) {
+    public convenience init(alert column: String, info: String, for table: String) {
         
         self.init()
         let sql = "ALTER TABLE \(table) ALTER COLUMN \(column) \(info);"

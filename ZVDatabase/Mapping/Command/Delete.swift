@@ -8,9 +8,9 @@
 
 import UIKit
 
-class Delete: Command {
+public class Delete: Command {
 
-    convenience init(from table: String) {
+    public convenience init(from table: String) {
         self.init()
         let sql = "DELETE FROM \(table)"
         _sql.append(sql)

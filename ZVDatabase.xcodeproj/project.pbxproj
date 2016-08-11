@@ -11,7 +11,7 @@
 		4A8878501D48618E00FEEF6D /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88784F1D48618E00FEEF6D /* Bindable.swift */; };
 		4A9D21571D49ADED008F00E4 /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D21561D49ADED008F00E4 /* ZVDatabaseTests.swift */; };
 		4A9D21591D49ADED008F00E4 /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
-		4A9D21621D49AF7A008F00E4 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D21611D49AF7A008F00E4 /* Table.swift */; };
+		4A9D21621D49AF7A008F00E4 /* ZVTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D21611D49AF7A008F00E4 /* ZVTable.swift */; };
 		4D7BA3F01D45A73F00F7C47F /* ConmonDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */; };
 		4D7BA3F11D45A73F00F7C47F /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E71D45A73F00F7C47F /* Connection.swift */; };
 		4D7BA3F31D45A73F00F7C47F /* DatabasePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */; };
@@ -47,7 +47,7 @@
 		4A9D21541D49ADED008F00E4 /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A9D21561D49ADED008F00E4 /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZVDatabaseTests.swift; sourceTree = "<group>"; };
 		4A9D21581D49ADED008F00E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4A9D21611D49AF7A008F00E4 /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
+		4A9D21611D49AF7A008F00E4 /* ZVTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVTable.swift; sourceTree = "<group>"; };
 		4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConmonDef.swift; sourceTree = "<group>"; };
 		4D7BA3E71D45A73F00F7C47F /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Connection.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabasePool.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 				4DE233F41D5C7A1D009D3FB2 /* Command */,
 				4DCDA8A71D55E45000614303 /* Bindable+Collection.swift */,
 				4DCDA8A91D55E48400614303 /* ZVObject.swift */,
-				4A9D21611D49AF7A008F00E4 /* Table.swift */,
+				4A9D21611D49AF7A008F00E4 /* ZVTable.swift */,
 				4DE233E81D5C7126009D3FB2 /* ObjectType.swift */,
 			);
 			path = Mapping;
@@ -175,11 +175,11 @@
 			isa = PBXGroup;
 			children = (
 				4DE233F51D5C7A1D009D3FB2 /* Command.swift */,
-				4DE233F61D5C7A1D009D3FB2 /* Delete.swift */,
-				4DE233F91D5C7A1D009D3FB2 /* Select.swift */,
 				4DE233F81D5C7A1D009D3FB2 /* Schema.swift */,
 				4DE233F71D5C7A1D009D3FB2 /* Insert.swift */,
+				4DE233F61D5C7A1D009D3FB2 /* Delete.swift */,
 				4DE233FA1D5C7A1D009D3FB2 /* Update.swift */,
+				4DE233F91D5C7A1D009D3FB2 /* Select.swift */,
 				4DE233FB1D5C7A1D009D3FB2 /* Where.swift */,
 				4DE234031D5C8499009D3FB2 /* Order.swift */,
 			);
@@ -322,7 +322,7 @@
 				4DE234041D5C8499009D3FB2 /* Order.swift in Sources */,
 				4DE233FC1D5C7A1D009D3FB2 /* Command.swift in Sources */,
 				4DE233FF1D5C7A1D009D3FB2 /* Schema.swift in Sources */,
-				4A9D21621D49AF7A008F00E4 /* Table.swift in Sources */,
+				4A9D21621D49AF7A008F00E4 /* ZVTable.swift in Sources */,
 				4DE234001D5C7A1D009D3FB2 /* Select.swift in Sources */,
 				4DE234021D5C7A1D009D3FB2 /* Where.swift in Sources */,
 			);
