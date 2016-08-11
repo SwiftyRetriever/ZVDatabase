@@ -151,35 +151,42 @@ public class ZVTable<V: ZVObject>: NSObject, ZVTableProtocol {
     public func excute(inBackground: Bool = false) {
         
         if inBackground {
-            
-            let queue = DatabaseQueue(path: self.databasePath() ?? "")
-            queue.inTransaction({ (db) -> Bool in
-
-                var success: Bool = true
-                do {
-                    for cmd in self.commands {
-                        try cmd.execute(with: db)
-                    }
-                } catch {
-                    print(error)
-                    success = false
-                }
-                return success
-            })
-            
+            _executeInBackground()
         } else {
-            
-            let db = Connection(path: self.databasePath() ?? "")
+            _excute()
+        }
+    }
+    
+    private func _excute() {
+        
+        let db = Connection(path: self.databasePath() ?? "")
+        do {
+            try db.open()
+            print(db.databasePath)
+            for cmd in self.commands {
+                try cmd.execute(with: db)
+            }
+            try db.close()
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func _executeInBackground() {
+        
+        let queue = DatabaseQueue(path: self.databasePath() ?? "")
+        queue.inTransaction({ (db) -> Bool in
+            print(db.databasePath)
+            var success: Bool = true
             do {
-                try db.open()
-                print(db.databasePath)
                 for cmd in self.commands {
                     try cmd.execute(with: db)
                 }
-                try db.close()
             } catch {
                 print(error)
+                success = false
             }
-        }
+            return success
+        })
     }
 }

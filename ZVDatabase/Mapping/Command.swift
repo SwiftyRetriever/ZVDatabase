@@ -87,11 +87,11 @@ public extension Command {
         
         for (column, value) in values {
             columnArray.append(column)
-            prefixArray.append(",")
+            prefixArray.append("?")
             valueArray.append(value)
         }
         
-        _sql.append("INSERT INTO \(table) \(columnArray.joined(separator: ",")) VALUES (\(prefixArray.joined(separator: ", ")))")
+        _sql.append("INSERT INTO \(table) (\(columnArray.joined(separator: ", "))) VALUES (\(prefixArray.joined(separator: ", ")))")
         _parameters.append(contentsOf: valueArray)
         
         return self

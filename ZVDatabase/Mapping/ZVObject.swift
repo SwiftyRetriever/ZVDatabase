@@ -126,40 +126,50 @@ internal extension ZVObject {
     
     private func _value(for anyValue: Any) -> Bindable {
         
-        switch anyValue {
-        case is Int64:
-            return NSDecimalNumber(value: anyValue as! Int64)
-        case is Int32:
-            return NSDecimalNumber(value: anyValue as! Int32)
-        case is Int16:
-            return NSDecimalNumber(value: anyValue as! Int16)
-        case is Int8:
-            return NSDecimalNumber(value: anyValue as! Int8)
-        case is UInt64:
-            return NSDecimalNumber(value: anyValue as! UInt64)
-        case is UInt32:
-            return NSDecimalNumber(value: anyValue as! UInt32)
-        case is UInt16:
-            return NSDecimalNumber(value: anyValue as! UInt16)
-        case is UInt8:
-            return NSDecimalNumber(value: anyValue as! UInt8)
-        case is Double:
-            return NSDecimalNumber(value: anyValue as! Double)
-        case is Float:
-            return NSDecimalNumber(value: anyValue as! Float)
-        case is NSNumber, is Int, is UInt:
-            return anyValue as! NSNumber
-        case is String, is NSString:
-            return anyValue as! String
-        case is NSArray:
-            let value = anyValue as! NSArray
+        var theValue = anyValue
+        
+        let mirror = Mirror(reflecting: theValue)
+        
+        if mirror.displayStyle == .optional {
+            if mirror.children.count == 1 {
+                theValue = _value(for: mirror.children.first!.value)
+            } else if mirror.children.count == 0 {
+                return NSNull()
+            }
+        }
+        
+        switch theValue {
+        case let value as  Int64:
+            return NSDecimalNumber(value: value)
+        case let value as Int32:
+            return NSDecimalNumber(value: value)
+        case let value as Int16:
+            return NSDecimalNumber(value: value)
+        case let value as Int8:
+            return NSDecimalNumber(value: value)
+        case let value as UInt64:
+            return NSDecimalNumber(value: value)
+        case let value as UInt32:
+            return NSDecimalNumber(value: value)
+        case let value as UInt16:
+            return NSDecimalNumber(value: value)
+        case let value as UInt8:
+            return NSDecimalNumber(value: value)
+        case let value as Double:
+            return NSDecimalNumber(value: value)
+        case let value as Float:
+            return NSDecimalNumber(value: value)
+        case let value as NSNumber:
+            return value
+        case let value as String:
+            return value
+        case let value as NSArray:
             if let val = value as? Array<ZVObject> {
                 return val.map({ item in return item.dictionaryValue() })
             } else {
                 return value
             }
-        case is NSDictionary:
-            let value = anyValue as! NSDictionary
+        case let value as NSDictionary:
             if let val = value as? Dictionary<String, ZVObject> {
                 var dictioanry = [String: [String: Bindable]]()
                 for (k, v) in val {
@@ -169,10 +179,9 @@ internal extension ZVObject {
             } else {
                 return value
             }
-        case is Date:
-            return anyValue as! Date
-        case is ZVObject:
-            let value = anyValue as! ZVObject
+        case let value as Date:
+            return value
+        case let value as ZVObject:
             return value.dictionaryValue()
         default:
             return NSNull()

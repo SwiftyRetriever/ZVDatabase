@@ -18,8 +18,8 @@ public final class DatabaseQueue: NSObject {
     public init(path: String) {
         
         _connection = Connection(path: path)
-        _queue = DispatchQueue(label: "com.zevwings.db.queue")
-        
+        let label = path.isEmpty ? "queue" : path
+        _queue = DispatchQueue(label: "com.zevwings.db.\(label)")
     }
     
     public init(path: String = "", queue: DispatchQueue) {
