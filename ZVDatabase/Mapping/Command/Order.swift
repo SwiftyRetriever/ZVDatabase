@@ -13,14 +13,14 @@ public class Order: Command {
     public convenience init(condition: [String]) {
         
         self.init()
-        _add(keyword: "ORDER BY")
+        self.add(keyword: "ORDER BY")
         _sql.append(condition.joined(separator: ","))
     }
     
     public convenience init(column: String, asc: Bool = true) {
         
         self.init()
-        _add(keyword: "ORDER BY")
+        self.add(keyword: "ORDER BY")
         _sql.append("\(column) \(asc ? "ASC" : "DESC")")
     }
 }

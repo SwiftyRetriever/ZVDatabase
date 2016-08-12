@@ -15,10 +15,6 @@ public class Command: NSObject {
     
     public override init() {}
     deinit {}
-}
-
-//MARK: - WHERE Statement
-public extension Command {
     
     public var isEmpty: Bool {
         
@@ -28,10 +24,14 @@ public extension Command {
         }
         return isEmpty
     }
+}
+
+//MARK: - WHERE Statement
+public extension Command {
     
     public func `where`(_ expression: String, parameters: [Bindable] = []) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append(expression)
         _parameters.append(contentsOf: parameters)
         
@@ -40,7 +40,7 @@ public extension Command {
     
     public func `where`(_ column: String, equalTo value: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) = \(value)")
         
         return self
@@ -48,7 +48,7 @@ public extension Command {
     
     public func `where`(_ column: String, unequalTo value: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) <> \(value)")
         
         return self
@@ -56,7 +56,7 @@ public extension Command {
     
     public func `where`(_ column: String, lessThan value: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) < \(value)")
         
         return self
@@ -64,7 +64,7 @@ public extension Command {
     
     public func `where`(_ column: String, gatherThan value: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) > \(value)")
         
         return self
@@ -72,7 +72,7 @@ public extension Command {
     
     public func `where`(_ column: String, lessThanOrEqualTo value: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) <= \(value)")
         
         return self
@@ -80,7 +80,7 @@ public extension Command {
     
     public func `where`(_ column: String, gatherThanOrEqualTo value: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) >= \(value)")
         
         return self
@@ -88,7 +88,7 @@ public extension Command {
     
     public func `where`(_ column: String, between value1: Bindable, and value2: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) BETWEENT \(value1) AND \(value2)" )
         
         return self
@@ -96,7 +96,7 @@ public extension Command {
     
     public func `where`(_ column: String, like value: Bindable) -> Command {
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) LIKE \(value)" )
         return self
     }
@@ -105,7 +105,7 @@ public extension Command {
         
         let prefix = values.map { _  in return "?" }.joined(separator: ",")
         
-        _add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: "AND")
         _sql.append("\(column) in \(prefix)")
         _parameters.append(contentsOf: values)
         return self
@@ -117,14 +117,14 @@ public extension Command {
     
     public func order(by condition: [String]) -> Command {
         
-        _add(keyword: "ORDER BY")
+        self.add(keyword: "ORDER BY")
         _sql.append(condition.joined(separator: ","))
         return self
     }
     
     public func order(by column: String, asc: Bool = true) -> Command {
         
-        _add(keyword: "ORDER BY")
+        self.add(keyword: "ORDER BY")
         _sql.append("\(column) \(asc ? "ASC" : "DESC")")
         return self
     }
@@ -158,7 +158,7 @@ public extension Command {
 // MARK: - private methods
 internal extension Command {
     
-    internal func _add(keyword: String, prefix: String = ", ") {
+    internal func add(keyword: String, prefix: String = ", ") {
         
         if _sql.contains(keyword) {
             _sql.append(" \(prefix) ")
