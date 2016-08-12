@@ -159,3 +159,5 @@ internal extension ZVObject {
         }
     }
 }
+
+//MARK: - set(value: Any, for key: String)

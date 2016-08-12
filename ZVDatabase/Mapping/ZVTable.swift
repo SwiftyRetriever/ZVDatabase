@@ -82,6 +82,10 @@ public extension ZVTable {
 }
 
 //MARK: - CRUD
+
+public typealias errorBlock = ((error: Error) -> Void)
+public typealias resultBlock = (result: [[String: AnyObject]]) -> Void
+
 public extension ZVTable {
     
     public func insert(_ object: ZVObject) {
@@ -129,31 +133,40 @@ public extension ZVTable {
     }
     
     public func select(_ rows: [String] = [],
-                       where command: Where? = nil,
-                       inBackground: Bool = false,
-                       rs result: (result: [[String: AnyObject]]) -> Void) {
+                       where command: Where? = nil) throws -> [[String: AnyObject]] {
         
         let fields = rows.isEmpty ? self.shared.fields().map({ (key, _) in return key }) : rows
         let cmd = Select(fields, from: self.tableName()).appending(command)
-//        print(cmd._sql)
-        self.commands.append(cmd)
-        self.query(result)
+        return try self.query(by: cmd)
+    }
+    
+    public func select(_ rows: [String] = [],
+                       where command: Where? = nil,
+                       inBackground: Bool = false,
+                       rs result: resultBlock,
+                       error block: errorBlock? = nil) {
+        
+        let fields = rows.isEmpty ? self.shared.fields().map({ (key, _) in return key }) : rows
+        let cmd = Select(fields, from: self.tableName()).appending(command)
+        self.query(by: cmd, inBackground: inBackground, rs: result, error: block)
     }
 }
 
 //MARK: - Execute
+
 public extension ZVTable {
     
-    public func excute(inBackground: Bool = false) {
+    public func excute(inBackground: Bool = false,
+                       error block: errorBlock? = nil) {
         
         if inBackground {
-            _executeInBackground()
+            _executeInBackground(error: block)
         } else {
-            _excute()
+            _excute(error: block)
         }
     }
     
-    private func _excute() {
+    private func _excute(error block: errorBlock? = nil) {
         
         let db = Connection(path: self.databasePath() ?? "")
         do {
@@ -164,11 +177,13 @@ public extension ZVTable {
             }
             try db.close()
         } catch {
-            print(error)
+            block?(error: error)
         }
+        
+        self.commands.removeAll()
     }
     
-    private func _executeInBackground() {
+    private func _executeInBackground(error block: errorBlock? = nil) {
         
         let queue = DatabaseQueue(path: self.databasePath() ?? "")
         queue.inTransaction({ (db) -> Bool in
@@ -179,53 +194,70 @@ public extension ZVTable {
                     try cmd.execute(with: db)
                 }
             } catch {
-                print(error)
                 success = false
+                block?(error: error)
             }
+            
+            self.commands.removeAll()
             return success
         })
     }
 }
 
+//MARK: - Query
 public extension ZVTable {
     
-    public func query(inBackground: Bool = false, _ result: (result: [[String: AnyObject]]) -> Void) {
+    public func query(by cmd: Command) throws -> [[String: AnyObject]] {
+
+        let db = Connection(path: self.databasePath() ?? "")
+        try db.open()
+        let rs = try cmd.query(with: db)
+        try db.close()
+        
+        return rs
+    }
+    
+    public func query(by cmd: Command,
+                      inBackground: Bool = false,
+                      rs result: (result: [[String: AnyObject]]) -> Void,
+                      error block: errorBlock? = nil) {
         
         if inBackground {
-            _queryInBackground(result: result)
+            _queryInBackground(by: cmd, result: result, error: block)
         } else {
-            _query(result: result)
+            _query(by: cmd, result: result, error: block)
         }
     }
 
-    private func _query(result: (results: [[String: AnyObject]]) -> Void) {
+    private func _query(by cmd: Command,
+                        result: (results: [[String: AnyObject]]) -> Void,
+                        error block: errorBlock? = nil) {
         
         let db = Connection(path: self.databasePath() ?? "")
         do {
             try db.open()
-            print(db.databasePath)
-            for cmd in self.commands {
-                let rs = try cmd.query(with: db)
-                result(results: rs)
-            }
+            let rs = try cmd.query(with: db)
+            result(results: rs)
             try db.close()
         } catch {
-            print(error)
+            block?(error: error)
         }
     }
     
-    private func _queryInBackground(result: (results: [[String: AnyObject]]) -> Void) {
+    private func _queryInBackground(by cmd: Command,
+                                    result: (results: [[String: AnyObject]]) -> Void,
+                                    error block: errorBlock? = nil) {
         
         let queue = DatabaseQueue(path: self.databasePath() ?? "")
         queue.inBlock { (db) in
             
             do {
-                for cmd in self.commands {
-                    let rs = try cmd.query(with: db)
-                    result(results: rs)
-                }
+                try db.open()
+                let rs = try cmd.query(with: db)
+                result(results: rs)
+                try db.close()
             } catch {
-                print(error)
+                block?(error: error)
             }
         }
     }

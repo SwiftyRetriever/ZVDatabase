@@ -31,9 +31,9 @@ public final class DatabaseQueue: NSObject {
     public func inBlock(_ block: (db: Connection) -> Void) {
         
         if let queue = _queue {
-            queue.async(execute: {
+            queue.async {
                 block(db: self._connection!)
-            })
+            }
         }
     }
     
