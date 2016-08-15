@@ -158,12 +158,12 @@
 			children = (
 				4DE254021D61A31D004E6499 /* Bindable+Collection.swift */,
 				4DE254031D61A31D004E6499 /* Command.swift */,
-				4DE254041D61A31D004E6499 /* Delete.swift */,
-				4DE254051D61A31D004E6499 /* Insert.swift */,
-				4DE254061D61A31D004E6499 /* Order.swift */,
 				4DE254071D61A31D004E6499 /* Schema.swift */,
-				4DE254081D61A31D004E6499 /* Select.swift */,
+				4DE254051D61A31D004E6499 /* Insert.swift */,
+				4DE254041D61A31D004E6499 /* Delete.swift */,
 				4DE254091D61A31D004E6499 /* Update.swift */,
+				4DE254081D61A31D004E6499 /* Select.swift */,
+				4DE254061D61A31D004E6499 /* Order.swift */,
 				4DE2540A1D61A31D004E6499 /* Where.swift */,
 			);
 			path = DBHelper;

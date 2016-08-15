@@ -218,4 +218,9 @@ class ZVDatabaseTests: XCTestCase {
             print(error)
         }
     }
+
+    func testSchema() {
+        let cmd = Schema(create: "tb_user", fields: [:])
+    }
 }
+

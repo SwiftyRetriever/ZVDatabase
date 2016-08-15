@@ -13,9 +13,8 @@ public class Schema: Command {
     public convenience init(create table: String, fields: [String: String]) {
         
         self.init()
-        var columns: [String] = []
-        for (name, info) in fields {
-            columns.append("\(name) \(info)")
+        let columns = fields.map { (name, info) -> String in
+            return "\(name) \(info)"
         }
         let sql = "CREATE TABLE IF NOT EXISTS \(table) (\(columns.joined(separator: ", ")));"
         _sql.append(sql)

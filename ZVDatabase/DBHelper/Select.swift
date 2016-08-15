@@ -10,7 +10,9 @@ import UIKit
 
 public class Select: Command {
 
-    public convenience init(_ column: [String], from table: String, parameters: [Bindable] = []) {
+    public convenience init(_ column: [String],
+                            from table: String,
+                            parameters: [Bindable] = []) {
         
         self.init()
         let sql = "SELECT \(column.joined(separator: ", ")) FROM \(table)"

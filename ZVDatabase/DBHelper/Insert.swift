@@ -10,7 +10,9 @@ import UIKit
 
 public class Insert: Command {
 
-    public convenience init(_ column: [String], parameters: [Bindable] = [], into table: String) {
+    public convenience init(_ column: [String],
+                            parameters: [Bindable] = [],
+                            into table: String) {
         
         self.init()
         let prefix = column.map { _ in return "?" }
@@ -20,7 +22,8 @@ public class Insert: Command {
         _parameters.append(contentsOf: parameters)
     }
     
-    public convenience init(_ values: [String: Bindable], into table: String) {
+    public convenience init(_ values: [String: Bindable],
+                            into table: String) {
     
         self.init()
         var columnArray = [String]()

@@ -29,83 +29,104 @@ public class Command: NSObject {
 //MARK: - WHERE Statement
 public extension Command {
     
-    public func `where`(_ expression: String, parameters: [Bindable] = []) -> Command {
+    public func `where`(_ expression: String,
+                        parameters: [Bindable] = [],
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append(expression)
         _parameters.append(contentsOf: parameters)
         
         return self
     }
     
-    public func `where`(_ column: String, equalTo value: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        equalTo value: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) = \(value)")
         
         return self
     }
     
-    public func `where`(_ column: String, unequalTo value: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        unequalTo value: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) <> \(value)")
         
         return self
     }
     
-    public func `where`(_ column: String, lessThan value: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        lessThan value: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) < \(value)")
         
         return self
     }
     
-    public func `where`(_ column: String, gatherThan value: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        gatherThan value: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) > \(value)")
         
         return self
     }
     
-    public func `where`(_ column: String, lessThanOrEqualTo value: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        lessThanOrEqualTo value: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) <= \(value)")
         
         return self
     }
     
-    public func `where`(_ column: String, gatherThanOrEqualTo value: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        gatherThanOrEqualTo value: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) >= \(value)")
         
         return self
     }
     
-    public func `where`(_ column: String, between value1: Bindable, and value2: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        between value1: Bindable,
+                        and value2: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) BETWEENT \(value1) AND \(value2)" )
         
         return self
     }
     
-    public func `where`(_ column: String, like value: Bindable) -> Command {
+    public func `where`(_ column: String,
+                        like value: Bindable,
+                        prefix: String = "AND") -> Command {
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) LIKE \(value)" )
         return self
     }
     
-    public func `where`(_ column: String, in values: [Bindable]) -> Command {
+    public func `where`(_ column: String,
+                        in values: [Bindable],
+                        prefix: String = "AND") -> Command {
         
         let prefix = values.map { _  in return "?" }.joined(separator: ",")
         
-        self.add(keyword: "WHERE", prefix: "AND")
+        self.add(keyword: "WHERE", prefix: prefix)
         _sql.append("\(column) in \(prefix)")
         _parameters.append(contentsOf: values)
         return self
