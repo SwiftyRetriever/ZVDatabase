@@ -20,6 +20,10 @@ public class ZVObject: NSObject {
 
 //MARK: - toDictionary
 internal extension ZVObject {
+    /*
+    func type2() -> Any.Type {
+        return Int.Type()
+    }*/
     
     internal func dictionaryValue(skip:[String] = []) -> [String: Bindable] {
         
@@ -160,4 +164,166 @@ internal extension ZVObject {
     }
 }
 
+
 //MARK: - set(value: Any, for key: String)
+
+public typealias Element = (label: String, type: Any)
+
+public extension ZVObject {
+    
+    public convenience init(dictionary: [String: AnyObject]) {
+        
+        self.init()
+        
+        _getValue(from: dictionary)
+    }
+    
+    private func _getValue(from dictionary: [String: AnyObject]) {
+        
+        let mirror:Mirror! = Mirror(reflecting: self)
+        
+        if let collection = AnyBidirectionalCollection(mirror.children) {
+            
+            var index = collection.index(collection.endIndex,
+                                         offsetBy: -collection.count,
+                                         limitedBy: collection.startIndex) ?? collection.startIndex
+            
+            while index != collection.endIndex {
+                
+                let element = collection[index]
+                if let label = element.label {
+                    
+                    let value = _getValue(by: Element(label: label, type: element.value), from: dictionary)
+                    
+                    if let val = value {
+                        // print(val)
+                        self.setValue(val, forKey: label)
+                    }
+                    collection.formIndex(after: &index)
+                }
+            }
+        }
+    }
+    
+    private func _getType(by anyValue: Any) -> Any {
+        
+        var theValue = anyValue
+        
+        let mirror = Mirror(reflecting: theValue)
+        
+        if mirror.displayStyle == .optional {
+            if mirror.children.count == 1 {
+                theValue = _getType(by: mirror.children.first!.value)
+                    // _getType(by: mirror.children.first!.value)
+            }
+        }
+        
+        return theValue
+    }
+    
+    private func _getValue(by element: Element , from dictionary: [String: AnyObject]) -> AnyObject? {
+        
+        // print(Mirror(reflecting: element.type).subjectType)
+        var objectValue: AnyObject?
+        switch element.type {
+        case is Int, is Int8, is Int16, is Int32, is Int64,
+             is UInt, is UInt8, is UInt16, is UInt32, is UInt64, is NSNumber,
+             is Double, is Float,
+             is Bool:
+            
+            objectValue = _getNumberValue(by: element, from: dictionary)
+            break
+        case is String, is NSString:
+            objectValue = _getStringValue(by: element, from: dictionary)
+            break
+        case is NSArray:
+            objectValue = _getArrayValue(by: element, from: dictionary)
+            break
+        case is NSDictionary:
+            objectValue = _getDictionaryValue(by: element, from: dictionary)
+            break
+        default:
+            break
+        }
+        
+        return objectValue
+    }
+    
+    private func _getNumberValue(by element: Element,
+                                 from dictionary: [String: AnyObject]) -> AnyObject? {
+        
+        let objectValue = dictionary[element.label]
+
+        switch objectValue {
+        case let value as String:
+            return NSDecimalNumber(string: value)
+        case let value as NSNumber:
+            return value
+        case let value as Int8:
+            return NSDecimalNumber(value: value)
+        case let value as UInt8:
+            return NSDecimalNumber(value: value)
+        case let value as Int16:
+            return NSDecimalNumber(value: value)
+        case let value as UInt16:
+            return NSDecimalNumber(value: value)
+        case let value as Int32:
+            return NSDecimalNumber(value: value)
+        case let value as UInt32:
+            return NSDecimalNumber(value: value)
+        case let value as Int64:
+            return NSDecimalNumber(value: value)
+        case let value as UInt64:
+            return NSDecimalNumber(value: value)
+        case let value as Float:
+            return NSDecimalNumber(value: value)
+        case let value as Double:
+            return NSDecimalNumber(value: value)
+        case let value as Data:
+            let string = String(data: value, encoding: .utf8)
+            return NSDecimalNumber(string: string)
+        default:
+            return objectValue
+        }
+    }
+
+    private func _getStringValue(by element: Element,
+                                 from dictionary: [String: AnyObject]) -> AnyObject? {
+        
+        let objectValue = dictionary[element.label]
+        switch objectValue {
+        case let value as String:
+            return value
+        case let value as Data:
+            let string = String(data: value, encoding: .utf8)
+            return string
+        default:
+            if let val = objectValue {
+                return String(val)
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    private func _getArrayValue(by element: Element,
+                                from dictionary: [String: AnyObject]) -> NSArray? {
+
+        if let objectValue = dictionary[element.label] as? NSArray {
+            return objectValue
+        }
+        
+        return nil
+    }
+    
+    private func _getDictionaryValue(by element: Element,
+                                     from dictionary: [String: AnyObject]) -> NSDictionary? {
+        
+        if let objectValue = dictionary[element.label] as? NSDictionary {
+            return objectValue
+        }
+        
+        return nil
+    }
+}
+
