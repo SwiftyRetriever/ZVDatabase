@@ -10,6 +10,13 @@ import UIKit
 
 public class Delete: Command {
 
+    /**
+     <#Description#>
+     
+     - parameter table: <#table description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(from table: String) {
         self.init()
         let sql = "DELETE FROM \(table)"

@@ -29,6 +29,15 @@ public class Command: NSObject {
 //MARK: - WHERE Statement
 public extension Command {
     
+    /**
+     <#Description#>
+     
+     - parameter expression: <#expression description#>
+     - parameter parameters: <#parameters description#>
+     - parameter prefix:     <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ expression: String,
                         parameters: [Bindable] = [],
                         prefix: String = "AND") -> Command {
@@ -40,6 +49,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         equalTo value: Bindable,
                         prefix: String = "AND") -> Command {
@@ -50,6 +68,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         unequalTo value: Bindable,
                         prefix: String = "AND") -> Command {
@@ -60,6 +87,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         lessThan value: Bindable,
                         prefix: String = "AND") -> Command {
@@ -70,6 +106,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         gatherThan value: Bindable,
                         prefix: String = "AND") -> Command {
@@ -80,6 +125,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         lessThanOrEqualTo value: Bindable,
                         prefix: String = "AND") -> Command {
@@ -90,6 +144,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         gatherThanOrEqualTo value: Bindable,
                         prefix: String = "AND") -> Command {
@@ -100,6 +163,16 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value1: <#value1 description#>
+     - parameter value2: <#value2 description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         between value1: Bindable,
                         and value2: Bindable,
@@ -111,6 +184,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         like value: Bindable,
                         prefix: String = "AND") -> Command {
@@ -120,6 +202,15 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter values: <#values description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public func `where`(_ column: String,
                         in values: [Bindable],
                         prefix: String = "AND") -> Command {
@@ -136,6 +227,13 @@ public extension Command {
 //MARK: - Order Statement
 public extension Command {
     
+    /**
+     <#Description#>
+     
+     - parameter condition: <#condition description#>
+     
+     - returns: <#return value description#>
+     */
     public func order(by condition: [String]) -> Command {
         
         self.add(keyword: "ORDER BY")
@@ -143,6 +241,14 @@ public extension Command {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter asc:    <#asc description#>
+     
+     - returns: <#return value description#>
+     */
     public func order(by column: String, asc: Bool = true) -> Command {
         
         self.add(keyword: "ORDER BY")
@@ -154,6 +260,13 @@ public extension Command {
 //MARK: - Appding
 public extension Command {
     
+    /**
+     <#Description#>
+     
+     - parameter command: <#command description#>
+     
+     - returns: <#return value description#>
+     */
     public func appending(_ command: Command?) -> Command {
         
         if command == nil && command!.isEmpty {
@@ -169,6 +282,11 @@ public extension Command {
 //MARK: - End Prefix
 public extension Command {
     
+    /**
+     <#Description#>
+     
+     - returns: <#return value description#>
+     */
     public func end() -> Command{
         
         _sql.append(";")
@@ -179,6 +297,12 @@ public extension Command {
 // MARK: - private methods
 internal extension Command {
     
+    /**
+     <#Description#>
+     
+     - parameter keyword: <#keyword description#>
+     - parameter prefix:  <#prefix description#>
+     */
     internal func add(keyword: String, prefix: String = ", ") {
         
         if _sql.contains(keyword) {
@@ -192,6 +316,13 @@ internal extension Command {
 //MARK: - Execute
 public extension Command {
     
+    /**
+     <#Description#>
+     
+     - parameter db: <#db description#>
+     
+     - throws: <#throws value description#>
+     */
     public func execute(with db: Connection) throws {
         
         try db.executeUpdate(_sql, parameters: _parameters)
@@ -200,6 +331,15 @@ public extension Command {
         _parameters.removeAll()
     }
     
+    /**
+     <#Description#>
+     
+     - parameter db: <#db description#>
+     
+     - throws: <#throws value description#>
+     
+     - returns: <#return value description#>
+     */
     public func query(with db: Connection) throws -> [[String: AnyObject]] {
         
         let results = try db.executeQuery(_sql, parameters: _parameters)

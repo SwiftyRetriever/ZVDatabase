@@ -10,6 +10,15 @@ import UIKit
 
 public class Select: Command {
 
+    /**
+     <#Description#>
+     
+     - parameter column:     <#column description#>
+     - parameter table:      <#table description#>
+     - parameter parameters: <#parameters description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: [String],
                             from table: String,
                             parameters: [Bindable] = []) {

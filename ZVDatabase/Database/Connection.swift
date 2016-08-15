@@ -40,6 +40,14 @@ public final class Connection: NSObject {
         _connection = nil
     }
     
+    /**
+     <#Description#>
+     
+     - parameter readonly: <#readonly description#>
+     - parameter vfsName:  <#vfsName description#>
+     
+     - throws: <#throws value description#>
+     */
     public func open(readonly: Bool = false, vfs vfsName: String? = nil) throws {
     
         if databasePath.isEmpty {
@@ -62,6 +70,11 @@ public final class Connection: NSObject {
         
     }
     
+    /**
+     <#Description#>
+     
+     - throws: <#throws value description#>
+     */
     public func close() throws {
         
         if _connection == nil { return }
@@ -73,6 +86,14 @@ public final class Connection: NSObject {
         }
     }
     
+    /**
+     <#Description#>
+     
+     - parameter sql:        <#sql description#>
+     - parameter parameters: <#parameters description#>
+     
+     - throws: <#throws value description#>
+     */
     public func executeUpdate(_ sql: String,
                               parameters:[Bindable] = []) throws {
         
@@ -81,6 +102,17 @@ public final class Connection: NSObject {
         try statement.execute()
     }
     
+    /**
+     <#Description#>
+     
+     - parameter sql:             <#sql description#>
+     - parameter parameters:      <#parameters description#>
+     - parameter lastInsertRowid: <#lastInsertRowid description#>
+     
+     - throws: <#throws value description#>
+     
+     - returns: <#return value description#>
+     */
     public func exceuteUpdate(_ sql: String,
                               parameters:[Bindable] = [],
                               lastInsertRowid: Bool = false) throws -> Int64? {
@@ -96,6 +128,16 @@ public final class Connection: NSObject {
         }   
     }
     
+    /**
+     <#Description#>
+     
+     - parameter sql:        <#sql description#>
+     - parameter parameters: <#parameters description#>
+     
+     - throws: <#throws value description#>
+     
+     - returns: <#return value description#>
+     */
     public func executeQuery(_ sql: String,
                              parameters:[Bindable] = []) throws -> [[String: AnyObject]] {
         
@@ -106,6 +148,12 @@ public final class Connection: NSObject {
     
     
     // MARK: - Transaction
+    
+    /**
+     <#Description#>
+     
+     - returns: <#return value description#>
+     */
     public func beginExclusiveTransaction() -> Bool {
         
         let sql = "BEGIN EXCLUSIVE TRANSACTION"
@@ -115,6 +163,11 @@ public final class Connection: NSObject {
         return self.hasTransaction
     }
     
+    /**
+     <#Description#>
+     
+     - returns: <#return value description#>
+     */
     public func beginDeferredTransaction() -> Bool {
         
         let sql = "BEGIN DEFERRED TRANSACTION"
@@ -124,6 +177,11 @@ public final class Connection: NSObject {
         return self.hasTransaction
     }
     
+    /**
+     <#Description#>
+     
+     - returns: <#return value description#>
+     */
     public func beginImmediateTransaction() -> Bool {
         
         let sql = "BEGIN IMMEDIATE TRANSACTION"
@@ -133,6 +191,9 @@ public final class Connection: NSObject {
         return self.hasTransaction
     }
     
+    /**
+     <#Description#>
+     */
     public func rollback() {
         
         defer {
@@ -149,6 +210,9 @@ public final class Connection: NSObject {
         }
     }
     
+    /**
+     <#Description#>
+     */
     public func commit() {
         
         defer {
@@ -163,7 +227,13 @@ public final class Connection: NSObject {
         }
     }
     
-    
+    /**
+     <#Description#>
+     
+     - parameter name: <#name description#>
+     
+     - returns: <#return value description#>
+     */
     public func beginSavepoint(with name: String) -> Bool {
         
         let sql = "SAVEPOINT " + name
@@ -175,6 +245,11 @@ public final class Connection: NSObject {
         return self.hasSavePoint
     }
     
+    /**
+     <#Description#>
+     
+     - parameter name: <#name description#>
+     */
     public func rollbackSavepoint(with name: String) {
         
         let sql = "ROLLBACK TO SAVEPOINT " + name
@@ -184,6 +259,11 @@ public final class Connection: NSObject {
         }
     }
     
+    /**
+     <#Description#>
+     
+     - parameter name: <#name description#>
+     */
     public func releaseSavepoint(with name:String) {
         
         let sql = "RELEASE " + name
@@ -196,6 +276,7 @@ public final class Connection: NSObject {
     // MARK: - BusyHandler
     private var _startBusyRetryTime: TimeInterval = 0.0
     
+    ///
     public var maxBusyRetryTime: TimeInterval = 2.0 {
         didSet (timeOut) {
             _setMaxBusyRetry(timeOut: timeOut)
@@ -244,22 +325,26 @@ public final class Connection: NSObject {
     }
     
     // MARK: -
+    /// <#Description#>
     public var lastInsertRowid: Int64? {
         
         let rowid = sqlite3_last_insert_rowid(_connection)
         return rowid != 0 ? rowid : nil
     }
     
+    /// <#Description#>
     public var changes: Int {
         
         let rows = sqlite3_changes(_connection)
         return Int(rows)
     }
     
+    /// <#Description#>
     public var totalChanges: Int {
         return Int(sqlite3_total_changes(_connection))
     }
     
+    /// <#Description#>
     public var lastErrorMsg: String {
         
         let errMsg = String(cString: sqlite3_errmsg(_connection))

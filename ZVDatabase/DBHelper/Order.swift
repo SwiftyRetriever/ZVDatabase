@@ -10,6 +10,13 @@ import UIKit
 
 public class Order: Command {
 
+    /**
+     <#Description#>
+     
+     - parameter condition: <#condition description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(condition: [String]) {
         
         self.init()
@@ -17,6 +24,14 @@ public class Order: Command {
         _sql.append(condition.joined(separator: ","))
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter asc:    <#asc description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(column: String, asc: Bool = true) {
         
         self.init()

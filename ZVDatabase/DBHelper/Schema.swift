@@ -10,6 +10,14 @@ import UIKit
 
 public class Schema: Command {
 
+    /**
+     <#Description#>
+     
+     - parameter table:  <#table description#>
+     - parameter fields: <#fields description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(create table: String, fields: [String: String]) {
         
         self.init()
@@ -20,6 +28,13 @@ public class Schema: Command {
         _sql.append(sql)
     }
     
+    /**
+     <#Description#>
+     
+     - parameter table: <#table description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(drop table: String) {
         
         self.init()
@@ -27,6 +42,15 @@ public class Schema: Command {
         _sql.append(sql)
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter info:   <#info description#>
+     - parameter table:  <#table description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(add column: String, info: String, for table: String) {
         
         self.init()
@@ -34,6 +58,14 @@ public class Schema: Command {
         _sql.append(sql)
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter table:  <#table description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(delete column: String, from table: String) {
         
         self.init()
@@ -41,6 +73,15 @@ public class Schema: Command {
         _sql.append(sql)
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter info:   <#info description#>
+     - parameter table:  <#table description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(alert column: String, info: String, for table: String) {
         
         self.init()

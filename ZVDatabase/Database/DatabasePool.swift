@@ -10,7 +10,20 @@ import UIKit
 
 public protocol DatabasePoolDelegate : class {
     
+    /**
+     <#Description#>
+     
+     - parameter database: <#database description#>
+     
+     - throws: <#throws value description#>
+     */
     func databaseOpened(_ database: Connection) throws
+    
+    /**
+     <#Description#>
+     
+     - parameter database: <#database description#>
+     */
     func databaseClosed(_ database: Connection)
     
 }
@@ -24,10 +37,24 @@ public final class DatabasePool {
     
     public weak var delegate : DatabasePoolDelegate?
 
+    /**
+     <#Description#>
+     
+     - returns: <#return value description#>
+     */
     public init() {
         _lockQueue = DispatchQueue(label: "com.zevwings.db.locked")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter path:     <#path description#>
+     - parameter readOnly: <#readOnly description#>
+     - parameter vfsName:  <#vfsName description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(path: String, readOnly: Bool = false, vfs vfsName: String? = nil) {
         self.init()
         _databasePath = path
@@ -35,6 +62,14 @@ public final class DatabasePool {
         _vfsName = vfsName
     }
     
+    /**
+     <#Description#>
+     
+     - parameter path:     <#path description#>
+     - parameter delegate: <#delegate description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(path: String? = nil, delegate: DatabasePoolDelegate? = nil) {
         self.init()
         _databasePath = path
@@ -57,14 +92,23 @@ public final class DatabasePool {
     private var _inactiveDatabases   = [Connection]()
     private var _activeDatabases     = [Connection]()
     
+    /// <#Description#>
     public var inactiveDatabaseCount : Int {
         return _inactiveDatabases.count
     }
     
+    /// <#Description#>
     public var activeDatabaseCount : Int {
         return _activeDatabases.count
     }
 
+    /**
+     <#Description#>
+     
+     - throws: <#throws value description#>
+     
+     - returns: <#return value description#>
+     */
     public func dequeueDatabase() throws -> Connection {
         var database: Connection?
         var error: NSError?
@@ -92,6 +136,11 @@ public final class DatabasePool {
         return dequeuedDatabase
     }
     
+    /**
+     <#Description#>
+     
+     - parameter database: <#database description#>
+     */
     public func enqueueDatabase(database: Connection) {
         _deactivate(database: database)
         _lockQueue?.sync(execute: {
@@ -99,10 +148,18 @@ public final class DatabasePool {
         })
     }
     
+    /**
+     <#Description#>
+     
+     - parameter database: <#database description#>
+     */
     public func removeDatabase(database: Connection) {
         _deactivate(database: database)
     }
     
+    /**
+     <#Description#>
+     */
     public func drain() {
         _lockQueue?.sync(execute: { 
             _inactiveDatabases.removeAll(keepingCapacity: false)
@@ -140,6 +197,13 @@ public final class DatabasePool {
         })
     }
     
+    /**
+     <#Description#>
+     
+     - parameter block: <#block description#>
+     
+     - throws: <#throws value description#>
+     */
     public func inBlock(_ block: (db: Connection) -> Void) throws {
         
         let db = try self.dequeueDatabase()
@@ -147,6 +211,14 @@ public final class DatabasePool {
         self.enqueueDatabase(database: db)
     }
     
+    /**
+     <#Description#>
+     
+     - parameter type:  <#type description#>
+     - parameter block: <#block description#>
+     
+     - throws: <#throws value description#>
+     */
     public func inTransaction(transactionType type: TransactionType = .deferred, _ block: (db: Connection) -> Bool) throws {
         
         let db: Connection = try self.dequeueDatabase()

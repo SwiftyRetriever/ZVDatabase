@@ -10,6 +10,15 @@ import UIKit
 
 public class Insert: Command {
 
+    /**
+     <#Description#>
+     
+     - parameter column:     <#column description#>
+     - parameter parameters: <#parameters description#>
+     - parameter table:      <#table description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: [String],
                             parameters: [Bindable] = [],
                             into table: String) {
@@ -22,6 +31,14 @@ public class Insert: Command {
         _parameters.append(contentsOf: parameters)
     }
     
+    /**
+     <#Description#>
+     
+     - parameter values: <#values description#>
+     - parameter table:  <#table description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ values: [String: Bindable],
                             into table: String) {
     

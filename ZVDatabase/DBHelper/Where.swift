@@ -10,6 +10,14 @@ import UIKit
 
 public class Where: Command {
 
+    /**
+     <#Description#>
+     
+     - parameter expression: <#expression description#>
+     - parameter parameters: <#parameters description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ expression: String,
                             parameters: [Bindable] = []) {
         
@@ -18,6 +26,15 @@ public class Where: Command {
         _parameters.append(contentsOf: parameters)
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             equalTo value: Bindable,
                             prefix: String = "AND") {
@@ -27,6 +44,15 @@ public class Where: Command {
         _sql.append("\(column) = \(value)")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             unequalTo value: Bindable,
                             prefix: String = "AND") {
@@ -36,6 +62,15 @@ public class Where: Command {
         _sql.append("\(column) <> \(value)")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             lessThan value: Bindable,
                             prefix: String = "AND") {
@@ -45,6 +80,15 @@ public class Where: Command {
         _sql.append("\(column) <> \(value)")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             gatherThan value: Bindable,
                             prefix: String = "AND") {
@@ -54,6 +98,15 @@ public class Where: Command {
         _sql.append("\(column) <> \(value)")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             lessThanOrEqualTo value: Bindable,
                             prefix: String = "AND") {
@@ -63,6 +116,15 @@ public class Where: Command {
         _sql.append("\(column) <= \(value)")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             gatherThanOrEqualTo value: Bindable,
                             prefix: String = "AND") {
@@ -72,6 +134,16 @@ public class Where: Command {
         _sql.append("\(column) >= \(value)")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value1: <#value1 description#>
+     - parameter value2: <#value2 description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             between value1: Bindable,
                             and value2: Bindable,
@@ -82,6 +154,15 @@ public class Where: Command {
         _sql.append("\(column) BETWEEN \(value1) AND \(value2)" )
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             like value: Bindable,
                             prefix: String = "AND") {
@@ -91,6 +172,15 @@ public class Where: Command {
         _sql.append("\(column) LIKE \(value)" )
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter values: <#values description#>
+     - parameter prefix: <#prefix description#>
+     
+     - returns: <#return value description#>
+     */
     public convenience init(_ column: String,
                             in values: [Bindable],
                             prefix: String = "AND") {
@@ -107,6 +197,14 @@ public class Where: Command {
 //MARK: - AND Statement
 public extension Where {
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     equalTo value: Bindable) -> Where {
         
@@ -116,6 +214,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     unequalTo value: Bindable) -> Where {
         
@@ -125,6 +231,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     lessThan value: Bindable) -> Where {
         
@@ -134,6 +248,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     gatherThan value: Bindable) -> Where {
         
@@ -143,6 +265,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     lessThanOrEqualTo value: Bindable) -> Where {
         
@@ -152,6 +282,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     gatherThanOrEqualTo value: Bindable) -> Where {
         
@@ -161,6 +299,15 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value1: <#value1 description#>
+     - parameter value2: <#value2 description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     between value1: Bindable,
                     and value2: Bindable) -> Where {
@@ -171,6 +318,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     like value: Bindable) -> Where {
         
@@ -180,6 +335,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter values: <#values description#>
+     
+     - returns: <#return value description#>
+     */
     public func and(_ column: String,
                     in values: [Bindable]) -> Where {
         
@@ -196,6 +359,14 @@ public extension Where {
 //MARK: - OR Statement
 public extension Where {
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    equalTo value: Bindable) -> Where {
         
@@ -205,6 +376,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    unequalTo value: Bindable) -> Where {
         
@@ -214,6 +393,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    lessThan value: Bindable) -> Where {
         
@@ -223,6 +410,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    gatherThan value: Bindable) -> Where {
         
@@ -232,6 +427,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    lessThanOrEqualTo value: Bindable) -> Where {
         
@@ -241,6 +444,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    gatherThanOrEqualTo value: Bindable) -> Where {
         
@@ -250,6 +461,15 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value1: <#value1 description#>
+     - parameter value2: <#value2 description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    between value1: Bindable,
                    and value2: Bindable) -> Where {
@@ -260,6 +480,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter value:  <#value description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    like value: Bindable) -> Where {
         
@@ -269,6 +497,14 @@ public extension Where {
         return self
     }
     
+    /**
+     <#Description#>
+     
+     - parameter column: <#column description#>
+     - parameter values: <#values description#>
+     
+     - returns: <#return value description#>
+     */
     public func or(_ column: String,
                    in values: [Bindable]) -> Where {
         

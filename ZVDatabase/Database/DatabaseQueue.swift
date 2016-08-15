@@ -15,6 +15,13 @@ public final class DatabaseQueue: NSObject {
     
     private override init() {}
     
+    /**
+     <#Description#>
+     
+     - parameter path: <#path description#>
+     
+     - returns: <#return value description#>
+     */
     public init(path: String) {
         
         _connection = Connection(path: path)
@@ -22,12 +29,25 @@ public final class DatabaseQueue: NSObject {
         _queue = DispatchQueue(label: "com.zevwings.db.\(label)")
     }
     
+    /**
+     <#Description#>
+     
+     - parameter path:  <#path description#>
+     - parameter queue: <#queue description#>
+     
+     - returns: <#return value description#>
+     */
     public init(path: String = "", queue: DispatchQueue) {
         
         _connection = Connection(path: path)
         _queue = queue
     }
     
+    /**
+     <#Description#>
+     
+     - parameter block: <#block description#>
+     */
     public func inBlock(_ block: (db: Connection) -> Void) {
         
         if let queue = _queue {
@@ -37,6 +57,12 @@ public final class DatabaseQueue: NSObject {
         }
     }
     
+    /**
+     <#Description#>
+     
+     - parameter type:  <#type description#>
+     - parameter block: <#block description#>
+     */
     public func inTransaction(transactionType type: TransactionType = .deferred,
                               _ block: (db: Connection) -> Bool) {
         
@@ -80,6 +106,12 @@ public final class DatabaseQueue: NSObject {
         })
     }
     
+    /**
+     <#Description#>
+     
+     - parameter name:  <#name description#>
+     - parameter block: <#block description#>
+     */
     public func inSavePoint(with name: String,
                             _ block: (db: Connection) -> Bool) {
         
