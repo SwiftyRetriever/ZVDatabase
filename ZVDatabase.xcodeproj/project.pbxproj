@@ -11,24 +11,21 @@
 		4A8878501D48618E00FEEF6D /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A88784F1D48618E00FEEF6D /* Bindable.swift */; };
 		4A9D21571D49ADED008F00E4 /* ZVDatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D21561D49ADED008F00E4 /* ZVDatabaseTests.swift */; };
 		4A9D21591D49ADED008F00E4 /* ZVDatabase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */; };
-		4A9D21621D49AF7A008F00E4 /* ZVTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D21611D49AF7A008F00E4 /* ZVTable.swift */; };
 		4D7BA3F01D45A73F00F7C47F /* ConmonDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */; };
 		4D7BA3F11D45A73F00F7C47F /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E71D45A73F00F7C47F /* Connection.swift */; };
 		4D7BA3F31D45A73F00F7C47F /* DatabasePool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */; };
 		4D7BA3F41D45A73F00F7C47F /* DatabaseQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7BA3EA1D45A73F00F7C47F /* DatabaseQueue.swift */; };
 		4D7BA3FC1D45A89C00F7C47F /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DA0792C1D26B29F00C30590 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */; };
-		4DCDA8A81D55E45000614303 /* Bindable+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCDA8A71D55E45000614303 /* Bindable+Collection.swift */; };
-		4DCDA8AA1D55E48400614303 /* ZVObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCDA8A91D55E48400614303 /* ZVObject.swift */; };
-		4DE233E91D5C7126009D3FB2 /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233E81D5C7126009D3FB2 /* ObjectType.swift */; };
-		4DE233FC1D5C7A1D009D3FB2 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233F51D5C7A1D009D3FB2 /* Command.swift */; };
-		4DE233FD1D5C7A1D009D3FB2 /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233F61D5C7A1D009D3FB2 /* Delete.swift */; };
-		4DE233FE1D5C7A1D009D3FB2 /* Insert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233F71D5C7A1D009D3FB2 /* Insert.swift */; };
-		4DE233FF1D5C7A1D009D3FB2 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233F81D5C7A1D009D3FB2 /* Schema.swift */; };
-		4DE234001D5C7A1D009D3FB2 /* Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233F91D5C7A1D009D3FB2 /* Select.swift */; };
-		4DE234011D5C7A1D009D3FB2 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233FA1D5C7A1D009D3FB2 /* Update.swift */; };
-		4DE234021D5C7A1D009D3FB2 /* Where.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE233FB1D5C7A1D009D3FB2 /* Where.swift */; };
-		4DE234041D5C8499009D3FB2 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE234031D5C8499009D3FB2 /* Order.swift */; };
+		4DE2540B1D61A31D004E6499 /* Bindable+Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254021D61A31D004E6499 /* Bindable+Collection.swift */; };
+		4DE2540C1D61A31D004E6499 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254031D61A31D004E6499 /* Command.swift */; };
+		4DE2540D1D61A31D004E6499 /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254041D61A31D004E6499 /* Delete.swift */; };
+		4DE2540E1D61A31D004E6499 /* Insert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254051D61A31D004E6499 /* Insert.swift */; };
+		4DE2540F1D61A31D004E6499 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254061D61A31D004E6499 /* Order.swift */; };
+		4DE254101D61A31D004E6499 /* Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254071D61A31D004E6499 /* Schema.swift */; };
+		4DE254111D61A31D004E6499 /* Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254081D61A31D004E6499 /* Select.swift */; };
+		4DE254121D61A31D004E6499 /* Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE254091D61A31D004E6499 /* Update.swift */; };
+		4DE254131D61A31D004E6499 /* Where.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DE2540A1D61A31D004E6499 /* Where.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +44,6 @@
 		4A9D21541D49ADED008F00E4 /* ZVDatabaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZVDatabaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A9D21561D49ADED008F00E4 /* ZVDatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZVDatabaseTests.swift; sourceTree = "<group>"; };
 		4A9D21581D49ADED008F00E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4A9D21611D49AF7A008F00E4 /* ZVTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVTable.swift; sourceTree = "<group>"; };
 		4D7BA3E61D45A73F00F7C47F /* ConmonDef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConmonDef.swift; sourceTree = "<group>"; };
 		4D7BA3E71D45A73F00F7C47F /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Connection.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4D7BA3E91D45A73F00F7C47F /* DatabasePool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabasePool.swift; sourceTree = "<group>"; };
@@ -57,17 +53,15 @@
 		4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZVDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA079021D26AECC00C30590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
-		4DCDA8A71D55E45000614303 /* Bindable+Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bindable+Collection.swift"; sourceTree = "<group>"; };
-		4DCDA8A91D55E48400614303 /* ZVObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZVObject.swift; sourceTree = "<group>"; };
-		4DE233E81D5C7126009D3FB2 /* ObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
-		4DE233F51D5C7A1D009D3FB2 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
-		4DE233F61D5C7A1D009D3FB2 /* Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delete.swift; sourceTree = "<group>"; };
-		4DE233F71D5C7A1D009D3FB2 /* Insert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Insert.swift; sourceTree = "<group>"; };
-		4DE233F81D5C7A1D009D3FB2 /* Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
-		4DE233F91D5C7A1D009D3FB2 /* Select.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Select.swift; sourceTree = "<group>"; };
-		4DE233FA1D5C7A1D009D3FB2 /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
-		4DE233FB1D5C7A1D009D3FB2 /* Where.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Where.swift; sourceTree = "<group>"; };
-		4DE234031D5C8499009D3FB2 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		4DE254021D61A31D004E6499 /* Bindable+Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bindable+Collection.swift"; sourceTree = "<group>"; };
+		4DE254031D61A31D004E6499 /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		4DE254041D61A31D004E6499 /* Delete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delete.swift; sourceTree = "<group>"; };
+		4DE254051D61A31D004E6499 /* Insert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Insert.swift; sourceTree = "<group>"; };
+		4DE254061D61A31D004E6499 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		4DE254071D61A31D004E6499 /* Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schema.swift; sourceTree = "<group>"; };
+		4DE254081D61A31D004E6499 /* Select.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Select.swift; sourceTree = "<group>"; };
+		4DE254091D61A31D004E6499 /* Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Update.swift; sourceTree = "<group>"; };
+		4DE2540A1D61A31D004E6499 /* Where.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Where.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,18 +91,6 @@
 				4A9D21581D49ADED008F00E4 /* Info.plist */,
 			);
 			path = ZVDatabaseTests;
-			sourceTree = "<group>";
-		};
-		4D7910BA1D48E2FF00A21B32 /* Mapping */ = {
-			isa = PBXGroup;
-			children = (
-				4DE233F41D5C7A1D009D3FB2 /* Command */,
-				4DCDA8A71D55E45000614303 /* Bindable+Collection.swift */,
-				4DCDA8A91D55E48400614303 /* ZVObject.swift */,
-				4A9D21611D49AF7A008F00E4 /* ZVTable.swift */,
-				4DE233E81D5C7126009D3FB2 /* ObjectType.swift */,
-			);
-			path = Mapping;
 			sourceTree = "<group>";
 		};
 		4D7BA3E31D45A73F00F7C47F /* Database */ = {
@@ -156,7 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */,
-				4D7910BA1D48E2FF00A21B32 /* Mapping */,
+				4DE254011D61A31D004E6499 /* DBHelper */,
 				4D7BA3E31D45A73F00F7C47F /* Database */,
 				4DA079021D26AECC00C30590 /* Info.plist */,
 			);
@@ -171,19 +153,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4DE233F41D5C7A1D009D3FB2 /* Command */ = {
+		4DE254011D61A31D004E6499 /* DBHelper */ = {
 			isa = PBXGroup;
 			children = (
-				4DE233F51D5C7A1D009D3FB2 /* Command.swift */,
-				4DE233F81D5C7A1D009D3FB2 /* Schema.swift */,
-				4DE233F71D5C7A1D009D3FB2 /* Insert.swift */,
-				4DE233F61D5C7A1D009D3FB2 /* Delete.swift */,
-				4DE233FA1D5C7A1D009D3FB2 /* Update.swift */,
-				4DE233F91D5C7A1D009D3FB2 /* Select.swift */,
-				4DE233FB1D5C7A1D009D3FB2 /* Where.swift */,
-				4DE234031D5C8499009D3FB2 /* Order.swift */,
+				4DE254021D61A31D004E6499 /* Bindable+Collection.swift */,
+				4DE254031D61A31D004E6499 /* Command.swift */,
+				4DE254041D61A31D004E6499 /* Delete.swift */,
+				4DE254051D61A31D004E6499 /* Insert.swift */,
+				4DE254061D61A31D004E6499 /* Order.swift */,
+				4DE254071D61A31D004E6499 /* Schema.swift */,
+				4DE254081D61A31D004E6499 /* Select.swift */,
+				4DE254091D61A31D004E6499 /* Update.swift */,
+				4DE2540A1D61A31D004E6499 /* Where.swift */,
 			);
-			path = Command;
+			path = DBHelper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -307,24 +290,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DE233E91D5C7126009D3FB2 /* ObjectType.swift in Sources */,
+				4DE254101D61A31D004E6499 /* Schema.swift in Sources */,
+				4DE2540E1D61A31D004E6499 /* Insert.swift in Sources */,
+				4DE254121D61A31D004E6499 /* Update.swift in Sources */,
 				4A6E98D11D48BCB600F7A090 /* Statement.swift in Sources */,
+				4DE254131D61A31D004E6499 /* Where.swift in Sources */,
 				4D7BA3F01D45A73F00F7C47F /* ConmonDef.swift in Sources */,
+				4DE254111D61A31D004E6499 /* Select.swift in Sources */,
 				4D7BA3F31D45A73F00F7C47F /* DatabasePool.swift in Sources */,
+				4DE2540F1D61A31D004E6499 /* Order.swift in Sources */,
+				4DE2540D1D61A31D004E6499 /* Delete.swift in Sources */,
+				4DE2540B1D61A31D004E6499 /* Bindable+Collection.swift in Sources */,
 				4D7BA3F41D45A73F00F7C47F /* DatabaseQueue.swift in Sources */,
-				4DCDA8AA1D55E48400614303 /* ZVObject.swift in Sources */,
-				4DE233FE1D5C7A1D009D3FB2 /* Insert.swift in Sources */,
-				4DE233FD1D5C7A1D009D3FB2 /* Delete.swift in Sources */,
 				4D7BA3F11D45A73F00F7C47F /* Connection.swift in Sources */,
-				4DCDA8A81D55E45000614303 /* Bindable+Collection.swift in Sources */,
-				4DE234011D5C7A1D009D3FB2 /* Update.swift in Sources */,
 				4A8878501D48618E00FEEF6D /* Bindable.swift in Sources */,
-				4DE234041D5C8499009D3FB2 /* Order.swift in Sources */,
-				4DE233FC1D5C7A1D009D3FB2 /* Command.swift in Sources */,
-				4DE233FF1D5C7A1D009D3FB2 /* Schema.swift in Sources */,
-				4A9D21621D49AF7A008F00E4 /* ZVTable.swift in Sources */,
-				4DE234001D5C7A1D009D3FB2 /* Select.swift in Sources */,
-				4DE234021D5C7A1D009D3FB2 /* Where.swift in Sources */,
+				4DE2540C1D61A31D004E6499 /* Command.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
