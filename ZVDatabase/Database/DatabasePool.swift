@@ -47,13 +47,11 @@ public final class DatabasePool {
     }
     
     /**
-     <#Description#>
      
-     - parameter path:     <#path description#>
-     - parameter readOnly: <#readOnly description#>
-     - parameter vfsName:  <#vfsName description#>
+     - parameter path:     String
+     - parameter readOnly: Bool
+     - parameter vfsName:  String
      
-     - returns: <#return value description#>
      */
     public convenience init(path: String, readOnly: Bool = false, vfs vfsName: String? = nil) {
         self.init()
@@ -63,12 +61,10 @@ public final class DatabasePool {
     }
     
     /**
-     <#Description#>
      
-     - parameter path:     <#path description#>
-     - parameter delegate: <#delegate description#>
+     - parameter path:     String
+     - parameter delegate: DatabasePoolDelegate
      
-     - returns: <#return value description#>
      */
     public convenience init(path: String? = nil, delegate: DatabasePoolDelegate? = nil) {
         self.init()
@@ -92,22 +88,22 @@ public final class DatabasePool {
     private var _inactiveDatabases   = [Connection]()
     private var _activeDatabases     = [Connection]()
     
-    /// <#Description#>
+    /// inactive database count
     public var inactiveDatabaseCount : Int {
         return _inactiveDatabases.count
     }
     
-    /// <#Description#>
+    /// active database count
     public var activeDatabaseCount : Int {
         return _activeDatabases.count
     }
 
     /**
-     <#Description#>
+     从队列中取出数据库
      
-     - throws: <#throws value description#>
+     - throws:
      
-     - returns: <#return value description#>
+     - returns: Connection
      */
     public func dequeueDatabase() throws -> Connection {
         var database: Connection?
@@ -137,9 +133,9 @@ public final class DatabasePool {
     }
     
     /**
-     <#Description#>
+     添加数据库到队列中
      
-     - parameter database: <#database description#>
+     - parameter database: Connection
      */
     public func enqueueDatabase(database: Connection) {
         _deactivate(database: database)
@@ -149,16 +145,16 @@ public final class DatabasePool {
     }
     
     /**
-     <#Description#>
+     从队列中移除数据库
      
-     - parameter database: <#database description#>
+     - parameter database: Connection
      */
     public func removeDatabase(database: Connection) {
         _deactivate(database: database)
     }
     
     /**
-     <#Description#>
+     将队列中所有数据库移除
      */
     public func drain() {
         _lockQueue?.sync(execute: { 
@@ -198,11 +194,11 @@ public final class DatabasePool {
     }
     
     /**
-     <#Description#>
+     在数据库池中执行数据库
      
-     - parameter block: <#block description#>
+     - parameter block: Closure
      
-     - throws: <#throws value description#>
+     - throws:
      */
     public func inBlock(_ block: (db: Connection) -> Void) throws {
         
@@ -212,30 +208,18 @@ public final class DatabasePool {
     }
     
     /**
-     <#Description#>
+     在数据库池中执行数据库并开启事务
      
-     - parameter type:  <#type description#>
-     - parameter block: <#block description#>
+     - parameter type:  事务类型
+     - parameter block: Closure
      
-     - throws: <#throws value description#>
+     - throws: 
      */
     public func inTransaction(transactionType type: TransactionType = .deferred, _ block: (db: Connection) -> Bool) throws {
         
         let db: Connection = try self.dequeueDatabase()
         
-        var success = false
-        
-        switch type {
-        case .deferred:
-            success = db.beginDeferredTransaction()
-            break
-        case .exclusive:
-            success = db.beginExclusiveTransaction()
-            break
-        case .immediate:
-            success = db.beginImmediateTransaction()
-            break
-        }
+        let success = db.begin(transaction: type)
         
         if success {
             if block(db: db) {

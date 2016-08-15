@@ -56,7 +56,6 @@ internal extension Int32 {
     var next: Bool {
         
         switch self {
-        case SQLITE_DONE: return false
         case SQLITE_ROW: return true
         default: return false
         }

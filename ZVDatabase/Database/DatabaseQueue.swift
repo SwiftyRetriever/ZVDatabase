@@ -16,26 +16,22 @@ public final class DatabaseQueue: NSObject {
     private override init() {}
     
     /**
-     <#Description#>
      
-     - parameter path: <#path description#>
+     - parameter path: String
      
-     - returns: <#return value description#>
      */
     public init(path: String) {
         
         _connection = Connection(path: path)
-        let label = path.isEmpty ? "queue" : path
+        let label = path.isEmpty ? "queue" : String(path.hashValue)
         _queue = DispatchQueue(label: "com.zevwings.db.\(label)")
     }
     
     /**
-     <#Description#>
      
-     - parameter path:  <#path description#>
-     - parameter queue: <#queue description#>
+     - parameter path:  String
+     - parameter queue: DispatchQueue
      
-     - returns: <#return value description#>
      */
     public init(path: String = "", queue: DispatchQueue) {
         
@@ -44,9 +40,9 @@ public final class DatabaseQueue: NSObject {
     }
     
     /**
-     <#Description#>
+     在线程中执行数据库
      
-     - parameter block: <#block description#>
+     - parameter block: Closure
      */
     public func inBlock(_ block: (db: Connection) -> Void) {
         
@@ -58,10 +54,10 @@ public final class DatabaseQueue: NSObject {
     }
     
     /**
-     <#Description#>
+     在线程中执行数据库并开启事务
      
-     - parameter type:  <#type description#>
-     - parameter block: <#block description#>
+     - parameter type:  事务类型
+     - parameter block: Closure
      */
     public func inTransaction(transactionType type: TransactionType = .deferred,
                               _ block: (db: Connection) -> Bool) {
@@ -74,19 +70,7 @@ public final class DatabaseQueue: NSObject {
         
         _queue?.async(execute: {
             
-            var success = false
-            
-            switch type {
-            case .deferred:
-                success = self._connection!.beginDeferredTransaction()
-                break
-            case .exclusive:
-                success = self._connection!.beginExclusiveTransaction()
-                break
-            case .immediate:
-                success = self._connection!.beginImmediateTransaction()
-                break
-            }
+            let success = self._connection!.begin(transaction: type)
             
             if success {
                 
@@ -107,10 +91,10 @@ public final class DatabaseQueue: NSObject {
     }
     
     /**
-     <#Description#>
+     在线程中执行数据库并开启SAVEPOINT
      
-     - parameter name:  <#name description#>
-     - parameter block: <#block description#>
+     - parameter name:  String
+     - parameter block: Closure
      */
     public func inSavePoint(with name: String,
                             _ block: (db: Connection) -> Bool) {

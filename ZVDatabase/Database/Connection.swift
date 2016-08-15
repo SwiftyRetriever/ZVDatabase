@@ -41,12 +41,12 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     创建一个新的数据库
      
-     - parameter readonly: <#readonly description#>
-     - parameter vfsName:  <#vfsName description#>
+     - parameter readonly: 判断数据库打开属性，是否只读
+     - parameter vfsName:
      
-     - throws: <#throws value description#>
+     - throws: 数据库打开异常
      */
     public func open(readonly: Bool = false, vfs vfsName: String? = nil) throws {
     
@@ -71,9 +71,9 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     关闭并摧毁一个数据库
      
-     - throws: <#throws value description#>
+     - throws:
      */
     public func close() throws {
         
@@ -87,12 +87,12 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     执行SQL语句
      
-     - parameter sql:        <#sql description#>
-     - parameter parameters: <#parameters description#>
+     - parameter sql:        String
+     - parameter parameters: An array which element implement Bindable
      
-     - throws: <#throws value description#>
+     - throws:
      */
     public func executeUpdate(_ sql: String,
                               parameters:[Bindable] = []) throws {
@@ -103,15 +103,15 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     执行SQL语句
      
-     - parameter sql:             <#sql description#>
-     - parameter parameters:      <#parameters description#>
-     - parameter lastInsertRowid: <#lastInsertRowid description#>
+     - parameter sql:             String
+     - parameter parameters:      An array which element implement Bindable
+     - parameter lastInsertRowid: 返回数据库改变行数或者最后一行数据id
      
-     - throws: <#throws value description#>
+     - throws:
      
-     - returns: <#return value description#>
+     - returns: 返回一个Int64的数值
      */
     public func exceuteUpdate(_ sql: String,
                               parameters:[Bindable] = [],
@@ -129,14 +129,14 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     执行SQL语句
      
-     - parameter sql:        <#sql description#>
-     - parameter parameters: <#parameters description#>
+     - parameter sql:        String
+     - parameter parameters: An array which element implement Bindable
      
-     - throws: <#throws value description#>
+     - throws:
      
-     - returns: <#return value description#>
+     - returns: 返回一个字典数组
      */
     public func executeQuery(_ sql: String,
                              parameters:[Bindable] = []) throws -> [[String: AnyObject]] {
@@ -146,15 +146,34 @@ public final class Connection: NSObject {
         return rows
     }
     
-    
     // MARK: - Transaction
     
     /**
-     <#Description#>
+     开始一个数据库事务
      
-     - returns: <#return value description#>
+     - parameter transaction: 事务类型 详参 @see http://www.sqlite.org/lang_transaction.html
+     - returns:
      */
-    public func beginExclusiveTransaction() -> Bool {
+    public func begin(transaction type: TransactionType) -> Bool {
+        
+        var success = false
+        
+        switch type {
+        case .deferred:
+            success = self._beginDeferredTransaction()
+            break
+        case .exclusive:
+            success = self._beginExclusiveTransaction()
+            break
+        case .immediate:
+            success = self._beginImmediateTransaction()
+            break
+        }
+        
+        return success
+    }
+    
+    private func _beginExclusiveTransaction() -> Bool {
         
         let sql = "BEGIN EXCLUSIVE TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
@@ -163,12 +182,7 @@ public final class Connection: NSObject {
         return self.hasTransaction
     }
     
-    /**
-     <#Description#>
-     
-     - returns: <#return value description#>
-     */
-    public func beginDeferredTransaction() -> Bool {
+    private func _beginDeferredTransaction() -> Bool {
         
         let sql = "BEGIN DEFERRED TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
@@ -177,12 +191,7 @@ public final class Connection: NSObject {
         return self.hasTransaction
     }
     
-    /**
-     <#Description#>
-     
-     - returns: <#return value description#>
-     */
-    public func beginImmediateTransaction() -> Bool {
+    private func _beginImmediateTransaction() -> Bool {
         
         let sql = "BEGIN IMMEDIATE TRANSACTION"
         if sqlite3_exec(_connection, sql, nil, nil, nil).isSuccess {
@@ -192,7 +201,7 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     回滚事务
      */
     public func rollback() {
         
@@ -211,7 +220,7 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     提交事务
      */
     public func commit() {
         
@@ -227,12 +236,15 @@ public final class Connection: NSObject {
         }
     }
     
+    //MARK: - SAVEPOINT
+    
     /**
-     <#Description#>
+     开启一个数据库SAVEPOINT
+     @see http://www.sqlite.org/lang_savepoint.html
      
-     - parameter name: <#name description#>
+     - parameter name: String
      
-     - returns: <#return value description#>
+     - returns:
      */
     public func beginSavepoint(with name: String) -> Bool {
         
@@ -246,9 +258,9 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     回滚一个SAVEPOINT
      
-     - parameter name: <#name description#>
+     - parameter name: String
      */
     public func rollbackSavepoint(with name: String) {
         
@@ -260,9 +272,9 @@ public final class Connection: NSObject {
     }
     
     /**
-     <#Description#>
+     提交一个SAVEPOINT
      
-     - parameter name: <#name description#>
+     - parameter name: String
      */
     public func releaseSavepoint(with name:String) {
         
@@ -325,26 +337,26 @@ public final class Connection: NSObject {
     }
     
     // MARK: -
-    /// <#Description#>
+    /// last insert rowid
     public var lastInsertRowid: Int64? {
         
         let rowid = sqlite3_last_insert_rowid(_connection)
         return rowid != 0 ? rowid : nil
     }
     
-    /// <#Description#>
+    /// change rows
     public var changes: Int {
         
         let rows = sqlite3_changes(_connection)
         return Int(rows)
     }
     
-    /// <#Description#>
+    /// total change rows
     public var totalChanges: Int {
         return Int(sqlite3_total_changes(_connection))
     }
     
-    /// <#Description#>
+    /// last error message
     public var lastErrorMsg: String {
         
         let errMsg = String(cString: sqlite3_errmsg(_connection))

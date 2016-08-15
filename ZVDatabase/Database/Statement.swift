@@ -27,7 +27,7 @@ internal enum ColumnType: Int {
     case Blob
     case Null
     
-    static func fromSQLiteColumnType(columnType: Int32) -> ColumnType {
+    internal static func fromSQLiteColumnType(columnType: Int32) -> ColumnType {
         switch columnType {
         case SQLITE_INTEGER:
             return .Integer
@@ -53,7 +53,7 @@ public final class Statement: NSObject {
     private var _db: Connection? = nil
     private var _parameters = [Bindable]()
     
-    override init() {
+    internal override init() {
         super.init()
     }
     
