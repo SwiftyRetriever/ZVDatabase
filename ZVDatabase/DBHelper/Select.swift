@@ -19,13 +19,12 @@ public class Select: Command {
      
      - returns: <#return value description#>
      */
-    public convenience init(_ column: [String],
-                            from table: String,
-                            parameters: [Bindable] = []) {
+    public convenience init(_ column: [String] = [],
+                            from table: String) {
         
         self.init()
-        let sql = "SELECT \(column.joined(separator: ", ")) FROM \(table)"
+        let columns = column.isEmpty ? "*" : column.joined(separator: ", ")
+        let sql = "SELECT \(columns) FROM \(table)"
         _sql.append(sql)
-        _parameters.append(contentsOf: parameters)
     }
 }

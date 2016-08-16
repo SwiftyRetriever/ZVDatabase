@@ -11,18 +11,18 @@ import UIKit
 public protocol DatabasePoolDelegate : class {
     
     /**
-     <#Description#>
+     数据库开启时调用
      
-     - parameter database: <#database description#>
+     - parameter database: Connection
      
-     - throws: <#throws value description#>
+     - throws:
      */
     func databaseOpened(_ database: Connection) throws
     
     /**
-     <#Description#>
+     数据库移除时调用
      
-     - parameter database: <#database description#>
+     - parameter database: Connection
      */
     func databaseClosed(_ database: Connection)
     
@@ -37,11 +37,6 @@ public final class DatabasePool {
     
     public weak var delegate : DatabasePoolDelegate?
 
-    /**
-     <#Description#>
-     
-     - returns: <#return value description#>
-     */
     public init() {
         _lockQueue = DispatchQueue(label: "com.zevwings.db.locked")
     }
@@ -213,7 +208,7 @@ public final class DatabasePool {
      - parameter type:  事务类型
      - parameter block: Closure
      
-     - throws: 
+     - throws:
      */
     public func inTransaction(transactionType type: TransactionType = .deferred, _ block: (db: Connection) -> Bool) throws {
         

@@ -20,8 +20,8 @@ public class Update: Command {
      - returns: <#return value description#>
      */
     public convenience init(_ column: [String],
-                            table: String,
-                            parameters: [Bindable] = []) {
+                            parameters: [Bindable] = [],
+                            table: String) {
         
         self.init()
         let col = column.map { (col) in return "\(col) = ?" }.joined(separator: ", ")
