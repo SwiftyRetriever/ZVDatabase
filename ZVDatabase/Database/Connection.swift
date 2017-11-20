@@ -36,7 +36,7 @@ public final class Connection: NSObject {
     }
     
     deinit {
-        sqlite3_close(_connection)
+        sqlite3_close_v2(_connection)
         _connection = nil
     }
     
@@ -97,7 +97,7 @@ public final class Connection: NSObject {
     }
     
     public func executeQuery(_ sql: String,
-                             parameters:[Bindable] = []) throws -> [[String: AnyObject]] {
+                             parameters:[Bindable] = []) throws -> [[String: Any]] {
         
         let statement = try Statement(self, sql: sql, parameters: parameters)
         let rows = try statement.query()
@@ -212,34 +212,33 @@ public final class Connection: NSObject {
             sqlite3_busy_handler(_connection, nil, nil)
         } else {
             sqlite3_busy_handler(_connection, { (dbPointer, retry) -> Int32 in
-                
                 let connection = unsafeBitCast(dbPointer, to: Connection.self)
-                return connection._busyHandler(dbPointer, retry)
-                }, unsafeBitCast(self, to: UnsafeMutablePointer<Void>.self))
+                return connection._busyHandler(dbPointer!, retry)
+            }, unsafeBitCast(self, to: UnsafeMutableRawPointer.self))
         }
     }
     
-    private var _busyHandler: BusyHandler = { (dbPointer: UnsafeMutablePointer<Void>?, retry: Int32) -> Int32 in
+    private var _busyHandler: BusyHandler = { (dbPointer: UnsafeMutableRawPointer, retry: Int32) -> Int32 in
         let connection = unsafeBitCast(dbPointer, to: Connection.self)
-        
+
         if retry == 0 {
             connection._startBusyRetryTime = Date.timeIntervalSinceReferenceDate
             return 1
         }
-        
+
         let delta = Date.timeIntervalSinceReferenceDate - connection._startBusyRetryTime
-        
+
         if (delta < connection.maxBusyRetryTime) {
-            
+
             let requestedSleep = Int32(arc4random_uniform(50) + 50)
             let actualSleep = sqlite3_sleep(requestedSleep);
             if actualSleep != requestedSleep {
                 print("WARNING: Requested sleep of \(requestedSleep) milliseconds, but SQLite returned \(actualSleep). Maybe SQLite wasn't built with HAVE_USLEEP=1?" )
             }
-            
+
             return 1
         }
-        
+
         return 0
     }
     

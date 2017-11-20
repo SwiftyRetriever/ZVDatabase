@@ -140,14 +140,14 @@ public final class DatabasePool {
         })
     }
     
-    public func inBlock(_ block: (db: Connection) -> Void) throws {
+    public func inBlock(_ block: (_ db: Connection) -> Void) throws {
         
         let db = try self.dequeueDatabase()
-        block(db: db)
+        block(db)
         self.enqueueDatabase(database: db)
     }
     
-    public func inTransaction(transactionType type: TransactionType = .deferred, _ block: (db: Connection) -> Bool) throws {
+    public func inTransaction(transactionType type: TransactionType = .deferred, _ block: (_ db: Connection) -> Bool) throws {
         
         let db: Connection = try self.dequeueDatabase()
         
@@ -166,7 +166,7 @@ public final class DatabasePool {
         }
         
         if success {
-            if block(db: db) {
+            if block(db) {
                 db.commit()
                 self.enqueueDatabase(database: db)
             } else {

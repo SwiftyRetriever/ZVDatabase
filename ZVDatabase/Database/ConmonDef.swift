@@ -39,10 +39,10 @@ internal enum DatabaseError : Error {
     case error(code: Int32, msg: String)
 }
 
-internal typealias BusyHandler = ((UnsafeMutablePointer<Void>?, Int32) -> Int32)!
+internal typealias BusyHandler = ((UnsafeMutableRawPointer, Int32) -> Int32)!
 
 internal extension Int32 {
-    
+
     var isSuccess: Bool {
         
         switch self {

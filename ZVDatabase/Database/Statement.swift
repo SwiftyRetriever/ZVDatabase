@@ -77,14 +77,14 @@ public final class Statement: NSObject {
         
         guard errCode.isSuccess else {
             sqlite3_finalize(_statement)
-            let errMsg = "sqlite3_prepare error :\(_db?.lastErrorMsg)"
+            let errMsg = "sqlite3_prepare error :\(_db!.lastErrorMsg)"
             throw DatabaseError.error(code: errCode, msg: errMsg)
         }
         
         let count = sqlite3_bind_parameter_count(_statement)
         
         guard count == CInt(_parameters.count) else {
-            let errMsg = "failed to bind parameters, counts did not match. SQL: \(_sql), Parameters: \(_parameters)"
+            let errMsg = "failed to bind parameters, counts did not match. SQL: \(_sql!), Parameters: \(_parameters)"
             throw DatabaseError.error(code: SQLITE_BIND_COUNT_ERR, msg: errMsg)
         }
         
@@ -106,19 +106,19 @@ public final class Statement: NSObject {
         let errCode = sqlite3_step(_statement)
         
         guard errCode.isSuccess else {
-            let errMsg = "excute sql \(String(cString: _sql!)), \(_db?.lastErrorMsg)"
+            let errMsg = "excute sql \(String(cString: _sql!)), \(_db!.lastErrorMsg)"
             throw DatabaseError.error(code: errCode, msg: errMsg)
         }
     }
     
-    internal func query() throws -> [[String: AnyObject]] {
+    internal func query() throws -> [[String: Any]] {
         
         defer {
             sqlite3_finalize(_statement)
         }
         
         var result = sqlite3_step(_statement)
-        var rows = [[String: AnyObject]]()
+        var rows = [[String: Any]]()
         while result.next {
             rows.append(self.rowValue)
             result = sqlite3_step(_statement)
@@ -170,7 +170,7 @@ internal extension Statement {
         try _check(errCode, value: value, index: index)
     }
     
-    private func _check(_ errCode: CInt, value: AnyObject, index: Int) throws {
+    private func _check(_ errCode: CInt, value: Any, index: Int) throws {
         
         guard errCode.isSuccess else {
             let errMsg = "sqlite bind value: \(value) error at \(index) . error code : \(errCode)"
@@ -182,8 +182,8 @@ internal extension Statement {
 //MARL: - RowValue
 internal extension Statement {
     
-    internal var rowValue: [String: AnyObject] {
-        var row = [String: AnyObject]()
+    internal var rowValue: [String: Any] {
+        var row = [String: Any]()
         for index in 0 ..< self.columnCount() {
             let columnName = self.columnName(at: index)
             row[columnName] = value(at: index)
@@ -224,7 +224,7 @@ internal extension Statement {
         return NSData(bytes: bytes, length: Int(length))
     }
     
-    internal func value(at index: CInt) -> AnyObject? {
+    internal func value(at index: CInt) -> Any? {
         
         switch columntType(at: index) {
         case .Integer:

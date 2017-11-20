@@ -28,17 +28,17 @@ public final class DatabaseQueue: NSObject {
         _queue = queue
     }
     
-    public func inBlock(_ block: (db: Connection) -> Void) {
+    public func inBlock(_ block: @escaping (_ db: Connection) -> Void) {
         
         if let queue = _queue {
             queue.async {
-                block(db: self._connection!)
+                block(self._connection!)
             }
         }
     }
     
     public func inTransaction(transactionType type: TransactionType = .deferred,
-                              _ block: (db: Connection) -> Bool) {
+                              _ block: @escaping (_ db: Connection) -> Bool) {
         
         do {
             try _connection!.open()
@@ -64,7 +64,7 @@ public final class DatabaseQueue: NSObject {
             
             if success {
                 
-                if block(db: self._connection!) {
+                if block(self._connection!) {
                     
                     self._connection!.commit()
                     do { try self._connection!.close() } catch {}
@@ -81,7 +81,7 @@ public final class DatabaseQueue: NSObject {
     }
     
     public func inSavePoint(with name: String,
-                            _ block: (db: Connection) -> Bool) {
+                            _ block: @escaping (_ db: Connection) -> Bool) {
         
         do {
             try _connection!.open()
@@ -95,7 +95,7 @@ public final class DatabaseQueue: NSObject {
             
             if success {
 
-                if block(db: self._connection!) {
+                if block(self._connection!) {
                     
                 } else {
                     self._connection!.rollbackSavepoint(with: name)

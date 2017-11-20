@@ -20,7 +20,6 @@ import Foundation
 
 
 public protocol Bindable {
-    
     func bind(to statement: Statement, at index: Int) throws
 }
 
@@ -28,77 +27,66 @@ public protocol Number: Bindable {}
 
 // MARK: - Number
 extension Int8: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(intValue: Int(self), at: index)
     }
 }
 
 extension UInt8: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(intValue: Int(self), at: index)
     }
 }
 
 extension Int16: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(intValue: Int(self), at: index)
     }
 }
 
 extension UInt16: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(intValue: Int(self), at: index)
     }
 }
 
 extension Int32: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(intValue: Int(self), at: index)
     }
 }
 
 extension UInt32: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(int64Value: Int64(self), at: index)
     }
 }
 
 extension Int64: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(int64Value: Int64(self), at: index)
     }
 }
 
 extension UInt64: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(int64Value: Int64(self), at: index)
     }
 }
 
 extension Int: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(int64Value: Int64(self), at: index)
     }
 }
 
 extension UInt: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(int64Value: Int64(self), at: index)
     }
 }
 
 extension Double: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(doubleValue: self, at: index)
     }
@@ -111,14 +99,12 @@ extension Float: Number {
 }
 
 extension Bool: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
-        try statement.bind(intValue: Int(self), at: index)
+        try statement.bind(intValue: self ? 1 : 0, at: index)
     }
 }
 
 extension NSNumber: Number {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(int64Value: self.int64Value, at: index)
     }
@@ -126,7 +112,6 @@ extension NSNumber: Number {
 
 //MARK: - Null
 extension NSNull: Bindable {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(nullValueAt: index)
     }
@@ -134,14 +119,12 @@ extension NSNull: Bindable {
 
 //MARK: - String
 extension String: Bindable {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(textValue: self, at: index)
     }
 }
 
 extension NSString: Bindable {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(textValue: self as String, at: index)
     }
@@ -149,14 +132,12 @@ extension NSString: Bindable {
 
 //MARK: - NSDate
 extension NSDate: Bindable {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(doubleValue: self.timeIntervalSince1970, at: index)
     }
 }
 
 extension Date: Bindable {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(doubleValue: self.timeIntervalSince1970, at: index)
     }
@@ -164,15 +145,13 @@ extension Date: Bindable {
 
 //MARK: - NSData
 extension NSData: Bindable {
-    
     public func bind(to statement: Statement, at index: Int) throws {
         try statement.bind(dataValue: self, at: index)
     }
 }
 
 extension Data: Bindable {
-    
     public func bind(to statement: Statement, at index: Int) throws {
-        try statement.bind(dataValue: self, at: index)
+        try statement.bind(dataValue: self as NSData, at: index)
     }
 }

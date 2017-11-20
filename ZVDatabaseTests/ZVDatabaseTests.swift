@@ -16,7 +16,7 @@ class ZVDatabaseTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        db = Connection()
+//        db = Connection()
         
     }
     
@@ -36,7 +36,7 @@ class ZVDatabaseTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    
+    /*
     func testCreateTable() {
         
         let connection = Connection()
@@ -217,5 +217,5 @@ class ZVDatabaseTests: XCTestCase {
         } catch {
             print(error)
         }
-    }
+    }*/
 }
