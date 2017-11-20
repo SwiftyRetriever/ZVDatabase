@@ -11,20 +11,22 @@ Pod::Spec.new do |s|
   s.name         = "ZVDatabase"
   s.version      = "0.0.3"
   s.summary      = "a simple swift database"
-
   s.description  = <<-DESC
-    a simple swift database - -.
+  					a simple swift database.
                    DESC
   s.homepage     = "https://github.com/zevwings/ZVDatabase"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author             = { "zevwings" => "zev.wings@gmail.com" }
-  s.platform     = :ios, "8.0"
-  ##{s.version}
-  s.source       = { :git => "https://github.com/zevwings/ZVDatabase.git", :branch => "master" }
-  s.source_files  = "ZVDatabase/ZVDatabase.h", "ZVDatabase/Database/*.swift"
-  s.library   = "sqlite3"
+  # s.social_media_url   = "http://twitter.com/zevwings"
+  s.platform     = :ios, "8.2"
+  s.source       = { :git => "https://github.com/zevwings/ZVDatabase.git", :tag => "#{s.version}" }
+  s.source_files  = "ZVDatabase", "ZVDatabase/**/*.{c,h,m,swift}"
+  s.exclude_files = "ZVDatabase/**/*.modulemap"
+
+  # s.public_header_files = "Classes/**/*.h"
+
+  s.libraries = "sqlite3"
   s.requires_arc = true
-  # s.module_name = "ZVDatabase",
-  s.module_map = 'ZVDatabase/Database/Support/module.modulemap'
+  s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libsqlite3" }
 
 end

@@ -17,6 +17,8 @@
 		4D213D641FC271CB002AB7E1 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D213D601FC271CB002AB7E1 /* Connection.swift */; };
 		4D7BA3FC1D45A89C00F7C47F /* ZVDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4DA0792C1D26B29F00C30590 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */; };
+		4DAFC1FF1FC2CF570001E14C /* ZVDatabase-Bridging.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DAFC1FD1FC2CF570001E14C /* ZVDatabase-Bridging.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4DAFC2001FC2CF570001E14C /* ZVDatabase-Bridging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DAFC1FE1FC2CF570001E14C /* ZVDatabase-Bridging.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +45,9 @@
 		4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZVDatabase.h; sourceTree = "<group>"; };
 		4DA078FD1D26AECC00C30590 /* ZVDatabase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZVDatabase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DA079021D26AECC00C30590 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; xcLanguageSpecificationIdentifier = "xcode.lang.text-based-dylib"; };
+		4DA0792B1D26B29F00C30590 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; lineEnding = 0; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		4DAFC1FD1FC2CF570001E14C /* ZVDatabase-Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZVDatabase-Bridging.h"; sourceTree = "<group>"; };
+		4DAFC1FE1FC2CF570001E14C /* ZVDatabase-Bridging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "ZVDatabase-Bridging.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 			isa = PBXGroup;
 			children = (
 				4D7BA3FB1D45A89C00F7C47F /* ZVDatabase.h */,
+				4DAFC1FD1FC2CF570001E14C /* ZVDatabase-Bridging.h */,
+				4DAFC1FE1FC2CF570001E14C /* ZVDatabase-Bridging.m */,
 				4D7BA3E31D45A73F00F7C47F /* Database */,
 				4DA079021D26AECC00C30590 /* Info.plist */,
 			);
@@ -142,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D7BA3FC1D45A89C00F7C47F /* ZVDatabase.h in Headers */,
+				4DAFC1FF1FC2CF570001E14C /* ZVDatabase-Bridging.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +265,7 @@
 			files = (
 				4A8878501D48618E00FEEF6D /* Bindable.swift in Sources */,
 				4D213D641FC271CB002AB7E1 /* Connection.swift in Sources */,
+				4DAFC2001FC2CF570001E14C /* ZVDatabase-Bridging.m in Sources */,
 				4D213D611FC271CB002AB7E1 /* DatabaseQueue.swift in Sources */,
 				4D213D5C1FC271A0002AB7E1 /* Statement.swift in Sources */,
 				4D213D621FC271CB002AB7E1 /* ConmonDef.swift in Sources */,
@@ -418,7 +426,7 @@
 		4DA079121D26AECC00C30590 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
@@ -433,7 +441,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Database/Support/";
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -443,7 +451,7 @@
 		4DA079131D26AECC00C30590 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
@@ -458,7 +466,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zevwings.ZVDatabase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/ZVDatabase/Database/Support/";
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};

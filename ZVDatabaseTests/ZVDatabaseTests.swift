@@ -16,7 +16,7 @@ class ZVDatabaseTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-//        db = Connection()
+        db = Connection()
         
     }
     
@@ -36,7 +36,7 @@ class ZVDatabaseTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-    /*
+    
     func testCreateTable() {
         
         let connection = Connection()
@@ -74,7 +74,7 @@ class ZVDatabaseTests: XCTestCase {
             
         }
         
-        XCTAssertTrue(rowId > 0)
+        XCTAssertTrue(rowId ?? 0 > 0)
     }
     
     func testUpdateValue() {
@@ -94,7 +94,7 @@ class ZVDatabaseTests: XCTestCase {
             
         }
         
-        XCTAssertTrue(changes > 0)
+        XCTAssertTrue(changes ?? 0 > 0)
     }
     
     func testDeleteValue() {
@@ -112,7 +112,7 @@ class ZVDatabaseTests: XCTestCase {
             
         }
         
-        XCTAssertTrue(changes > 0)
+        XCTAssertTrue(changes ?? 0 > 0)
     }
     
     // if this test failed, the queue is start.
@@ -139,7 +139,7 @@ class ZVDatabaseTests: XCTestCase {
             }
         }
         
-        XCTAssert(changes >= 100)
+        XCTAssert(changes ?? 0 >= 100)
         
     }
     
@@ -160,10 +160,11 @@ class ZVDatabaseTests: XCTestCase {
                 }
                 
             } catch {
+                
                 success = false
             }
             changes = Int64(db.totalChanges)
-            XCTAssert(changes >= 100)
+            XCTAssert(changes ?? 0 >= 100)
             return success
         }
     }
@@ -217,5 +218,5 @@ class ZVDatabaseTests: XCTestCase {
         } catch {
             print(error)
         }
-    }*/
+    }
 }
