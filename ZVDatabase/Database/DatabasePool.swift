@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 public protocol DatabasePoolDelegate : class {
     
     func databaseOpened(_ database: Connection) throws

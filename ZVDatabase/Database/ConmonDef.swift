@@ -8,15 +8,6 @@
 
 import Foundation
 
-//#if os(OSX)
-//    import SQLiteMacOS
-//#elseif os(iOS)
-//    #if (arch(i386) || arch(x86_64))
-//        import SQLiteiPhoneSimulator
-//    #else
-//        import SQLiteiPhoneOS
-//    #endif
-//#endif
 
 // MARK: - Public
 public enum TransactionType {

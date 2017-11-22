@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 public final class DatabaseQueue: NSObject {
     
     private var _queue: DispatchQueue?

@@ -66,8 +66,6 @@ class ZVDatabaseTests: XCTestCase {
             rowId = try connection.exceuteUpdate(sql,
                                                  parameters: [9527, "Wings", "Zev", "Gulou Street", "Chengdu"],
                                                  lastInsertRowid: true)
-            
-            
             try connection.close()
             
         } catch {
@@ -87,7 +85,6 @@ class ZVDatabaseTests: XCTestCase {
             changes = try connection.exceuteUpdate(sql,
                                                    parameters: ["Zhang", 9527],
                                                    lastInsertRowid: false)
-            
             try connection.close()
             
         } catch {
@@ -207,8 +204,6 @@ class ZVDatabaseTests: XCTestCase {
                 } catch {
                     
                 }
-                
-                
                 return false
             })
             
